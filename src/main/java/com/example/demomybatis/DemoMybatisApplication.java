@@ -31,7 +31,7 @@ public class DemoMybatisApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(){
 		return (args) -> {
-
+			//test
 			System.out.println(this.hotelMapper.selectByCityId(10));
 
 //			City city = new City();
