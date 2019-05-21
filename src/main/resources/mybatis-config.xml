@@ -9,5 +9,6 @@
     </typeAliases>
     <mappers>
         <mapper resource="sample/mybatis/mapper/HotelMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/TourMapper.xml"/>
     </mappers>
 </configuration>

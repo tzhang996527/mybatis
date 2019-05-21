@@ -1,11 +1,10 @@
 package com.example.demomybatis;
 
-import com.example.demomybatis.entity.Hotel;
 import com.example.demomybatis.mapper.CityMapper;
 import com.example.demomybatis.mapper.HotelMapper;
+import com.example.demomybatis.mapper.TourMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.example.demomybatis.entity.City;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +17,12 @@ public class DemoMybatisApplication {
 
 	private final HotelMapper hotelMapper;
 
-	public DemoMybatisApplication(CityMapper cityMapper, HotelMapper hotelMapper) {
+	private final TourMapper tourMapper;
+
+	public DemoMybatisApplication(CityMapper cityMapper, HotelMapper hotelMapper, TourMapper tourMapper) {
 		this.cityMapper = cityMapper;
 		this.hotelMapper = hotelMapper;
+		this.tourMapper = tourMapper;
 	}
 
 	public static void main(String[] args) {
@@ -32,7 +34,7 @@ public class DemoMybatisApplication {
 	public CommandLineRunner commandLineRunner(){
 		return (args) -> {
 			//test
-			System.out.println(this.hotelMapper.selectByCityId(10));
+//			System.out.println(this.tourMapper.selectTour());
 
 //			City city = new City();
 //			city.setName("San Francisco");
