@@ -34,7 +34,7 @@ public class DemoMybatisApplication {
 	public CommandLineRunner commandLineRunner(){
 		return (args) -> {
 			//test
-//			System.out.println(this.tourMapper.selectTour());
+			System.out.println(this.tourMapper.findTourById("2"));
 
 //			City city = new City();
 //			city.setName("San Francisco");

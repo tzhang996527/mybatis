@@ -2,12 +2,57 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.demomybatis.mapper.TourMapper">
+
     <select id="selectTour" resultType="Tour">
-        select TOURID as tourid,
+        select TOURID as "tourid",
         SOURCE_ADDR as sourceAddress,
         DEST_ADDR as destAddress,
-        ETA
+        ETA,
+        EXE_STATUS as status
         from t_tour
     </select>
+
+    <select id="selectPlannedStops" resultType="PlannedStops">
+        select TOURID as tourid,
+        SEQ as seq,
+        LAT as lat,
+        LNG as lng,
+        ADDR as addr,
+        PLAN_DEPART as plannedDep from t_pln_stop
+    </select>
+
+    <select id="selectActStops" resultType="ActualStop">
+        select TOURID as tourid,
+        SEQ as seq,
+        LAT as lat,
+        LNG as lng,
+        ADDR as addr,
+        REP_TIME as repDate,
+        TEMPERATURE as temperature from t_act_stop
+    </select>
+
+
+    <select id="findTourById" parameterType="String" resultType="Tour">
+        select TOURID as "tourid",
+        SOURCE_ADDR as sourceAddress,
+        DEST_ADDR as destAddress,
+        ETA,
+        EXE_STATUS as status
+        from t_tour WHERE TOURID = #{id}
+    </select>
+
+    <insert id="createTour" useGeneratedKeys="true" keyProperty="tourid" parameterType="Tour">
+        INSERT INTO t_tour(SOURCE_ADDR,DEST_ADDR,ETA,EXE_STATUS)
+        values(#{sourceAddress},#{destAddress},#{ETA},#{status})
+    </insert>
+    <!-- 删除用户 -->
+    <delete id="deleteTour" parameterType="java.lang.String">
+        DELETE FROM t_tour WHERE TOURID=#{id}
+    </delete>
+    <!-- 修改用户 -->
+    <update id="updateTourStatus" parameterType="Tour" >
+        UPDATE t_tour SET EXE_STATUS = #{status} WHERE TOURID = #{tourid}
+    </update>
 </mapper>
