@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TourDetail extends Tour {
+public class TourDetail extends Tour implements Serializable {
 
     private Customer customer;
 

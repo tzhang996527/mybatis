@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tour {
+public class Tour implements Serializable {
     private String tourid;
     private String sourceAddress;
 

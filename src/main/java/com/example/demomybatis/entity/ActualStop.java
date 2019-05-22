@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ActualStop {
+public class ActualStop implements Serializable {
     private String tourid;
     private int seq;
     private String lat;
