@@ -4,11 +4,14 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
     <typeAliases>
         <package name="com.example.demomybatis"/>
     </typeAliases>
     <mappers>
-        <mapper resource="sample/mybatis/mapper/HotelMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/TourMapper.xml"/>
     </mappers>
 </configuration>

@@ -47,12 +47,68 @@
         INSERT INTO t_tour(SOURCE_ADDR,DEST_ADDR,ETA,EXE_STATUS)
         values(#{sourceAddress},#{destAddress},#{ETA},#{status})
     </insert>
-    <!-- 删除用户 -->
+    <!-- delete tour  -->
     <delete id="deleteTour" parameterType="java.lang.String">
         DELETE FROM t_tour WHERE TOURID=#{id}
     </delete>
-    <!-- 修改用户 -->
+    <!-- update tour status -->
     <update id="updateTourStatus" parameterType="Tour" >
         UPDATE t_tour SET EXE_STATUS = #{status} WHERE TOURID = #{tourid}
     </update>
+
+    <!-- get tour details   -->
+    <resultMap id="tourDetailResultMap" type="TourDetail">
+        <id column="TOURID" property="tourid" />
+        <result column="SOURCE_ADDR" property="sourceAddress"/>
+        <result column="DEST_ADDR" property="destAddress"/>
+        <result column="ETA" property="ETA" javaType="java.util.Date"/>
+        <result column="EXE_STATUS" property="status"/>
+        <association property="customer" javaType="Customer">
+            <id column="ID" property="id"/>
+            <result column="NAME" property="name"/>
+        </association>
+        <collection property="plannedStops" ofType="PlannedStops">
+            <id column="TOURID" property="tourid"/>
+            <id column="SEQ" property="seq"/>
+            <result column="LAT" property="lat"/>
+            <result column="LNG" property="lng"/>
+            <result column="ADDR" property="addr"/>
+            <result column="PLAN_DEPART" property="plannedDep" javaType="java.util.Date"/>
+        </collection>
+    </resultMap>
+
+    <select id="getTourDetails" resultMap="tourDetailResultMap">
+        select t.*,
+        c.ID,
+        c.NAME,
+        s.SEQ,
+        s.LAT,
+        s.LNG,
+        s.ADDR,
+        s.PLAN_DEPART
+        from t_tour t INNER JOIN
+        t_pln_stop s on t.TOURID = s.TOURID
+        inner join t_customer c
+        on t.CUST_ID = c.ID
+    </select>
+
+    <!-- Lazy load   -->
+    <select id="getTourLazyLoading" resultMap="BatchTourLazyLoadingResultMap">
+        SELECT * FROM t_tour
+    </select>
+
+    <resultMap id="BatchTourLazyLoadingResultMap" type="TourDetail">
+        <id column="TOURID" property="tourid" />
+        <result column="SOURCE_ADDR" property="sourceAddress"/>
+        <result column="DEST_ADDR" property="destAddress"/>
+        <result column="ETA" property="ETA" javaType="java.util.Date"/>
+        <result column="EXE_STATUS" property="status"/>
+        <result column="CUST_ID" property="customer_id"/>
+        <!-- Lazy load customer -->
+        <association property="customer" javaType="Customer" select="findCustomerById" column="customer_id"/>
+    </resultMap>
+
+    <select id="findCustomerById" parameterType="int" resultType="Customer">
+        select * from t_customer where ID = #{id}
+    </select>
 </mapper>
