@@ -15,5 +15,6 @@
     </typeAliases>
     <mappers>
         <mapper resource="sample/mybatis/mapper/TourMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/UserDaoMapper.xml"/>
     </mappers>
 </configuration>
