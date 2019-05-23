@@ -1,7 +1,7 @@
 package com.example.demomybatis.service.Impl;
 
 import com.example.demomybatis.entity.Tour;
-import com.example.demomybatis.mapper.TourMapper;
+import com.example.demomybatis.dao.TourMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

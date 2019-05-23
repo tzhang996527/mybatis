@@ -1,4 +1,4 @@
-package com.example.demomybatis.mapper;
+package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.ActualStop;
 import com.example.demomybatis.entity.PlannedStops;

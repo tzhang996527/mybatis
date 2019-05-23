@@ -1,7 +1,7 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.entity.*;
-import com.example.demomybatis.mapper.TourMapper;
+import com.example.demomybatis.dao.TourMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;

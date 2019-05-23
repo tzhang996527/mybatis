@@ -1,6 +1,6 @@
 package com.example.demomybatis;
 
-import com.example.demomybatis.mapper.TourMapper;
+import com.example.demomybatis.dao.TourMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
