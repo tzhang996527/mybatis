@@ -29,6 +29,7 @@ create table `T_TOUR` (
     `PLAN_ARR`    TIMESTAMP,
     `ETA`	        TIMESTAMP,
     `EXE_STATUS`  VARCHAR(2),
+    `CUST_ID` VARCHAR(20),
     primary key(`TOURID`)
 ) engine=InnoDB auto_increment=2 charset = utf8;
 
