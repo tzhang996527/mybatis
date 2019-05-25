@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-@Service
+//@Service
 public class MyInvocationSecurityMetadataSourceService  implements
         FilterInvocationSecurityMetadataSource {
 
-    @Autowired
+    //@Autowired
     private PermissionDao permissionDao;
 
     private HashMap<String, Collection<ConfigAttribute>> map =null;
