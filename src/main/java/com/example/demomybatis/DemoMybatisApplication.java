@@ -26,6 +26,13 @@ public class DemoMybatisApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(){
 		return (args) -> {
+			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+			String password1 =  "Admin";
+			String encoding_password1 = bCryptPasswordEncoder.encode(password1);
+
+			boolean match1 = bCryptPasswordEncoder.matches(password1,encoding_password1);
+			System.out.println("Encoding_password1: " + encoding_password1);
+			System.out.println("matches " + password1 + "boolean = " + match1);
 //		    String test = new BCryptPasswordEncoder().encode("admin");
 //		    System.out.println(String.format("admin = %s, length = %d.",test,test.length()));
 //			//test
