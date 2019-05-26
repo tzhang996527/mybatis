@@ -1,56 +1,34 @@
---https://www.cnblogs.com/softidea/p/7068149.html
+use db_example;
+drop table if exists `db_example`.`T_USER`;
+drop table if exists `db_example`.`T_ROLE`;
+drop table if exists `db_example`.`T_USER_ROLE`;
 
-DROP TABLE IF EXISTS `Sys_User`;
-CREATE TABLE `Sys_User`(
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(200) NOT NULL,
-  `password` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+create table `T_USER`(
+	`ID` INT(10) NOT NULL auto_increment,
+    `LOGIN_NAME` varchar(20),
+    `NAME` varchar(20),
+    `PASSWORD` varchar(60),
+    primary key(`ID`)
+)engine=InnoDB auto_increment=1 charset = utf8;
 
-DROP TABLE IF EXISTS `Sys_Role`;
-CREATE TABLE `Sys_Role`(
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-`name` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+create table `T_ROLE`(
+	`ID` INT(10) NOT NULL auto_increment,
+    `NAME` varchar(20),
+    primary key(`ID`)
+)engine=InnoDB auto_increment=10 charset = utf8;
 
-DROP TABLE IF EXISTS `Sys_permission`;
-CREATE TABLE `Sys_permission`(
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(200) NOT NULL,
-  `description` VARCHAR(200) DEFAULT NULL,
-  `url` VARCHAR(200) NOT NULL,
-  `pid` BIGINT DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+create table `T_USER_ROLE`(
+	`ID` INT(10) NOT NULL auto_increment,
+    `USER_ID` INT(10),
+    `ROLE_ID` INT(10),
+    constraint `FK_USER_ID` foreign key(`USER_ID`) references `T_USER`(`ID`)
+    ON delete no action ON update no action,
+    constraint `FK_ROLE_ID` foreign key(`ROLE_ID`) references `T_ROLE`(`ID`)
+    ON delete no action ON update no action,
+    primary key(`ID`)
+)ENGINE=InnoDB auto_increment=1 charset = utf8;
 
-
-DROP TABLE IF EXISTS `Sys_role_user`;
-CREATE TABLE `Sys_role_user`(
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `sys_user_id` BIGINT UNSIGNED NOT NULL,
-  `sys_role_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-DROP TABLE IF EXISTS `Sys_permission_role`;
-CREATE TABLE `Sys_permission_role`(
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` BIGINT UNSIGNED NOT NULL,
-  `permission_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-insert into SYS_USER (id,username, password) values (1,'admin', 'admin');
-insert into SYS_USER (id,username, password) values (2,'abel', 'abel');
-
-insert into SYS_ROLE(id,name) values(1,'ROLE_ADMIN');
-insert into SYS_ROLE(id,name) values(2,'ROLE_USER');
-
-insert into SYS_ROLE_USER(SYS_USER_ID,sys_role_id) values(1,1);
-insert into SYS_ROLE_USER(SYS_USER_ID,sys_role_id) values(2,2);
-
-INSERT INTO `Sys_permission` VALUES ('1', 'ROLE_HOME', 'home', '/', null), ('2', 'ROLE_ADMIN', 'ABel', '/admin', null);
-INSERT INTO `Sys_permission_role` VALUES ('1', '1', '1'), ('2', '1', '2'), ('3', '2', '1');
+INSERT INTO `T_USER`(`LOGIN_NAME`,`NAME`,`PASSWORD`) VALUES('Admin','Admin','$2a$10$dJs/vynIP17qBKxHNzTfL.DHST9CmP3ZbJq9G6jYVJNRyUUvjvi4G');
+INSERT INTO `T_USER`(`LOGIN_NAME`,`NAME`,`PASSWORD`) VALUES('Eddie','Eddie','$2a$10$hlYIhOe1mjxfJltgdm6YwuozWMZqTJQCHebp0b0FPXbu.t/GvjY9C');
+INSERT INTO `T_ROLE`(`NAME`) values('ROLE_ADMIN'),('ROLE_DBA'),('ROLE_USER');
+INSERT INTO `T_USER_ROLE`(`USER_ID`,`ROLE_ID`) VALUES('1','10'),('1','11'),('1','12'),('2','12');

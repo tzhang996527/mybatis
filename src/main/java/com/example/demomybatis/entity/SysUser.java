@@ -4,8 +4,17 @@ import java.util.List;
 
 public class SysUser {
     private Integer id;
+    private String loginName;
     private String username;
     private String password;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
     private List<SysRole> roles;
 

@@ -1,7 +1,7 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.entity.Tour;
-import com.example.demomybatis.service.Impl.TourService;
+import com.example.demomybatis.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;

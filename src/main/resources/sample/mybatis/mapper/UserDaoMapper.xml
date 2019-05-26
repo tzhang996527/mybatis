@@ -3,23 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demomybatis.dao.UserDao">
+<mapper namespace="com.example.demomybatis.dao.UserMapper">
 <!--    <cache/>-->
     <resultMap id="userMap" type="com.example.demomybatis.entity.SysUser">
-        <id property="id" column="id"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
+        <id property="id" column="ID"/>
+        <result property="username" column="NAME"/>
+        <result property="password" column="PASSWORD"/>
         <collection property="roles" ofType="com.example.demomybatis.entity.SysRole">
-            <result column="name" property="name"/>
+            <result property="name" column="ROLE_NAME"/>
         </collection>
 
     </resultMap>
     <select id="findByUserName" parameterType="String" resultMap="userMap">
         select u.*
-        ,r.name
-        from Sys_User u
-        LEFT JOIN sys_role_user sru on u.id= sru.Sys_User_id
-        LEFT JOIN Sys_Role r on sru.Sys_Role_id=r.id
-        where username= #{username}
+        ,r.name AS ROLE_NAME
+        from T_USER u
+        LEFT JOIN T_USER_ROLE ur on u.id = ur.USER_ID
+        LEFT JOIN T_ROLE r on ur.ROLE_ID = r.ID
+        where u.NAME = #{username}
     </select>
 </mapper>

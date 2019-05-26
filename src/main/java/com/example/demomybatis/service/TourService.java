@@ -1,4 +1,4 @@
-package com.example.demomybatis.service.Impl;
+package com.example.demomybatis.service;
 
 import com.example.demomybatis.entity.Tour;
 
