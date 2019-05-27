@@ -80,12 +80,15 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin/**").hasAnyRole("ADMIN", "DBA")
 				.anyRequest().authenticated()
 				.and()
+				.httpBasic()
+				.and()
 				.formLogin().loginPage("/login").successHandler(appAuthenticationSuccessHandler)
 				.usernameParameter("loginName").passwordParameter("password")
 				.and()
 				.logout().permitAll()
 				.and()
 				.exceptionHandling().accessDeniedPage("/accessDenied");
+
     }
 		
 }
