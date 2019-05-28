@@ -5,9 +5,9 @@ drop table if exists `db_example`.`T_NOTIFICATION`;
 drop table if exists `db_example`.`T_EXE_EVENT`;
 drop table if exists `db_example`.`T_TOUR_ITEM`;
 drop table if exists `db_example`.`T_TOUR`;
-drop table if exists `db_example`.`T_DRIVER`;
-drop table if exists `db_example`.`T_RESERVATION`;
 drop table if exists `db_example`.`T_RESV_ITEM`;
+drop table if exists `db_example`.`T_RESERVATION`;
+drop table if exists `db_example`.`T_DRIVER`;
 drop table if exists `db_example`.`T_ASSET`;
 drop table if exists `db_example`.`T_LOCATION`;
 drop table if exists `db_example`.`T_ASSET_TYPE`;
@@ -25,17 +25,25 @@ create table `T_RESV_TYPE`(
     primary key (`RESV_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `T_RESV_TYPE` VALUES('NORM','普通预留');
+INSERT INTO `T_RESV_TYPE` VALUES('ADV1','客户预留');
+
 create table `T_TOUR_TYPE`(
 	`TOUR_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
     primary key (`TOUR_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `T_TOUR_TYPE` VALUES('LONG','短途');
+INSERT INTO `T_TOUR_TYPE` VALUES('SHORT','长途');
+
 create table `T_NOTIFICATION`(
 	`ID` INT(10) NOT NULL auto_increment,
     `TEXT` VARCHAR(100),
     primary key (`ID`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `T_NOTIFICATION`(`TEXT`) VALUES('前方道路拥堵');
 
 create table `T_CUSTOMER`(
 	`CUST_ID` varchar(20) not null,
@@ -45,6 +53,9 @@ create table `T_CUSTOMER`(
     `DEL` VARCHAR(1),
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST01','GROUP1','中国移动上海分公司','上海市北京西路1000号');
+insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST02','GROUP1','中国联通上海分公司','上海市南京东路2000号');
 
 create table `T_LOCATION`(
 	`LOC_ID` VARCHAR(20) NOT NULL,
@@ -59,12 +70,52 @@ create table `T_LOCATION`(
     primary KEY(`LOC_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `db_example`.`t_location`
+(`LOC_ID`,
+`ADDRESS`,
+`LAT`,
+`LNG`,
+`CITY`,
+`PROVINCE`,
+`DISTRICT`,
+`POSTAL_CODE`,
+`DEL`)
+VALUES
+('LOC1',
+'上海市人民广场',
+'31.228477',
+'121.475476',
+'上海',
+'上海',
+'黄浦区',
+'200000',
+''),('LOC2',
+'上海西站',
+'31.262966',
+'121.403979',
+'上海',
+'上海',
+'普陀区',
+'200000',
+'');
+
 CREATE TABLE `T_ASSET_TYPE`(
     `ASSET_TYPE` VARCHAR(10) NOT NULL,
     `ASSET_TEXT` VARCHAR(30),
     `DEL` VARCHAR(1),
     primary key(`ASSET_TYPE`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT INTO `db_example`.`t_asset_type`
+(`ASSET_TYPE`,
+`ASSET_TEXT`,
+`DEL`)
+VALUES
+('10T',
+'卡车10吨',
+''),('20T',
+'卡车20吨',
+'');
 
 CREATE TABLE `T_ASSET`(
 	`ASSET_ID` VARCHAR(20) not NULL,
@@ -83,6 +134,37 @@ CREATE TABLE `T_ASSET`(
     constraint `fk_location` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
     ON delete no action ON update no action
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+INSERT INTO `db_example`.`t_asset`
+(`ASSET_ID`,
+`ASSET_TYPE`,
+`PLATENUMBER`,
+`MAKE`,
+`MODEL`,
+`VIN`,
+`YEAR`,
+`HARDWARE`,
+`LOCATION`,
+`DEL`)
+VALUES
+('TRUCK01',
+'10T',
+'沪A 12345',
+'奔驰',
+'Actros重卡',
+'VIN1234567890',
+'2019',
+'OBD1',
+'LOC1',
+''),('TRUCK02',
+'10T',
+'沪A 66688',
+'奔驰',
+'Actros重卡',
+'VIN1234567891',
+'2017',
+'OBD2',
+'LOC1',
+'');
 
 CREATE TABLE `T_DRIVER`(
 	`DRIVER_ID` VARCHAR(20) NOT NULL,
