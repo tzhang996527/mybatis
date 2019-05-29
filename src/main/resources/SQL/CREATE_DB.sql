@@ -54,8 +54,8 @@ create table `T_CUSTOMER`(
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST01','GROUP1','中国移动上海分公司','上海市北京西路1000号');
-insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST02','GROUP1','中国联通上海分公司','上海市南京东路2000号');
+insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST1','GROUP1','中国移动上海分公司','上海市北京西路1000号');
+insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST2','GROUP1','中国联通上海分公司','上海市南京东路2000号');
 
 create table `T_LOCATION`(
 	`LOC_ID` VARCHAR(20) NOT NULL,
@@ -148,7 +148,7 @@ INSERT INTO `db_example`.`t_asset`
 VALUES
 ('TRUCK01',
 '10T',
-'沪A 12345',
+'沪A 87659',
 '奔驰',
 'Actros重卡',
 'VIN1234567890',
@@ -176,6 +176,22 @@ CREATE TABLE `T_DRIVER`(
     constraint `fk_driver_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
     ON delete no action ON update no action
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+INSERT INTO `db_example`.`t_driver`
+(`DRIVER_ID`,
+`NAME`,
+`TEL`,
+`LOCATION`,
+`DEL`)
+VALUES
+('DRIVER1',
+'小明',
+'188 8888 8888',
+'LOC1',
+''),('DRIVER2',
+'小李',
+'188 8888 8898',
+'LOC1',
+'');
 
 create table `T_TOUR` (
 	`TOURID` VARCHAR(20) NOT NULL,
@@ -193,7 +209,7 @@ create table `T_TOUR` (
     `EXE_STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
     `CREATED_ON` DATE,
-    `CREATED_BY` DATE,
+    `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary key(`TOURID`),
     constraint `fk_tour_type` foreign key(`TOUR_TYPE`) references `T_TOUR_TYPE`(`TOUR_TYPE`)
@@ -211,6 +227,75 @@ create table `T_TOUR` (
     constraint `fk_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB auto_increment=2 charset = utf8;
+
+INSERT INTO `db_example`.`t_tour`
+(`TOURID`,
+`TOUR_TYPE`,
+`SOURCE_LOCID`,
+`DEST_LOCID`,
+`VEHICLE_ID`,
+`DRIVER_ID`,
+`SHIP_TO`,
+`PLAN_DEPART`,
+`PLAN_ARR`,
+`ACT_DEPART`,
+`ACT_ARR`,
+`ETA`,
+`EXE_STATUS`,
+`CUST_ID`,
+`CREATED_ON`,
+`CREATED_BY`,
+`DEL`)
+VALUES
+('2100000001',
+'LONG',
+'LOC1',
+'LOC2',
+'TRUCK01',
+'DRIVER1',
+'CUST1',
+NOW(),
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+'01',
+'CUST1',
+NOW(),
+'ADMIN',
+''),('2100000002',
+'LONG',
+'LOC1',
+'LOC2',
+'TRUCK01',
+'DRIVER1',
+'CUST1',
+NOW(),
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+'01',
+'CUST2',
+NOW(),
+'ADMIN',
+''),('2100000003',
+'LONG',
+'LOC1',
+'LOC2',
+'TRUCK02',
+'DRIVER2',
+'CUST2',
+NOW(),
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+'01',
+'CUST2',
+NOW(),
+'ADMIN',
+'');
 
 create table `T_PLN_STOP` (
 	`TOURID` VARCHAR(20) NOT NULL,
@@ -232,6 +317,32 @@ create table `T_PLN_STOP` (
     constraint `fk_pln_loc` foreign key(`LOCID`) references `T_LOCATION`(`LOC_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
+INSERT INTO `db_example`.`t_pln_stop`
+(`TOURID`,
+`SEQ`,
+`LOCID`,
+`PLAN_DEPART`,
+`PLAN_ARR`,
+`ACT_DEPART`,
+`ACT_ARR`,
+`EST_DEPART`,
+`EST_ARR`,
+`ETA`,
+`STATUS`,
+`DEL`)
+VALUES
+('2100000003',1,'LOC1',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P',''),
+('2100000003',2,'LOC2',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P',''),
+('2100000001',1,'LOC1',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P',''),
+('2100000001',2,'LOC2',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P',''),
+('2100000002',1,'LOC1',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P',''),
+('2100000002',2,'LOC2',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
+INTERVAL 2 HOUR),NOW(),'P','');
 
 create table `T_TOUR_ITEM` (
 	`TOURID` VARCHAR(20) NOT NULL,
@@ -247,6 +358,42 @@ create table `T_TOUR_ITEM` (
     constraint `fk_tour_id_itm` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
+INSERT INTO `db_example`.`t_tour_item`
+(`TOURID`,
+`SEQ`,
+`CONTAINER`,
+`QUAN`,
+`QUAN_UOM`,
+`COMMODITY`,
+`LOCATION`,
+`STATUS`,
+`DEL`)
+VALUES
+('2100000002',
+'1',
+'CONTAINER1',
+1,
+'PC',
+'PRODUCT01',
+'LOC2',
+'01',
+''),('2100000001',
+'1',
+'CONTAINER2',
+1,
+'PC',
+'PRODUCT01',
+'LOC2',
+'01',
+''),('2100000003',
+'1',
+'CONTAINER3',
+1,
+'PC',
+'PRODUCT01',
+'LOC2',
+'01',
+'');
 
 create table `T_ACT_STOP` (
 	`TOURID` VARCHAR(20) NOT NULL,
@@ -270,6 +417,20 @@ CREATE TABLE `T_EVENT_CODE`(
     `DEL` VARCHAR(1),
     primary KEY(`EVENT_CODE`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `db_example`.`t_event_code`
+(`EVENT_CODE`,
+`EVENT_TEXT`,
+`DEL`)
+VALUES
+('DEPART',
+'出发',
+''),('ARRV',
+'到达',
+''),('LOAD',
+'装载',
+''),('UNLOAD',
+'卸载',
+'');
 
 CREATE TABLE `T_EXE_EVENT`(
 	`TOURID` VARCHAR(20) NOT NULL,
@@ -285,6 +446,66 @@ CREATE TABLE `T_EXE_EVENT`(
     constraint `fk_evt_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
      ON delete no action ON update no action
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `db_example`.`t_exe_event`
+(`TOURID`,
+`SEQ`,
+`EVENT_CODE`,
+`LOCATION`,
+`CREATED_ON`,
+`STATUS`,
+`DEL`)
+VALUES
+('2100000001',
+1,
+'DEPART',
+'LOC1',
+NOW(),
+'E',
+''),('2100000001',
+2,
+'LOAD',
+'LOC1',
+NOW(),
+'E',
+''),
+('2100000001',
+3,
+'ARRV',
+'LOC2',
+NOW(),
+'E',
+''),('2100000001',
+'4',
+'UNLOAD',
+'LOC1',
+NOW(),
+'E',
+''),('2100000002',
+1,
+'DEPART',
+'LOC1',
+NOW(),
+'E',
+''),('2100000002',
+2,
+'LOAD',
+'LOC1',
+NOW(),
+'E',
+''),
+('2100000002',
+3,
+'ARRV',
+'LOC2',
+NOW(),
+'E',
+''),('2100000002',
+'4',
+'UNLOAD',
+'LOC1',
+NOW(),
+'E',
+'');
 
 create table `T_RESERVATION`(
 	`RESV_ID` VARCHAR(20) NOT NULL,
@@ -320,6 +541,76 @@ create table `T_RESERVATION`(
     constraint `fk_resv_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
     ON delete no action ON update no action
 )engine=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `db_example`.`t_reservation`
+(`RESV_ID`,
+`RESV_TYPE`,
+`SOURCE_LOCID`,
+`DEST_LOCID`,
+`VEHICLE_ID`,
+`DRIVER_ID`,
+`SHIP_TO`,
+`PLAN_DEPART`,
+`PLAN_ARR`,
+`ACT_DEPART`,
+`ACT_ARR`,
+`STATUS`,
+`CUST_ID`,
+`CREATED_ON`,
+`CREATED_BY`,
+`TEXT`,
+`DEL`)
+VALUES
+('5100000001',
+'NORM',
+'LOC1',
+'LOC2',
+'TRUCK01',
+'DRIVER1',
+'CUST1',
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+NOW(),
+NOW(),
+'P',
+'CUST1',
+NOW(),
+NOW(),
+'测试预留',
+''),
+('5100000002',
+'NORM',
+'LOC2',
+'LOC1',
+'TRUCK01',
+'DRIVER1',
+'CUST1',
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+NOW(),
+NOW(),
+'P',
+'CUST1',
+NOW(),
+NOW(),
+'测试预留',
+''),
+('5100000003',
+'NORM',
+'LOC2',
+'LOC1',
+'TRUCK01',
+'DRIVER1',
+'CUST1',
+NOW(),
+DATE_ADD(NOW(),INTERVAL 2 HOUR),
+NOW(),
+NOW(),
+'P',
+'CUST1',
+NOW(),
+NOW(),
+'测试预留',
+'');
 
 create table `T_RESV_ITEM` (
 	`RESV_ID` VARCHAR(20) NOT NULL,
@@ -335,3 +626,67 @@ create table `T_RESV_ITEM` (
     constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `T_RESERVATION`(`RESV_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
+INSERT INTO `db_example`.`t_resv_item`
+(`RESV_ID`,
+`SEQ`,
+`CONTAINER`,
+`QUAN`,
+`QUAN_UOM`,
+`COMMODITY`,
+`LOCATION`,
+`STATUS`,
+`DEL`)
+VALUES
+('5100000003',
+1,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+''),
+('5100000003',
+2,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+''),('5100000001',
+1,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+''),
+('5100000001',
+2,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+''),
+('5100000002',
+1,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+''),
+('5100000002',
+2,
+'CONTAINER1',
+1,
+'PC',
+'货物1',
+'LOC2',
+'P',
+'');
