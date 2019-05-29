@@ -8,8 +8,8 @@
 
     <select id="selectTour" resultType="Tour">
         select TOURID as "tourid",
-        SOURCE_ADDR as sourceAddress,
-        DEST_ADDR as destAddress,
+        SOURCE_LOCID as sourceAddress,
+        DEST_LOCID as destAddress,
         ETA,
         EXE_STATUS as status
         from t_tour
