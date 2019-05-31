@@ -1,39 +1,29 @@
 package com.example.demomybatis.entity;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class ActualStop implements Serializable {
-    private String tourid;
-    private int seq;
+public class ActualStop extends ActualStopKey {
     private String lat;
+
     private String lng;
+
     private String addr;
-    private Date repDate;
-    private float temperature;
 
-    public String getTourid() {
-        return tourid;
-    }
+    private Date repTime;
 
-    public void setTourid(String tourid) {
-        this.tourid = tourid;
-    }
+    private BigDecimal temperature;
 
-    public int getSeq() {
-        return seq;
-    }
+    private String status;
 
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
+    private String del;
 
     public String getLat() {
         return lat;
     }
 
     public void setLat(String lat) {
-        this.lat = lat;
+        this.lat = lat == null ? null : lat.trim();
     }
 
     public String getLng() {
@@ -41,7 +31,7 @@ public class ActualStop implements Serializable {
     }
 
     public void setLng(String lng) {
-        this.lng = lng;
+        this.lng = lng == null ? null : lng.trim();
     }
 
     public String getAddr() {
@@ -49,22 +39,38 @@ public class ActualStop implements Serializable {
     }
 
     public void setAddr(String addr) {
-        this.addr = addr;
+        this.addr = addr == null ? null : addr.trim();
     }
 
-    public Date getRepDate() {
-        return repDate;
+    public Date getRepTime() {
+        return repTime;
     }
 
-    public void setRepDate(Date repDate) {
-        this.repDate = repDate;
+    public void setRepTime(Date repTime) {
+        this.repTime = repTime;
     }
 
-    public float getTemperature() {
+    public BigDecimal getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(float temperature) {
+    public void setTemperature(BigDecimal temperature) {
         this.temperature = temperature;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getDel() {
+        return del;
+    }
+
+    public void setDel(String del) {
+        this.del = del == null ? null : del.trim();
     }
 }

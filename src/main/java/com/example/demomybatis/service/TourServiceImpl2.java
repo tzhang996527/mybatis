@@ -1,7 +1,7 @@
 package com.example.demomybatis.service;
 
-import com.example.demomybatis.entity.Tour;
 import com.example.demomybatis.dao.TourMapper;
+import com.example.demomybatis.entity.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +24,9 @@ public class TourServiceImpl2 implements TourService {
         List<Tour> tlist = new ArrayList<>();
 
         Tour test1 = new Tour();
-        test1.setTourid("12321321");
-        test1.setStatus("1");
-        tlist.add(test1);
+//        test1.setTourid("12321321");
+//        test1.setStatus("1");
+//        tlist.add(test1);
 
         return tlist;
     }

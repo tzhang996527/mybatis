@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.AssetMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Asset" >
+    <id column="ASSET_ID" property="assetId" jdbcType="VARCHAR" />
+    <result column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
+    <result column="PLATENUMBER" property="platenumber" jdbcType="VARCHAR" />
+    <result column="MAKE" property="make" jdbcType="VARCHAR" />
+    <result column="MODEL" property="model" jdbcType="VARCHAR" />
+    <result column="VIN" property="vin" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="DATE" />
+    <result column="HARDWARE" property="hardware" jdbcType="VARCHAR" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="DEL" property="del" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ASSET_ID, ASSET_TYPE, PLATENUMBER, MAKE, MODEL, VIN, YEAR, HARDWARE, LOCATION, DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_asset
+    where ASSET_ID = #{assetId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_asset
+    where ASSET_ID = #{assetId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.Asset" >
+    insert into t_asset (ASSET_ID, ASSET_TYPE, PLATENUMBER, 
+      MAKE, MODEL, VIN, YEAR, 
+      HARDWARE, LOCATION, DEL
+      )
+    values (#{assetId,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR}, #{platenumber,jdbcType=VARCHAR}, 
+      #{make,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{year,jdbcType=DATE}, 
+      #{hardware,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Asset" >
+    insert into t_asset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="assetId != null" >
+        ASSET_ID,
+      </if>
+      <if test="assetType != null" >
+        ASSET_TYPE,
+      </if>
+      <if test="platenumber != null" >
+        PLATENUMBER,
+      </if>
+      <if test="make != null" >
+        MAKE,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+      <if test="vin != null" >
+        VIN,
+      </if>
+      <if test="year != null" >
+        YEAR,
+      </if>
+      <if test="hardware != null" >
+        HARDWARE,
+      </if>
+      <if test="location != null" >
+        LOCATION,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="assetId != null" >
+        #{assetId,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="platenumber != null" >
+        #{platenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="make != null" >
+        #{make,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null" >
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=DATE},
+      </if>
+      <if test="hardware != null" >
+        #{hardware,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.Asset" >
+    update t_asset
+    <set >
+      <if test="assetType != null" >
+        ASSET_TYPE = #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="platenumber != null" >
+        PLATENUMBER = #{platenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="make != null" >
+        MAKE = #{make,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        MODEL = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null" >
+        VIN = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        YEAR = #{year,jdbcType=DATE},
+      </if>
+      <if test="hardware != null" >
+        HARDWARE = #{hardware,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ASSET_ID = #{assetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.Asset" >
+    update t_asset
+    set ASSET_TYPE = #{assetType,jdbcType=VARCHAR},
+      PLATENUMBER = #{platenumber,jdbcType=VARCHAR},
+      MAKE = #{make,jdbcType=VARCHAR},
+      MODEL = #{model,jdbcType=VARCHAR},
+      VIN = #{vin,jdbcType=VARCHAR},
+      YEAR = #{year,jdbcType=DATE},
+      HARDWARE = #{hardware,jdbcType=VARCHAR},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      DEL = #{del,jdbcType=VARCHAR}
+    where ASSET_ID = #{assetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

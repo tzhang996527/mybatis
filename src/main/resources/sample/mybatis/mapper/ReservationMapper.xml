@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demomybatis.dao.TourMapper" >
-  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Tour" >
-    <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
-    <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
+<mapper namespace="com.example.demomybatis.dao.ReservationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Reservation" >
+    <id column="RESV_ID" property="resvId" jdbcType="VARCHAR" />
+    <result column="RESV_TYPE" property="resvType" jdbcType="VARCHAR" />
     <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
     <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />
     <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
@@ -13,53 +13,49 @@
     <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
     <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
     <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
-    <result column="ETA" property="eta" jdbcType="DATE" />
-    <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
     <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
-    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="DATE" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    TOURID, TOUR_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, PLAN_DEPART, 
-    PLAN_ARR, ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, CUST_ID, CREATED_ON, CREATED_BY, 
-    DEL
+    RESV_ID, RESV_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, PLAN_DEPART, 
+    PLAN_ARR, ACT_DEPART, ACT_ARR, STATUS, CUST_ID, CREATED_ON, CREATED_BY, TEXT, DEL
   </sql>
-  <select id="selectAllTour" resultType="Tour" resultMap="BaseResultMap">
-    select * from t_tour;
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from t_tour
-    where TOURID = #{tourid,jdbcType=VARCHAR}
+    from t_reservation
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from t_tour
-    where TOURID = #{tourid,jdbcType=VARCHAR}
+    delete from t_reservation
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.example.demomybatis.entity.Tour" >
-    insert into t_tour (TOURID, TOUR_TYPE, SOURCE_LOCID, 
+  <insert id="insert" parameterType="com.example.demomybatis.entity.Reservation" >
+    insert into t_reservation (RESV_ID, RESV_TYPE, SOURCE_LOCID, 
       DEST_LOCID, VEHICLE_ID, DRIVER_ID, 
       SHIP_TO, PLAN_DEPART, PLAN_ARR, 
-      ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, 
+      ACT_DEPART, ACT_ARR, STATUS, 
       CUST_ID, CREATED_ON, CREATED_BY, 
-      DEL)
-    values (#{tourid,jdbcType=VARCHAR}, #{tourType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR}, 
+      TEXT, DEL)
+    values (#{resvId,jdbcType=VARCHAR}, #{resvType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR}, 
       #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR}, 
       #{shipTo,jdbcType=VARCHAR}, #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE}, 
-      #{actDepart,jdbcType=DATE}, #{actArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, #{exeStatus,jdbcType=VARCHAR}, 
-      #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{createdBy,jdbcType=VARCHAR}, 
-      #{del,jdbcType=VARCHAR})
+      #{actDepart,jdbcType=DATE}, #{actArr,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{createdBy,jdbcType=DATE}, 
+      #{text,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Tour" >
-    insert into t_tour
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Reservation" >
+    insert into t_reservation
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tourid != null" >
-        TOURID,
+      <if test="resvId != null" >
+        RESV_ID,
       </if>
-      <if test="tourType != null" >
-        TOUR_TYPE,
+      <if test="resvType != null" >
+        RESV_TYPE,
       </if>
       <if test="sourceLocid != null" >
         SOURCE_LOCID,
@@ -88,11 +84,8 @@
       <if test="actArr != null" >
         ACT_ARR,
       </if>
-      <if test="eta != null" >
-        ETA,
-      </if>
-      <if test="exeStatus != null" >
-        EXE_STATUS,
+      <if test="status != null" >
+        STATUS,
       </if>
       <if test="custId != null" >
         CUST_ID,
@@ -103,16 +96,19 @@
       <if test="createdBy != null" >
         CREATED_BY,
       </if>
+      <if test="text != null" >
+        TEXT,
+      </if>
       <if test="del != null" >
         DEL,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tourid != null" >
-        #{tourid,jdbcType=VARCHAR},
+      <if test="resvId != null" >
+        #{resvId,jdbcType=VARCHAR},
       </if>
-      <if test="tourType != null" >
-        #{tourType,jdbcType=VARCHAR},
+      <if test="resvType != null" >
+        #{resvType,jdbcType=VARCHAR},
       </if>
       <if test="sourceLocid != null" >
         #{sourceLocid,jdbcType=VARCHAR},
@@ -141,11 +137,8 @@
       <if test="actArr != null" >
         #{actArr,jdbcType=DATE},
       </if>
-      <if test="eta != null" >
-        #{eta,jdbcType=DATE},
-      </if>
-      <if test="exeStatus != null" >
-        #{exeStatus,jdbcType=VARCHAR},
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
       <if test="custId != null" >
         #{custId,jdbcType=VARCHAR},
@@ -154,18 +147,21 @@
         #{createdOn,jdbcType=DATE},
       </if>
       <if test="createdBy != null" >
-        #{createdBy,jdbcType=VARCHAR},
+        #{createdBy,jdbcType=DATE},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
       </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.Tour" >
-    update t_tour
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.Reservation" >
+    update t_reservation
     <set >
-      <if test="tourType != null" >
-        TOUR_TYPE = #{tourType,jdbcType=VARCHAR},
+      <if test="resvType != null" >
+        RESV_TYPE = #{resvType,jdbcType=VARCHAR},
       </if>
       <if test="sourceLocid != null" >
         SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
@@ -194,11 +190,8 @@
       <if test="actArr != null" >
         ACT_ARR = #{actArr,jdbcType=DATE},
       </if>
-      <if test="eta != null" >
-        ETA = #{eta,jdbcType=DATE},
-      </if>
-      <if test="exeStatus != null" >
-        EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
       </if>
       <if test="custId != null" >
         CUST_ID = #{custId,jdbcType=VARCHAR},
@@ -207,17 +200,20 @@
         CREATED_ON = #{createdOn,jdbcType=DATE},
       </if>
       <if test="createdBy != null" >
-        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+        CREATED_BY = #{createdBy,jdbcType=DATE},
+      </if>
+      <if test="text != null" >
+        TEXT = #{text,jdbcType=VARCHAR},
       </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
     </set>
-    where TOURID = #{tourid,jdbcType=VARCHAR}
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.Tour" >
-    update t_tour
-    set TOUR_TYPE = #{tourType,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.Reservation" >
+    update t_reservation
+    set RESV_TYPE = #{resvType,jdbcType=VARCHAR},
       SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
       DEST_LOCID = #{destLocid,jdbcType=VARCHAR},
       VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
@@ -227,12 +223,12 @@
       PLAN_ARR = #{planArr,jdbcType=DATE},
       ACT_DEPART = #{actDepart,jdbcType=DATE},
       ACT_ARR = #{actArr,jdbcType=DATE},
-      ETA = #{eta,jdbcType=DATE},
-      EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
       CUST_ID = #{custId,jdbcType=VARCHAR},
       CREATED_ON = #{createdOn,jdbcType=DATE},
-      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=DATE},
+      TEXT = #{text,jdbcType=VARCHAR},
       DEL = #{del,jdbcType=VARCHAR}
-    where TOURID = #{tourid,jdbcType=VARCHAR}
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
   </update>
 </mapper>

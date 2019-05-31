@@ -21,8 +21,8 @@ public class TestController {
         this.tourService = tourService;
     }
 
-    @GetMapping(path = "getTour")
-    public List<Tour> getAllTours(){
-        return this.tourService.getAllTours();
-    }
+//    @GetMapping(path = "getTour")
+//    public List<Tour> getAllTours(){
+//        return this.tourService.getAllTours();
+//    }
 }

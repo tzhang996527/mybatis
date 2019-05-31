@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.PlannedStopMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.PlannedStop" >
+    <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+    <id column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="LOCID" property="locid" jdbcType="VARCHAR" />
+    <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+    <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+    <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+    <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+    <result column="EST_DEPART" property="estDepart" jdbcType="DATE" />
+    <result column="EST_ARR" property="estArr" jdbcType="DATE" />
+    <result column="ETA" property="eta" jdbcType="DATE" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="DEL" property="del" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TOURID, SEQ, LOCID, PLAN_DEPART, PLAN_ARR, ACT_DEPART, ACT_ARR, EST_DEPART, EST_ARR, 
+    ETA, STATUS, DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.PlannedStopKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pln_stop
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.PlannedStopKey" >
+    delete from t_pln_stop
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.PlannedStop" >
+    insert into t_pln_stop (TOURID, SEQ, LOCID, 
+      PLAN_DEPART, PLAN_ARR, ACT_DEPART, 
+      ACT_ARR, EST_DEPART, EST_ARR, ETA, 
+      STATUS, DEL)
+    values (#{tourid,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{locid,jdbcType=VARCHAR}, 
+      #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE}, #{actDepart,jdbcType=DATE}, 
+      #{actArr,jdbcType=DATE}, #{estDepart,jdbcType=DATE}, #{estArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, 
+      #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.PlannedStop" >
+    insert into t_pln_stop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tourid != null" >
+        TOURID,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="locid != null" >
+        LOCID,
+      </if>
+      <if test="planDepart != null" >
+        PLAN_DEPART,
+      </if>
+      <if test="planArr != null" >
+        PLAN_ARR,
+      </if>
+      <if test="actDepart != null" >
+        ACT_DEPART,
+      </if>
+      <if test="actArr != null" >
+        ACT_ARR,
+      </if>
+      <if test="estDepart != null" >
+        EST_DEPART,
+      </if>
+      <if test="estArr != null" >
+        EST_ARR,
+      </if>
+      <if test="eta != null" >
+        ETA,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tourid != null" >
+        #{tourid,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="locid != null" >
+        #{locid,jdbcType=VARCHAR},
+      </if>
+      <if test="planDepart != null" >
+        #{planDepart,jdbcType=DATE},
+      </if>
+      <if test="planArr != null" >
+        #{planArr,jdbcType=DATE},
+      </if>
+      <if test="actDepart != null" >
+        #{actDepart,jdbcType=DATE},
+      </if>
+      <if test="actArr != null" >
+        #{actArr,jdbcType=DATE},
+      </if>
+      <if test="estDepart != null" >
+        #{estDepart,jdbcType=DATE},
+      </if>
+      <if test="estArr != null" >
+        #{estArr,jdbcType=DATE},
+      </if>
+      <if test="eta != null" >
+        #{eta,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.PlannedStop" >
+    update t_pln_stop
+    <set >
+      <if test="locid != null" >
+        LOCID = #{locid,jdbcType=VARCHAR},
+      </if>
+      <if test="planDepart != null" >
+        PLAN_DEPART = #{planDepart,jdbcType=DATE},
+      </if>
+      <if test="planArr != null" >
+        PLAN_ARR = #{planArr,jdbcType=DATE},
+      </if>
+      <if test="actDepart != null" >
+        ACT_DEPART = #{actDepart,jdbcType=DATE},
+      </if>
+      <if test="actArr != null" >
+        ACT_ARR = #{actArr,jdbcType=DATE},
+      </if>
+      <if test="estDepart != null" >
+        EST_DEPART = #{estDepart,jdbcType=DATE},
+      </if>
+      <if test="estArr != null" >
+        EST_ARR = #{estArr,jdbcType=DATE},
+      </if>
+      <if test="eta != null" >
+        ETA = #{eta,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.PlannedStop" >
+    update t_pln_stop
+    set LOCID = #{locid,jdbcType=VARCHAR},
+      PLAN_DEPART = #{planDepart,jdbcType=DATE},
+      PLAN_ARR = #{planArr,jdbcType=DATE},
+      ACT_DEPART = #{actDepart,jdbcType=DATE},
+      ACT_ARR = #{actArr,jdbcType=DATE},
+      EST_DEPART = #{estDepart,jdbcType=DATE},
+      EST_ARR = #{estArr,jdbcType=DATE},
+      ETA = #{eta,jdbcType=DATE},
+      STATUS = #{status,jdbcType=VARCHAR},
+      DEL = #{del,jdbcType=VARCHAR}
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.AssetTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.AssetType" >
+    <id column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
+    <result column="ASSET_TEXT" property="assetText" jdbcType="VARCHAR" />
+    <result column="DEL" property="del" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ASSET_TYPE, ASSET_TEXT, DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_asset_type
+    where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_asset_type
+    where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.AssetType" >
+    insert into t_asset_type (ASSET_TYPE, ASSET_TEXT, DEL
+      )
+    values (#{assetType,jdbcType=VARCHAR}, #{assetText,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.AssetType" >
+    insert into t_asset_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="assetType != null" >
+        ASSET_TYPE,
+      </if>
+      <if test="assetText != null" >
+        ASSET_TEXT,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="assetType != null" >
+        #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="assetText != null" >
+        #{assetText,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.AssetType" >
+    update t_asset_type
+    <set >
+      <if test="assetText != null" >
+        ASSET_TEXT = #{assetText,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.AssetType" >
+    update t_asset_type
+    set ASSET_TEXT = #{assetText,jdbcType=VARCHAR},
+      DEL = #{del,jdbcType=VARCHAR}
+    where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
+  </update>
+</mapper>

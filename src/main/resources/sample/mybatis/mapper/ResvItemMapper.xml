@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.ResvItemMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.ResvItem" >
+    <id column="RESV_ID" property="resvId" jdbcType="VARCHAR" />
+    <id column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="CONTAINER" property="container" jdbcType="VARCHAR" />
+    <result column="QUAN" property="quan" jdbcType="DECIMAL" />
+    <result column="QUAN_UOM" property="quanUom" jdbcType="VARCHAR" />
+    <result column="COMMODITY" property="commodity" jdbcType="VARCHAR" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="DEL" property="del" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RESV_ID, SEQ, CONTAINER, QUAN, QUAN_UOM, COMMODITY, LOCATION, STATUS, DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.ResvItemKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_resv_item
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.ResvItemKey" >
+    delete from t_resv_item
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.ResvItem" >
+    insert into t_resv_item (RESV_ID, SEQ, CONTAINER, 
+      QUAN, QUAN_UOM, COMMODITY, 
+      LOCATION, STATUS, DEL
+      )
+    values (#{resvId,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{container,jdbcType=VARCHAR}, 
+      #{quan,jdbcType=DECIMAL}, #{quanUom,jdbcType=VARCHAR}, #{commodity,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.ResvItem" >
+    insert into t_resv_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resvId != null" >
+        RESV_ID,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="container != null" >
+        CONTAINER,
+      </if>
+      <if test="quan != null" >
+        QUAN,
+      </if>
+      <if test="quanUom != null" >
+        QUAN_UOM,
+      </if>
+      <if test="commodity != null" >
+        COMMODITY,
+      </if>
+      <if test="location != null" >
+        LOCATION,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resvId != null" >
+        #{resvId,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="container != null" >
+        #{container,jdbcType=VARCHAR},
+      </if>
+      <if test="quan != null" >
+        #{quan,jdbcType=DECIMAL},
+      </if>
+      <if test="quanUom != null" >
+        #{quanUom,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity != null" >
+        #{commodity,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.ResvItem" >
+    update t_resv_item
+    <set >
+      <if test="container != null" >
+        CONTAINER = #{container,jdbcType=VARCHAR},
+      </if>
+      <if test="quan != null" >
+        QUAN = #{quan,jdbcType=DECIMAL},
+      </if>
+      <if test="quanUom != null" >
+        QUAN_UOM = #{quanUom,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity != null" >
+        COMMODITY = #{commodity,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.ResvItem" >
+    update t_resv_item
+    set CONTAINER = #{container,jdbcType=VARCHAR},
+      QUAN = #{quan,jdbcType=DECIMAL},
+      QUAN_UOM = #{quanUom,jdbcType=VARCHAR},
+      COMMODITY = #{commodity,jdbcType=VARCHAR},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      DEL = #{del,jdbcType=VARCHAR}
+    where RESV_ID = #{resvId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+</mapper>

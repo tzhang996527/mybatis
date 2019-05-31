@@ -1,9 +1,6 @@
 package com.example.demomybatis.dao;
 
-import com.example.demomybatis.entity.ActualStop;
-import com.example.demomybatis.entity.PlannedStops;
 import com.example.demomybatis.entity.Tour;
-import com.example.demomybatis.entity.TourDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,19 +8,17 @@ import java.util.List;
 @Mapper
 public interface TourMapper {
 
-    List<Tour> selectTour();
+    List<Tour> selectAllTour();
 
-    List<PlannedStops> selectPlannedStops();
+    int deleteByPrimaryKey(String tourid);
 
-    List<ActualStop> selectActStops();
+    int insert(Tour record);
 
-    Tour findTourById(String tourId);
+    int insertSelective(Tour record);
 
-    void updateTourStatus(Tour tour);
+    Tour selectByPrimaryKey(String tourid);
 
-    void deleteTour(String tourid);
+    int updateByPrimaryKeySelective(Tour record);
 
-    void createTour(Tour tour);
-
-    List<TourDetail> getTourDetails();
+    int updateByPrimaryKey(Tour record);
 }

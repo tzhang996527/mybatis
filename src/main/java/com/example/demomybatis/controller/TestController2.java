@@ -1,6 +1,5 @@
 package com.example.demomybatis.controller;
 
-import com.example.demomybatis.entity.Tour;
 import com.example.demomybatis.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,8 +20,8 @@ public class TestController2 {
         this.tourService = tourService;
     }
 
-    @GetMapping(path = "getTour2")
-    public List<Tour> getAllTours(){
-        return this.tourService.getAllTours();
-    }
+//    @GetMapping(path = "getTour2")
+//    public List<Tour> getAllTours(){
+//        return this.tourService.getAllTours();
+//    }
 }

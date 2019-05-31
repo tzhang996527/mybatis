@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.ResvTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.ResvType" >
+    <id column="RESV_TYPE" property="resvType" jdbcType="VARCHAR" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RESV_TYPE, TEXT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_resv_type
+    where RESV_TYPE = #{resvType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_resv_type
+    where RESV_TYPE = #{resvType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.ResvType" >
+    insert into t_resv_type (RESV_TYPE, TEXT)
+    values (#{resvType,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.ResvType" >
+    insert into t_resv_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resvType != null" >
+        RESV_TYPE,
+      </if>
+      <if test="text != null" >
+        TEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resvType != null" >
+        #{resvType,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.ResvType" >
+    update t_resv_type
+    <set >
+      <if test="text != null" >
+        TEXT = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RESV_TYPE = #{resvType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.ResvType" >
+    update t_resv_type
+    set TEXT = #{text,jdbcType=VARCHAR}
+    where RESV_TYPE = #{resvType,jdbcType=VARCHAR}
+  </update>
+</mapper>

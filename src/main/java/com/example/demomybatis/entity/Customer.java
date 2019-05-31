@@ -1,25 +1,33 @@
 package com.example.demomybatis.entity;
 
-import java.io.Serializable;
-
-public class Customer implements Serializable {
-    private int id;
-
+public class Customer extends CustomerKey {
     private String name;
 
-    public int getId() {
-        return id;
-    }
+    private String address;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String del;
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getDel() {
+        return del;
+    }
+
+    public void setDel(String del) {
+        this.del = del == null ? null : del.trim();
     }
 }

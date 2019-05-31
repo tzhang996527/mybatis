@@ -2,10 +2,10 @@ package com.example.demomybatis.entity;
 
 import java.util.Date;
 
-public class Tour {
-    private String tourid;
+public class Reservation {
+    private String resvId;
 
-    private String tourType;
+    private String resvType;
 
     private String sourceLocid;
 
@@ -25,32 +25,32 @@ public class Tour {
 
     private Date actArr;
 
-    private Date eta;
-
-    private String exeStatus;
+    private String status;
 
     private String custId;
 
     private Date createdOn;
 
-    private String createdBy;
+    private Date createdBy;
+
+    private String text;
 
     private String del;
 
-    public String getTourid() {
-        return tourid;
+    public String getResvId() {
+        return resvId;
     }
 
-    public void setTourid(String tourid) {
-        this.tourid = tourid == null ? null : tourid.trim();
+    public void setResvId(String resvId) {
+        this.resvId = resvId == null ? null : resvId.trim();
     }
 
-    public String getTourType() {
-        return tourType;
+    public String getResvType() {
+        return resvType;
     }
 
-    public void setTourType(String tourType) {
-        this.tourType = tourType == null ? null : tourType.trim();
+    public void setResvType(String resvType) {
+        this.resvType = resvType == null ? null : resvType.trim();
     }
 
     public String getSourceLocid() {
@@ -125,20 +125,12 @@ public class Tour {
         this.actArr = actArr;
     }
 
-    public Date getEta() {
-        return eta;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEta(Date eta) {
-        this.eta = eta;
-    }
-
-    public String getExeStatus() {
-        return exeStatus;
-    }
-
-    public void setExeStatus(String exeStatus) {
-        this.exeStatus = exeStatus == null ? null : exeStatus.trim();
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public String getCustId() {
@@ -157,12 +149,20 @@ public class Tour {
         this.createdOn = createdOn;
     }
 
-    public String getCreatedBy() {
+    public Date getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy == null ? null : createdBy.trim();
+    public void setCreatedBy(Date createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text == null ? null : text.trim();
     }
 
     public String getDel() {

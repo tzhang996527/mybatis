@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.TourTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.TourType" >
+    <id column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TOUR_TYPE, TEXT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_tour_type
+    where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_tour_type
+    where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.TourType" >
+    insert into t_tour_type (TOUR_TYPE, TEXT)
+    values (#{tourType,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.TourType" >
+    insert into t_tour_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tourType != null" >
+        TOUR_TYPE,
+      </if>
+      <if test="text != null" >
+        TEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tourType != null" >
+        #{tourType,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.TourType" >
+    update t_tour_type
+    <set >
+      <if test="text != null" >
+        TEXT = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.TourType" >
+    update t_tour_type
+    set TEXT = #{text,jdbcType=VARCHAR}
+    where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
+  </update>
+</mapper>

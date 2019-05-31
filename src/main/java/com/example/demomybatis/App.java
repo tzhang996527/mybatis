@@ -1,6 +1,5 @@
 package com.example.demomybatis;
 
-import com.example.demomybatis.dao.TourMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,11 +10,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class App {
 
-	private final TourMapper tourMapper;
-
-	public App(TourMapper tourMapper) {
-		this.tourMapper = tourMapper;
-	}
+//	private final TourMapper tourMapper;
+//
+//	public App(TourMapper tourMapper) {
+//		this.tourMapper = tourMapper;
+//	}
 
 	public static void main(String[] args) {
 
