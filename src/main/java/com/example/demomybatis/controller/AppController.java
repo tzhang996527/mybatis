@@ -22,7 +22,6 @@ public class AppController {
         return "index";
     }
 
-	@CrossOrigin
 	@RequestMapping(value = "/login")
     public String login() {
         return "login";
@@ -34,7 +33,12 @@ public class AppController {
     	model.addAttribute("role", getAuthority());
         return "home";
     }
-    
+
+	@RequestMapping(value = "/user")
+	public String testPage(Model model) {
+		return "users2";
+	}
+
     @RequestMapping(value = "/admin")
     public String adminPage(Model model) {
     	model.addAttribute("user", getUsername());
