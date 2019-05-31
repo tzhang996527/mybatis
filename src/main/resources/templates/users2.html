@@ -7,13 +7,22 @@
 	<link rel="stylesheet" href="css/el/index.css" />
 	<script type="text/javascript" src="/js/vue.js"></script>
 	<script type="text/javascript" src="/js/el/index.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div id="app">
-	<el-button @click="visible = true">Button</el-button>
+	<el-button @click="test">Button</el-button>
 	<el-dialog :visible.sync="visible" title="Hello world">
 		<p>Try Element</p>
 	</el-dialog>
+
+	<input v-model="message" placeholder="编辑我……">
+
+	<ul id="example-2">
+		<li v-for="(item, index) in items">
+			{{ item.tourid }} - {{ index }} - {{ item.vehicleId }}
+		</li>
+	</ul>
 </div>
 <script type="text/javascript" src="/templates/tour.js"></script>
 
