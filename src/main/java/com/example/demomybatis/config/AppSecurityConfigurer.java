@@ -89,6 +89,8 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling().accessDeniedPage("/accessDenied");
 
+		http.cors().disable();
+
     }
 		
 }
