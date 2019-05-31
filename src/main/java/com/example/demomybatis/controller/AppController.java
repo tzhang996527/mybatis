@@ -36,7 +36,12 @@ public class AppController {
 
 	@RequestMapping(value = "/user")
 	public String testPage(Model model) {
-		return "users2";
+		return "main";
+	}
+
+	@RequestMapping(value = "/main")
+	public String mainPage(Model model) {
+		return "main2";
 	}
 
     @RequestMapping(value = "/admin")
