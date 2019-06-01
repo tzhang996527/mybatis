@@ -26,10 +26,17 @@ public class AppAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 		protected void handle(HttpServletRequest request, HttpServletResponse response,
 				Authentication authentication)
 				throws IOException {
+
+			//判断是json 格式返回 还是 view 格式返回
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write("login success");
+			return;
+
+
 			// 通过determineTargetUrl方法返回需要跳转的url 
-			String targetUrl = determineTargetUrl(authentication);
+			//String targetUrl = determineTargetUrl(authentication);
 			// 重定向请求到指定的url
-			redirectStrategy.sendRedirect(request, response, targetUrl);
+			//redirectStrategy.sendRedirect(request, response, targetUrl);
 		}
 
 		/*
@@ -50,8 +57,8 @@ public class AppAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
 			// 判断不同角色跳转到不同的url
 			if (isAdmin(roles)) {
-//				url = "/admin";
-				url = "user";
+				url = "/admin";
+//				url = "user";
 			} else if (isUser(roles)) {
 				url = "/home";
 			} else {

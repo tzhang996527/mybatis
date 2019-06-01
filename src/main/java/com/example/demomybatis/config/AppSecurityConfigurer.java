@@ -9,8 +9,17 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  * 自定义Spring Security认证处理类的时候
@@ -57,7 +66,17 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
-	
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	System.out.println("AppSecurityConfigurer configure auth......");
@@ -73,6 +92,17 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("AppSecurityConfigurer configure http......");
+		// 允许跨域访问
+		// by default uses a Bean by the name of corsConfigurationSource
+		//https://docs.spring.io/spring-security/site/docs/current/reference/html5/#cors
+		http.cors();
+		//关闭跨站请求防护
+		http.csrf().disable();
+
+//		http.cors().and().headers()
+//				.frameOptions().sameOrigin()
+//				.httpStrictTransportSecurity().disable();
+
 		http.authorizeRequests()
 				// spring-security 5.0 之后需要过滤静态资源
 				.antMatchers("/login","/css/**","/js/**","/img/*").permitAll()
@@ -83,13 +113,11 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 				.and()
 				.formLogin().loginPage("/login").successHandler(appAuthenticationSuccessHandler)
-				.usernameParameter("loginName").passwordParameter("password")
+				.usernameParameter("username").passwordParameter("password")
 				.and()
 				.logout().permitAll()
 				.and()
 				.exceptionHandling().accessDeniedPage("/accessDenied");
-
-		http.cors().disable();
 
     }
 		

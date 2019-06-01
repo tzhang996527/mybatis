@@ -44,6 +44,11 @@ public class AppController {
 		return "main2";
 	}
 
+	@RequestMapping(value = "/route2")
+	public String router2Page(Model model) {
+		return "route2";
+	}
+
     @RequestMapping(value = "/admin")
     public String adminPage(Model model) {
     	model.addAttribute("user", getUsername());
@@ -60,8 +65,8 @@ public class AppController {
     
     @RequestMapping(value = "/accessDenied")
 	public String accessDeniedPage(Model model) {
-		model.addAttribute("user", getUsername());
-		model.addAttribute("role", getAuthority());
+//		model.addAttribute("user", getUsername());
+//		model.addAttribute("role", getAuthority());
 		return "accessDenied";
 	}
    
