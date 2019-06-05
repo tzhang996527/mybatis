@@ -1,7 +1,9 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.AssetType;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface AssetTypeMapper {
     int deleteByPrimaryKey(String assetType);
 

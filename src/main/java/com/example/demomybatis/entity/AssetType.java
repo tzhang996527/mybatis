@@ -1,5 +1,7 @@
 package com.example.demomybatis.entity;
 
+import org.apache.ibatis.annotations.Mapper;
+
 public class AssetType {
     private String assetType;
 
