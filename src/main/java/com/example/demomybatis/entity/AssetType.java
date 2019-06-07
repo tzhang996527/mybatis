@@ -1,11 +1,16 @@
 package com.example.demomybatis.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class AssetType implements Serializable {
     private String assetType;
 
     private String assetText;
+
+    private Date createdOn;
+
+    private String createdBy;
 
     private String del;
 
@@ -31,5 +36,21 @@ public class AssetType implements Serializable {
 
     public void setDel(String del) {
         this.del = del == null ? null : del.trim();
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

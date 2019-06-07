@@ -29,16 +29,7 @@ public class TourController {
         return this.tourMapper.selectAllTour();
     }
 
-    @GetMapping(path="assetType/{id}")
-    public AssetType getAssetById(@PathVariable(name="id") String id){
-        return this.assetTypeMapper.selectByPrimaryKey(id);
-    }
-    @PostMapping(path="assetType")
-    public String createAssetType(@RequestBody AssetType assetType){
-        this.assetTypeMapper.insert(assetType);
 
-        return String.format("AssetType %s created.",assetType.getAssetType());
-    }
 //    @GetMapping(path="plannedStops")
 //    public  List<PlannedStop> getPlannedStops(){
 //        return this.tourMapper.selectPlannedStops();

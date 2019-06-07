@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.CustomerMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Customer" >
     <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
     <id column="TYPE" property="type" jdbcType="VARCHAR" />
@@ -17,6 +18,11 @@
     from t_customer
     where CUST_ID = #{custId,jdbcType=VARCHAR}
       and TYPE = #{type,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_customer
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.CustomerKey" >
     delete from t_customer

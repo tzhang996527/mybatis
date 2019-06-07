@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.AssetTypeMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.AssetType" >
     <id column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
     <result column="ASSET_TEXT" property="assetText" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ASSET_TYPE, ASSET_TEXT, DEL
+    ASSET_TYPE, ASSET_TEXT, CREATED_BY, CREATED_ON, DEL
   </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_asset_type
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_asset_type
     where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
@@ -20,10 +30,10 @@
     where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.AssetType" >
-    insert into t_asset_type (ASSET_TYPE, ASSET_TEXT, DEL
-      )
-    values (#{assetType,jdbcType=VARCHAR}, #{assetText,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
-      )
+    insert into t_asset_type (ASSET_TYPE, ASSET_TEXT, CREATED_BY,
+    CREATED_ON, DEL)
+    values (#{assetType,jdbcType=VARCHAR}, #{assetText,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR},
+    #{createdOn,jdbcType=DATE}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.AssetType" >
     insert into t_asset_type
@@ -33,6 +43,12 @@
       </if>
       <if test="assetText != null" >
         ASSET_TEXT,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -45,6 +61,12 @@
       <if test="assetText != null" >
         #{assetText,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -56,6 +78,12 @@
       <if test="assetText != null" >
         ASSET_TEXT = #{assetText,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -65,7 +93,9 @@
   <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.AssetType" >
     update t_asset_type
     set ASSET_TEXT = #{assetText,jdbcType=VARCHAR},
-      DEL = #{del,jdbcType=VARCHAR}
+    CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+    CREATED_ON = #{createdOn,jdbcType=DATE},
+    DEL = #{del,jdbcType=VARCHAR}
     where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
   </update>
 </mapper>

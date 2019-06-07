@@ -12,8 +12,6 @@ drop table if exists `db_example`.`T_ASSET`;
 drop table if exists `db_example`.`T_LOCATION`;
 drop table if exists `db_example`.`T_ASSET_TYPE`;
 drop table if exists `db_example`.`T_EVENT_CODE`;
-drop table if exists `db_example`.`T_PLN_STOP`;
-drop table if exists `db_example`.`T_ACT_STOP`;
 drop table if exists `db_example`.`T_RESV_TYPE`;
 drop table if exists `db_example`.`T_TOUR_TYPE`;
 drop table if exists `db_example`.`T_CUSTOMER`;
@@ -22,24 +20,30 @@ drop table if exists `db_example`.`T_CUSTOMER`;
 create table `T_RESV_TYPE`(
 	`RESV_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     primary key (`RESV_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `T_RESV_TYPE` VALUES('NORM','普通预留');
-INSERT INTO `T_RESV_TYPE` VALUES('ADV1','客户预留');
+INSERT INTO `T_RESV_TYPE` VALUES('NORM','普通预留','Admin',now());
+INSERT INTO `T_RESV_TYPE` VALUES('ADV1','客户预留','Admin',now());
 
 create table `T_TOUR_TYPE`(
 	`TOUR_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     primary key (`TOUR_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `T_TOUR_TYPE` VALUES('LONG','短途');
-INSERT INTO `T_TOUR_TYPE` VALUES('SHORT','长途');
+INSERT INTO `T_TOUR_TYPE` VALUES('LONG','短途','Admin',now());
+INSERT INTO `T_TOUR_TYPE` VALUES('SHORT','长途','Admin',now());
 
 create table `T_NOTIFICATION`(
 	`ID` INT(10) NOT NULL auto_increment,
     `TEXT` VARCHAR(100),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     primary key (`ID`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
@@ -50,6 +54,8 @@ create table `T_CUSTOMER`(
     `TYPE` VARCHAR(10),
     `NAME` VARCHAR(50),
     `ADDRESS` VARCHAR(50),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
@@ -66,6 +72,8 @@ create table `T_LOCATION`(
     `PROVINCE` VARCHAR(10),
     `DISTRICT` VARCHAR(20),
     `POSTAL_CODE` VARCHAR(10),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary KEY(`LOC_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -102,6 +110,8 @@ VALUES
 CREATE TABLE `T_ASSET_TYPE`(
     `ASSET_TYPE` VARCHAR(10) NOT NULL,
     `ASSET_TEXT` VARCHAR(30),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key(`ASSET_TYPE`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -127,6 +137,8 @@ CREATE TABLE `T_ASSET`(
     `YEAR` year,
     `HARDWARE` VARCHAR(50),
     `LOCATION` varchar(20),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key(`ASSET_ID`),
     constraint `fk_asset_type` foreign key(`ASSET_TYPE`) references `T_ASSET_TYPE`(`ASSET_TYPE`)
@@ -171,6 +183,8 @@ CREATE TABLE `T_DRIVER`(
     `NAME` VARCHAR(10),
     `TEL`  VARCHAR(15),
     `LOCATION` varchar(20),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL`  VARCHAR(1),
     primary key(`DRIVER_ID`),
     constraint `fk_driver_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
@@ -354,6 +368,8 @@ create table `T_TOUR_ITEM` (
     `LOCATION`   VARCHAR(20),
     `STATUS`      VARCHAR(2),
     `DEL` 		 VARCHAR(1),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     primary key(`TOURID`,`SEQ`),
     constraint `fk_tour_id_itm` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
     ON delete no action ON update no action
@@ -414,6 +430,8 @@ create table `T_ACT_STOP` (
 CREATE TABLE `T_EVENT_CODE`(
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `EVENT_TEXT` VARCHAR(50),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary KEY(`EVENT_CODE`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -439,6 +457,7 @@ CREATE TABLE `T_EXE_EVENT`(
     `LOCATION` VARCHAR(20),
     `CREATED_ON` Date,
     `STATUS` VARCHAR(2),
+    `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary KEY(`TOURID`,`SEQ`),
     constraint `fk_evt_tour_id` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
@@ -621,6 +640,8 @@ create table `T_RESV_ITEM` (
     `COMMODITY`  VARCHAR(20),
     `LOCATION`   VARCHAR(20),
     `STATUS`      VARCHAR(2),
+    `CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
     `DEL` 		 VARCHAR(1),
     primary key(`RESV_ID`,`SEQ`),
     constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `T_RESERVATION`(`RESV_ID`)
