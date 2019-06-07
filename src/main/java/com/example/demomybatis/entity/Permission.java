@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class Permission {
+import java.io.Serializable;
+
+public class Permission implements Serializable {
     private int id;
     //权限名称
     private String name;

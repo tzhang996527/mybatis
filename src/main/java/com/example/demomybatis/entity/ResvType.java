@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class ResvType {
+import java.io.Serializable;
+
+public class ResvType implements Serializable {
     private String resvType;
 
     private String text;

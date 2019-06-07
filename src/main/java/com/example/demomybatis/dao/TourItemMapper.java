@@ -2,7 +2,9 @@ package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.TourItem;
 import com.example.demomybatis.entity.TourItemKey;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface TourItemMapper {
     int deleteByPrimaryKey(TourItemKey key);
 

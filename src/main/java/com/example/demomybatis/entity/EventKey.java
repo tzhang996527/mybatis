@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class EventKey {
+import java.io.Serializable;
+
+public class EventKey implements Serializable {
     private String tourid;
 
     private Integer seq;

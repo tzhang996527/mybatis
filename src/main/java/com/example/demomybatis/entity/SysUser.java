@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SysUser {
+public class SysUser implements Serializable {
     private Integer id;
     private String loginName;
     private String username;

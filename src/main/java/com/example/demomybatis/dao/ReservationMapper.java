@@ -1,7 +1,9 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.Reservation;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ReservationMapper {
     int deleteByPrimaryKey(String resvId);
 

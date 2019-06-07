@@ -1,7 +1,9 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.TourType;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface TourTypeMapper {
     int deleteByPrimaryKey(String tourType);
 

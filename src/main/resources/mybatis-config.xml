@@ -17,5 +17,19 @@
         <mapper resource="sample/mybatis/mapper/TourMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/AssetTypeMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/UserDaoMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/ActualStopMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/AssetMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/CustomerMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/DriverMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/EventCodeMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/EventMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/LocationMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/NotificationMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/PlannedStopMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/ReservationMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/ResvItemMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/ResvTypeMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/TourItemMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/TourTypeMapper.xml"/>
     </mappers>
 </configuration>

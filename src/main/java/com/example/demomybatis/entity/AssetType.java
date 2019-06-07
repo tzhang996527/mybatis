@@ -1,8 +1,8 @@
 package com.example.demomybatis.entity;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.io.Serializable;
 
-public class AssetType {
+public class AssetType implements Serializable {
     private String assetType;
 
     private String assetText;

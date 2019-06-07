@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class TourItem extends TourItemKey {
+public class TourItem extends TourItemKey implements Serializable {
     private String container;
 
     private BigDecimal quan;

@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class ResvItemKey {
+import java.io.Serializable;
+
+public class ResvItemKey implements Serializable {
     private String resvId;
 
     private Integer seq;

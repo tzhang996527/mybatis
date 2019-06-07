@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class Customer extends CustomerKey {
+import java.io.Serializable;
+
+public class Customer extends CustomerKey implements Serializable {
     private String name;
 
     private String address;

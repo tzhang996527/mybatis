@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class Driver {
+import java.io.Serializable;
+
+public class Driver implements Serializable {
     private String driverId;
 
     private String name;

@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class TourItemKey {
+import java.io.Serializable;
+
+public class TourItemKey implements Serializable {
     private String tourid;
 
     private Integer seq;

@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class SysRole {
+import java.io.Serializable;
+
+public class SysRole implements Serializable {
     private Integer id;
     private String name;
     public Integer getId() {

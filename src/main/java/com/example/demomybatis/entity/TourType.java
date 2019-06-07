@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class TourType {
+import java.io.Serializable;
+
+public class TourType implements Serializable {
     private String tourType;
 
     private String text;

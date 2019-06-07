@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class ActualStopKey {
+import java.io.Serializable;
+
+public class ActualStopKey implements Serializable {
     private String tourid;
 
     private Integer seq;

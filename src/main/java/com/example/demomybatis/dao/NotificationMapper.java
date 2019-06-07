@@ -1,7 +1,9 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.Notification;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface NotificationMapper {
     int deleteByPrimaryKey(Integer id);
 

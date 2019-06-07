@@ -1,6 +1,8 @@
 package com.example.demomybatis.entity;
 
-public class EventCode {
+import java.io.Serializable;
+
+public class EventCode implements Serializable {
     private String eventCode;
 
     private String eventText;

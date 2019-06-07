@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PlannedStop extends PlannedStopKey {
+public class PlannedStop extends PlannedStopKey implements Serializable {
     private String locid;
 
     private Date planDepart;

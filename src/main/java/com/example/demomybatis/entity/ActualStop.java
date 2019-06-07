@@ -1,9 +1,10 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ActualStop extends ActualStopKey {
+public class ActualStop extends ActualStopKey implements Serializable {
     private String lat;
 
     private String lng;
