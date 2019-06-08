@@ -6,7 +6,7 @@
     <id column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
     <result column="ASSET_TEXT" property="assetText" jdbcType="VARCHAR" />
     <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
-    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -17,6 +17,15 @@
     select
     <include refid="Base_Column_List" />
     from t_asset_type
+  </select>
+
+  <select id="selectByField" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_asset_type
+    where true
+    <if test="assetType != null"> AND ASSET_TYPE LIKE CONCAT(CONCAT('%',#{assetType}),'%')</if>
+    <if test="assetText != null"> AND ASSET_TEXT LIKE CONCAT(CONCAT('%',#{assetText}),'%')</if>
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -33,7 +42,7 @@
     insert into t_asset_type (ASSET_TYPE, ASSET_TEXT, CREATED_BY,
     CREATED_ON, DEL)
     values (#{assetType,jdbcType=VARCHAR}, #{assetText,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR},
-    #{createdOn,jdbcType=DATE}, #{del,jdbcType=VARCHAR})
+    #{createdOn,jdbcType=TIMESTAMP}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.AssetType" >
     insert into t_asset_type
@@ -65,7 +74,7 @@
         #{createdBy,jdbcType=VARCHAR},
       </if>
       <if test="createdOn != null" >
-        #{createdOn,jdbcType=DATE},
+        #{createdOn,jdbcType=TIMESTAMP},
       </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
@@ -82,7 +91,7 @@
         CREATED_BY = #{createdBy,jdbcType=VARCHAR},
       </if>
       <if test="createdOn != null" >
-        CREATED_ON = #{createdOn,jdbcType=DATE},
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
       </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
@@ -94,7 +103,7 @@
     update t_asset_type
     set ASSET_TEXT = #{assetText,jdbcType=VARCHAR},
     CREATED_BY = #{createdBy,jdbcType=VARCHAR},
-    CREATED_ON = #{createdOn,jdbcType=DATE},
+    CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
     DEL = #{del,jdbcType=VARCHAR}
     where ASSET_TYPE = #{assetType,jdbcType=VARCHAR}
   </update>

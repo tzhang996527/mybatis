@@ -20,4 +20,6 @@ public interface AssetTypeMapper {
     int updateByPrimaryKey(AssetType record);
 
     List<AssetType> selectAll();
+
+    List<AssetType> selectByField(String assetType, String assetText);
 }
