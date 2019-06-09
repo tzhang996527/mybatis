@@ -1,6 +1,8 @@
 package com.example.demomybatis.controller;
 
+import com.example.demomybatis.dao.AssetMapper;
 import com.example.demomybatis.dao.AssetTypeMapper;
+import com.example.demomybatis.entity.Asset;
 import com.example.demomybatis.entity.AssetType;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,12 @@ public class AssetController {
 
     private final AssetTypeMapper assetTypeMapper;
 
+    private final AssetMapper assetMapper;
+
     @Autowired
-    public AssetController(AssetTypeMapper assetTypeMapper) {
+    public AssetController(AssetTypeMapper assetTypeMapper, AssetMapper assetMapper) {
         this.assetTypeMapper = assetTypeMapper;
+        this.assetMapper = assetMapper;
     }
 
     //get all asset type
@@ -28,7 +33,7 @@ public class AssetController {
     }
 
     @GetMapping(path="assetType/{id}")
-    public AssetType getAssetById(@PathVariable(name="id") String id){
+    public AssetType getAssetTypeById(@PathVariable(name="id") String id){
         return this.assetTypeMapper.selectByPrimaryKey(id);
     }
     @PostMapping(path="assetType")
@@ -50,5 +55,36 @@ public class AssetController {
     public List<AssetType> deleteAssetType(@PathVariable(name="id") String id){
         this.assetTypeMapper.deleteByPrimaryKey(id);
         return this.assetTypeMapper.selectAll();
+    }
+
+    //get all asset
+    @GetMapping(path="asset")
+    public List<Asset> getAllAsset(@Param("assetId") String assetId, @Param("assetType") String assetTpye){
+        return this.assetMapper.selectByField(assetId,assetTpye);
+    }
+
+    @GetMapping(path="asset/{id}")
+    public Asset getAssetById(@PathVariable(name="id") String id){
+        return this.assetMapper.selectByPrimaryKey(id);
+    }
+    @PostMapping(path="asset")
+    public List<Asset> createAsset(@RequestBody Asset asset){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        asset.setCreatedBy(username);
+        asset.setCreatedOn(new Date());
+        this.assetMapper.insert(asset);
+        return this.assetMapper.selectAll();
+//        return String.format("AssetType %s created.",assetType.getAssetType());
+    }
+
+    @PutMapping(path="asset")
+    public List<Asset> updateAssetType(@RequestBody Asset asset){
+        this.assetMapper.updateByPrimaryKeySelective(asset);
+        return this.assetMapper.selectAll();
+    }
+    @DeleteMapping(path="asset/{id}")
+    public List<Asset> deleteAsset(@PathVariable(name="id") String id){
+        this.assetMapper.deleteByPrimaryKey(id);
+        return this.assetMapper.selectAll();
     }
 }

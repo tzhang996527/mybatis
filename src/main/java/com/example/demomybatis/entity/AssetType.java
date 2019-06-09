@@ -8,9 +8,9 @@ public class AssetType implements Serializable {
 
     private String assetText;
 
-    private Date createdOn;
-
     private String createdBy;
+
+    private Date createdOn;
 
     private String del;
 
@@ -30,12 +30,12 @@ public class AssetType implements Serializable {
         this.assetText = assetText == null ? null : assetText.trim();
     }
 
-    public String getDel() {
-        return del;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setDel(String del) {
-        this.del = del == null ? null : del.trim();
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy == null ? null : createdBy.trim();
     }
 
     public Date getCreatedOn() {
@@ -46,11 +46,11 @@ public class AssetType implements Serializable {
         this.createdOn = createdOn;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getDel() {
+        return del;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setDel(String del) {
+        this.del = del == null ? null : del.trim();
     }
 }

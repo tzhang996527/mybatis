@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.AssetMapper" >
+    <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Asset" >
     <id column="ASSET_ID" property="assetId" jdbcType="VARCHAR" />
     <result column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
@@ -11,10 +12,13 @@
     <result column="YEAR" property="year" jdbcType="DATE" />
     <result column="HARDWARE" property="hardware" jdbcType="VARCHAR" />
     <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ASSET_ID, ASSET_TYPE, PLATENUMBER, MAKE, MODEL, VIN, YEAR, HARDWARE, LOCATION, DEL
+    ASSET_ID, ASSET_TYPE, PLATENUMBER, MAKE, MODEL, VIN, YEAR, HARDWARE, LOCATION, CREATED_BY, 
+    CREATED_ON, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -22,6 +26,19 @@
     from t_asset
     where ASSET_ID = #{assetId,jdbcType=VARCHAR}
   </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_asset
+    </select>
+    <select id="selectByField" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_asset
+        where true
+        <if test="assetId != null"> AND ASSET_ID LIKE CONCAT(CONCAT('%',#{assetId}),'%')</if>
+        <if test="assetType != null"> AND ASSET_TYPE LIKE CONCAT(CONCAT('%',#{assetType}),'%')</if>
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_asset
     where ASSET_ID = #{assetId,jdbcType=VARCHAR}
@@ -29,12 +46,12 @@
   <insert id="insert" parameterType="com.example.demomybatis.entity.Asset" >
     insert into t_asset (ASSET_ID, ASSET_TYPE, PLATENUMBER, 
       MAKE, MODEL, VIN, YEAR, 
-      HARDWARE, LOCATION, DEL
-      )
+      HARDWARE, LOCATION, CREATED_BY, 
+      CREATED_ON, DEL)
     values (#{assetId,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR}, #{platenumber,jdbcType=VARCHAR}, 
       #{make,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{year,jdbcType=DATE}, 
-      #{hardware,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
-      )
+      #{hardware,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Asset" >
     insert into t_asset
@@ -65,6 +82,12 @@
       </if>
       <if test="location != null" >
         LOCATION,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -98,6 +121,12 @@
       <if test="location != null" >
         #{location,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -130,6 +159,12 @@
       <if test="location != null" >
         LOCATION = #{location,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -146,6 +181,8 @@
       YEAR = #{year,jdbcType=DATE},
       HARDWARE = #{hardware,jdbcType=VARCHAR},
       LOCATION = #{location,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
       DEL = #{del,jdbcType=VARCHAR}
     where ASSET_ID = #{assetId,jdbcType=VARCHAR}
   </update>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.LocationMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Location" >
     <id column="LOC_ID" property="locId" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
@@ -10,16 +11,32 @@
     <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
     <result column="DISTRICT" property="district" jdbcType="VARCHAR" />
     <result column="POSTAL_CODE" property="postalCode" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    LOC_ID, ADDRESS, LAT, LNG, CITY, PROVINCE, DISTRICT, POSTAL_CODE, DEL
+    LOC_ID, ADDRESS, LAT, LNG, CITY, PROVINCE, DISTRICT, POSTAL_CODE, CREATED_BY, CREATED_ON, 
+    DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from t_location
     where LOC_ID = #{locId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_location
+  </select>
+  <select id="selectByField" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_location
+    where true
+    <if test="locId != null"> AND LOC_ID LIKE CONCAT(CONCAT('%',#{locId}),'%')</if>
+    <if test="address != null"> AND ADDRESS LIKE CONCAT(CONCAT('%',#{address}),'%')</if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_location
@@ -28,12 +45,12 @@
   <insert id="insert" parameterType="com.example.demomybatis.entity.Location" >
     insert into t_location (LOC_ID, ADDRESS, LAT, 
       LNG, CITY, PROVINCE, 
-      DISTRICT, POSTAL_CODE, DEL
-      )
+      DISTRICT, POSTAL_CODE, CREATED_BY, 
+      CREATED_ON, DEL)
     values (#{locId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, 
       #{lng,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{district,jdbcType=VARCHAR}, #{postalCode,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
-      )
+      #{district,jdbcType=VARCHAR}, #{postalCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Location" >
     insert into t_location
@@ -61,6 +78,12 @@
       </if>
       <if test="postalCode != null" >
         POSTAL_CODE,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -91,6 +114,12 @@
       <if test="postalCode != null" >
         #{postalCode,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -120,6 +149,12 @@
       <if test="postalCode != null" >
         POSTAL_CODE = #{postalCode,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -135,6 +170,8 @@
       PROVINCE = #{province,jdbcType=VARCHAR},
       DISTRICT = #{district,jdbcType=VARCHAR},
       POSTAL_CODE = #{postalCode,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
       DEL = #{del,jdbcType=VARCHAR}
     where LOC_ID = #{locId,jdbcType=VARCHAR}
   </update>

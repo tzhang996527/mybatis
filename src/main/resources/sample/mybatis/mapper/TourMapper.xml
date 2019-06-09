@@ -21,15 +21,12 @@
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    TOURID, TOUR_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, PLAN_DEPART, 
-    PLAN_ARR, ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, CUST_ID, CREATED_ON, CREATED_BY, 
+    TOURID, TOUR_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, PLAN_DEPART,
+    PLAN_ARR, ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, CUST_ID, CREATED_ON, CREATED_BY,
     DEL
   </sql>
-  <select id="selectAllTour" resultType="Tour" resultMap="BaseResultMap">
-    select * from t_tour;
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_tour
     where TOURID = #{tourid,jdbcType=VARCHAR}
@@ -39,18 +36,18 @@
     where TOURID = #{tourid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.Tour" >
-    insert into t_tour (TOURID, TOUR_TYPE, SOURCE_LOCID, 
-      DEST_LOCID, VEHICLE_ID, DRIVER_ID, 
-      SHIP_TO, PLAN_DEPART, PLAN_ARR, 
-      ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, 
-      CUST_ID, CREATED_ON, CREATED_BY, 
-      DEL)
-    values (#{tourid,jdbcType=VARCHAR}, #{tourType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR}, 
-      #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR}, 
-      #{shipTo,jdbcType=VARCHAR}, #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE}, 
-      #{actDepart,jdbcType=DATE}, #{actArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, #{exeStatus,jdbcType=VARCHAR}, 
-      #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{createdBy,jdbcType=VARCHAR}, 
-      #{del,jdbcType=VARCHAR})
+    insert into t_tour (TOURID, TOUR_TYPE, SOURCE_LOCID,
+    DEST_LOCID, VEHICLE_ID, DRIVER_ID,
+    SHIP_TO, PLAN_DEPART, PLAN_ARR,
+    ACT_DEPART, ACT_ARR, ETA, EXE_STATUS,
+    CUST_ID, CREATED_ON, CREATED_BY,
+    DEL)
+    values (#{tourid,jdbcType=VARCHAR}, #{tourType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR},
+    #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR},
+    #{shipTo,jdbcType=VARCHAR}, #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE},
+    #{actDepart,jdbcType=DATE}, #{actArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, #{exeStatus,jdbcType=VARCHAR},
+    #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{createdBy,jdbcType=VARCHAR},
+    #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Tour" >
     insert into t_tour
@@ -218,21 +215,21 @@
   <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.Tour" >
     update t_tour
     set TOUR_TYPE = #{tourType,jdbcType=VARCHAR},
-      SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
-      DEST_LOCID = #{destLocid,jdbcType=VARCHAR},
-      VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
-      DRIVER_ID = #{driverId,jdbcType=VARCHAR},
-      SHIP_TO = #{shipTo,jdbcType=VARCHAR},
-      PLAN_DEPART = #{planDepart,jdbcType=DATE},
-      PLAN_ARR = #{planArr,jdbcType=DATE},
-      ACT_DEPART = #{actDepart,jdbcType=DATE},
-      ACT_ARR = #{actArr,jdbcType=DATE},
-      ETA = #{eta,jdbcType=DATE},
-      EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
-      CUST_ID = #{custId,jdbcType=VARCHAR},
-      CREATED_ON = #{createdOn,jdbcType=DATE},
-      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
-      DEL = #{del,jdbcType=VARCHAR}
+    SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
+    DEST_LOCID = #{destLocid,jdbcType=VARCHAR},
+    VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
+    DRIVER_ID = #{driverId,jdbcType=VARCHAR},
+    SHIP_TO = #{shipTo,jdbcType=VARCHAR},
+    PLAN_DEPART = #{planDepart,jdbcType=DATE},
+    PLAN_ARR = #{planArr,jdbcType=DATE},
+    ACT_DEPART = #{actDepart,jdbcType=DATE},
+    ACT_ARR = #{actArr,jdbcType=DATE},
+    ETA = #{eta,jdbcType=DATE},
+    EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
+    CUST_ID = #{custId,jdbcType=VARCHAR},
+    CREATED_ON = #{createdOn,jdbcType=DATE},
+    CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+    DEL = #{del,jdbcType=VARCHAR}
     where TOURID = #{tourid,jdbcType=VARCHAR}
   </update>
 </mapper>

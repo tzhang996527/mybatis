@@ -2,6 +2,7 @@ package com.example.demomybatis.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class TourItem extends TourItemKey implements Serializable {
     private String container;
@@ -17,6 +18,10 @@ public class TourItem extends TourItemKey implements Serializable {
     private String status;
 
     private String del;
+
+    private String createdBy;
+
+    private Date createdOn;
 
     public String getContainer() {
         return container;
@@ -72,5 +77,21 @@ public class TourItem extends TourItemKey implements Serializable {
 
     public void setDel(String del) {
         this.del = del == null ? null : del.trim();
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy == null ? null : createdBy.trim();
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }

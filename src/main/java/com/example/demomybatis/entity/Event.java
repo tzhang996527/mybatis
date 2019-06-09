@@ -12,6 +12,8 @@ public class Event extends EventKey implements Serializable {
 
     private String status;
 
+    private String createdBy;
+
     private String del;
 
     public String getEventCode() {
@@ -44,6 +46,14 @@ public class Event extends EventKey implements Serializable {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy == null ? null : createdBy.trim();
     }
 
     public String getDel() {

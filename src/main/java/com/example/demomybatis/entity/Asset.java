@@ -22,6 +22,10 @@ public class Asset implements Serializable {
 
     private String location;
 
+    private String createdBy;
+
+    private Date createdOn;
+
     private String del;
 
     public String getAssetId() {
@@ -94,6 +98,22 @@ public class Asset implements Serializable {
 
     public void setLocation(String location) {
         this.location = location == null ? null : location.trim();
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy == null ? null : createdBy.trim();
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public String getDel() {

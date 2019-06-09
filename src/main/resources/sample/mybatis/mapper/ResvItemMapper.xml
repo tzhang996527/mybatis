@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.ResvItemMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.ResvItem" >
     <id column="RESV_ID" property="resvId" jdbcType="VARCHAR" />
     <id column="SEQ" property="seq" jdbcType="INTEGER" />
@@ -10,10 +11,13 @@
     <result column="COMMODITY" property="commodity" jdbcType="VARCHAR" />
     <result column="LOCATION" property="location" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    RESV_ID, SEQ, CONTAINER, QUAN, QUAN_UOM, COMMODITY, LOCATION, STATUS, DEL
+    RESV_ID, SEQ, CONTAINER, QUAN, QUAN_UOM, COMMODITY, LOCATION, STATUS, CREATED_BY, 
+    CREATED_ON, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.ResvItemKey" >
     select 
@@ -30,12 +34,12 @@
   <insert id="insert" parameterType="com.example.demomybatis.entity.ResvItem" >
     insert into t_resv_item (RESV_ID, SEQ, CONTAINER, 
       QUAN, QUAN_UOM, COMMODITY, 
-      LOCATION, STATUS, DEL
-      )
+      LOCATION, STATUS, CREATED_BY, 
+      CREATED_ON, DEL)
     values (#{resvId,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{container,jdbcType=VARCHAR}, 
       #{quan,jdbcType=DECIMAL}, #{quanUom,jdbcType=VARCHAR}, #{commodity,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
-      )
+      #{location,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=DATE}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.ResvItem" >
     insert into t_resv_item
@@ -63,6 +67,12 @@
       </if>
       <if test="status != null" >
         STATUS,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -93,6 +103,12 @@
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -119,6 +135,12 @@
       <if test="status != null" >
         STATUS = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -134,6 +156,8 @@
       COMMODITY = #{commodity,jdbcType=VARCHAR},
       LOCATION = #{location,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=DATE},
       DEL = #{del,jdbcType=VARCHAR}
     where RESV_ID = #{resvId,jdbcType=VARCHAR}
       and SEQ = #{seq,jdbcType=INTEGER}

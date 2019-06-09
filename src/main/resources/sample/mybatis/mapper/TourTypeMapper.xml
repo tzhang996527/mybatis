@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.TourTypeMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.TourType" >
     <id column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
     <result column="TEXT" property="text" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    TOUR_TYPE, TEXT
+    TOUR_TYPE, TEXT, CREATED_BY, CREATED_ON
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -19,8 +22,10 @@
     where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.TourType" >
-    insert into t_tour_type (TOUR_TYPE, TEXT)
-    values (#{tourType,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR})
+    insert into t_tour_type (TOUR_TYPE, TEXT, CREATED_BY, 
+      CREATED_ON)
+    values (#{tourType,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.TourType" >
     insert into t_tour_type
@@ -31,6 +36,12 @@
       <if test="text != null" >
         TEXT,
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tourType != null" >
@@ -38,6 +49,12 @@
       </if>
       <if test="text != null" >
         #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -47,12 +64,20 @@
       <if test="text != null" >
         TEXT = #{text,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=DATE},
+      </if>
     </set>
     where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.TourType" >
     update t_tour_type
-    set TEXT = #{text,jdbcType=VARCHAR}
+    set TEXT = #{text,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=DATE}
     where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
   </update>
 </mapper>

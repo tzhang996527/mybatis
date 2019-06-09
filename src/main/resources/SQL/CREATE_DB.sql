@@ -21,7 +21,7 @@ create table `T_RESV_TYPE`(
 	`RESV_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     primary key (`RESV_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
@@ -32,7 +32,7 @@ create table `T_TOUR_TYPE`(
 	`TOUR_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     primary key (`TOUR_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
@@ -43,7 +43,7 @@ create table `T_NOTIFICATION`(
 	`ID` INT(10) NOT NULL auto_increment,
     `TEXT` VARCHAR(100),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     primary key (`ID`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
@@ -55,7 +55,7 @@ create table `T_CUSTOMER`(
     `NAME` VARCHAR(50),
     `ADDRESS` VARCHAR(50),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` VARCHAR(1),
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
@@ -73,7 +73,7 @@ create table `T_LOCATION`(
     `DISTRICT` VARCHAR(20),
     `POSTAL_CODE` VARCHAR(10),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` VARCHAR(1),
     primary KEY(`LOC_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -111,7 +111,7 @@ CREATE TABLE `T_ASSET_TYPE`(
     `ASSET_TYPE` VARCHAR(10) NOT NULL,
     `ASSET_TEXT` VARCHAR(30),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` VARCHAR(1),
     primary key(`ASSET_TYPE`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -138,7 +138,7 @@ CREATE TABLE `T_ASSET`(
     `HARDWARE` VARCHAR(50),
     `LOCATION` varchar(20),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` VARCHAR(1),
     primary key(`ASSET_ID`),
     constraint `fk_asset_type` foreign key(`ASSET_TYPE`) references `T_ASSET_TYPE`(`ASSET_TYPE`)
@@ -184,7 +184,7 @@ CREATE TABLE `T_DRIVER`(
     `TEL`  VARCHAR(15),
     `LOCATION` varchar(20),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL`  VARCHAR(1),
     primary key(`DRIVER_ID`),
     constraint `fk_driver_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
@@ -222,7 +222,7 @@ create table `T_TOUR` (
     `ETA`	     date,
     `EXE_STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
-    `CREATED_ON` DATE,
+    `CREATED_ON` TIMESTAMP,
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary key(`TOURID`),
@@ -369,7 +369,7 @@ create table `T_TOUR_ITEM` (
     `STATUS`      VARCHAR(2),
     `DEL` 		 VARCHAR(1),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     primary key(`TOURID`,`SEQ`),
     constraint `fk_tour_id_itm` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
     ON delete no action ON update no action
@@ -431,7 +431,7 @@ CREATE TABLE `T_EVENT_CODE`(
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `EVENT_TEXT` VARCHAR(50),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` VARCHAR(1),
     primary KEY(`EVENT_CODE`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -455,7 +455,7 @@ CREATE TABLE `T_EXE_EVENT`(
     `SEQ` INT(10) NOT null,
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `LOCATION` VARCHAR(20),
-    `CREATED_ON` Date,
+    `CREATED_ON` TIMESTAMP,
     `STATUS` VARCHAR(2),
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
@@ -540,7 +540,7 @@ create table `T_RESERVATION`(
     `ACT_ARR`    date,
     `STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
-    `CREATED_ON` DATE,
+    `CREATED_ON` TIMESTAMP,
     `CREATED_BY` DATE,
 	`TEXT` VARCHAR(100),
     `DEL` VARCHAR(1),
@@ -641,7 +641,7 @@ create table `T_RESV_ITEM` (
     `LOCATION`   VARCHAR(20),
     `STATUS`      VARCHAR(2),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` date,
+    `CREATED_ON` TIMESTAMP,
     `DEL` 		 VARCHAR(1),
     primary key(`RESV_ID`,`SEQ`),
     constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `T_RESERVATION`(`RESV_ID`)

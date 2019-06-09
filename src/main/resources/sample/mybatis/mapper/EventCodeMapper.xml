@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.EventCodeMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.EventCode" >
     <id column="EVENT_CODE" property="eventCode" jdbcType="VARCHAR" />
     <result column="EVENT_TEXT" property="eventText" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    EVENT_CODE, EVENT_TEXT, DEL
+    EVENT_CODE, EVENT_TEXT, CREATED_BY, CREATED_ON, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -20,10 +23,10 @@
     where EVENT_CODE = #{eventCode,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.EventCode" >
-    insert into t_event_code (EVENT_CODE, EVENT_TEXT, DEL
-      )
-    values (#{eventCode,jdbcType=VARCHAR}, #{eventText,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR}
-      )
+    insert into t_event_code (EVENT_CODE, EVENT_TEXT, CREATED_BY, 
+      CREATED_ON, DEL)
+    values (#{eventCode,jdbcType=VARCHAR}, #{eventText,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=DATE}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.EventCode" >
     insert into t_event_code
@@ -33,6 +36,12 @@
       </if>
       <if test="eventText != null" >
         EVENT_TEXT,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -45,6 +54,12 @@
       <if test="eventText != null" >
         #{eventText,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -56,6 +71,12 @@
       <if test="eventText != null" >
         EVENT_TEXT = #{eventText,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -65,6 +86,8 @@
   <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.EventCode" >
     update t_event_code
     set EVENT_TEXT = #{eventText,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=DATE},
       DEL = #{del,jdbcType=VARCHAR}
     where EVENT_CODE = #{eventCode,jdbcType=VARCHAR}
   </update>

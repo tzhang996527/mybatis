@@ -1,6 +1,7 @@
 package com.example.demomybatis.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Location implements Serializable {
     private String locId;
@@ -18,6 +19,10 @@ public class Location implements Serializable {
     private String district;
 
     private String postalCode;
+
+    private String createdBy;
+
+    private Date createdOn;
 
     private String del;
 
@@ -83,6 +88,22 @@ public class Location implements Serializable {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode == null ? null : postalCode.trim();
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy == null ? null : createdBy.trim();
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public String getDel() {

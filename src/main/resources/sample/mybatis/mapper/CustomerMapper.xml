@@ -7,10 +7,12 @@
     <id column="TYPE" property="type" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    CUST_ID, TYPE, NAME, ADDRESS, DEL
+    CUST_ID, TYPE, NAME, ADDRESS, CREATED_BY, CREATED_ON, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.CustomerKey" >
     select 
@@ -19,11 +21,6 @@
     where CUST_ID = #{custId,jdbcType=VARCHAR}
       and TYPE = #{type,jdbcType=VARCHAR}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_customer
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.CustomerKey" >
     delete from t_customer
     where CUST_ID = #{custId,jdbcType=VARCHAR}
@@ -31,9 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.Customer" >
     insert into t_customer (CUST_ID, TYPE, NAME, 
-      ADDRESS, DEL)
+      ADDRESS, CREATED_BY, CREATED_ON, 
+      DEL)
     values (#{custId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
+      #{address,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, 
+      #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Customer" >
     insert into t_customer
@@ -49,6 +48,12 @@
       </if>
       <if test="address != null" >
         ADDRESS,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
       </if>
       <if test="del != null" >
         DEL,
@@ -67,6 +72,12 @@
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -81,6 +92,12 @@
       <if test="address != null" >
         ADDRESS = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=DATE},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -92,6 +109,8 @@
     update t_customer
     set NAME = #{name,jdbcType=VARCHAR},
       ADDRESS = #{address,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=DATE},
       DEL = #{del,jdbcType=VARCHAR}
     where CUST_ID = #{custId,jdbcType=VARCHAR}
       and TYPE = #{type,jdbcType=VARCHAR}

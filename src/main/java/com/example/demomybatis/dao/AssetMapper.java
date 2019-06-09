@@ -3,6 +3,8 @@ package com.example.demomybatis.dao;
 import com.example.demomybatis.entity.Asset;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface AssetMapper {
     int deleteByPrimaryKey(String assetId);
@@ -16,4 +18,8 @@ public interface AssetMapper {
     int updateByPrimaryKeySelective(Asset record);
 
     int updateByPrimaryKey(Asset record);
+
+    List<Asset> selectAll();
+
+    List<Asset> selectByField(String assetId, String assetType);
 }

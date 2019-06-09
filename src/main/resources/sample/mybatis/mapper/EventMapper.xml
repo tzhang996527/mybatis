@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demomybatis.dao.EventMapper" >
+  <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Event" >
     <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
     <id column="SEQ" property="seq" jdbcType="INTEGER" />
@@ -8,10 +9,11 @@
     <result column="LOCATION" property="location" jdbcType="VARCHAR" />
     <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    TOURID, SEQ, EVENT_CODE, LOCATION, CREATED_ON, STATUS, DEL
+    TOURID, SEQ, EVENT_CODE, LOCATION, CREATED_ON, STATUS, CREATED_BY, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.EventKey" >
     select 
@@ -28,10 +30,10 @@
   <insert id="insert" parameterType="com.example.demomybatis.entity.Event" >
     insert into t_exe_event (TOURID, SEQ, EVENT_CODE, 
       LOCATION, CREATED_ON, STATUS, 
-      DEL)
+      CREATED_BY, DEL)
     values (#{tourid,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{eventCode,jdbcType=VARCHAR}, 
       #{location,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, 
-      #{del,jdbcType=VARCHAR})
+      #{createdBy,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Event" >
     insert into t_exe_event
@@ -53,6 +55,9 @@
       </if>
       <if test="status != null" >
         STATUS,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
       </if>
       <if test="del != null" >
         DEL,
@@ -77,6 +82,9 @@
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
       <if test="del != null" >
         #{del,jdbcType=VARCHAR},
       </if>
@@ -97,6 +105,9 @@
       <if test="status != null" >
         STATUS = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
       <if test="del != null" >
         DEL = #{del,jdbcType=VARCHAR},
       </if>
@@ -110,6 +121,7 @@
       LOCATION = #{location,jdbcType=VARCHAR},
       CREATED_ON = #{createdOn,jdbcType=DATE},
       STATUS = #{status,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
       DEL = #{del,jdbcType=VARCHAR}
     where TOURID = #{tourid,jdbcType=VARCHAR}
       and SEQ = #{seq,jdbcType=INTEGER}
