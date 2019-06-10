@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demomybatis.dao.TourDetailMapper">
+    <cache/>
+
+    <resultMap id="BaseResultMap" type="TourDetail" >
+        <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+        <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
+        <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
+        <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />
+        <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
+        <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
+        <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
+        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+        <result column="ETA" property="eta" jdbcType="DATE" />
+        <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
+        <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+        <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
+        <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+        <result column="DEL" property="del" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- get tour details   -->
+    <resultMap id="tourDetailResultMap" type="TourDetail">
+        <id column="TOURID" property="tourid" />
+        <result column="TOUR_TYPE" property="tourType"/>
+        <result column="SOURCE_LOC" property="destAddress"/>
+        <result column="ETA" property="ETA" javaType="java.util.Date"/>
+        <result column="EXE_STATUS" property="status"/>
+        <association property="soldto" javaType="Customer">
+            <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+            <id column="TYPE" property="type" jdbcType="VARCHAR" />
+            <result column="NAME" property="name" jdbcType="VARCHAR" />
+            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        </association>
+        <association property="shipto" javaType="Customer">
+            <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+            <id column="TYPE" property="type" jdbcType="VARCHAR" />
+            <result column="NAME" property="name" jdbcType="VARCHAR" />
+            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        </association>
+        <collection property="plannedStops" ofType="PlannedStop">
+            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+            <id column="SEQ" property="seq" jdbcType="INTEGER" />
+            <result column="LOCID" property="locid" jdbcType="VARCHAR" />
+            <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+            <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+            <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+            <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+            <result column="EST_DEPART" property="estDepart" jdbcType="DATE" />
+            <result column="EST_ARR" property="estArr" jdbcType="DATE" />
+            <result column="ETA" property="eta" jdbcType="DATE" />
+            <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <select id="getTourDetail" resultMap="tourDetailResultMap">
+        select t.*,
+        c.*,
+        s.*,
+        loc.*,
+        loc2.*
+        from t_tour t INNER JOIN
+        t_pln_stop s on t.TOURID = s.TOURID
+        inner join t_customer c
+        on t.CUST_ID = c.CUST_ID
+        inner join t_location loc
+        on t.SOURCE_LOCID = loc.LOC_ID
+        inner join t_location loc2
+        on t.DEST_LOCID = loc2.LOC_ID
+    </select>
+
+    <!-- Lazy load   -->
+    <select id="getTourLazyLoading" resultMap="BatchTourLazyLoadingResultMap">
+        SELECT * FROM t_tour
+    </select>
+
+    <resultMap id="BatchTourLazyLoadingResultMap" type="TourDetail">
+        <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+        <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
+        <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
+        <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />
+        <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
+        <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
+        <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
+        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+        <result column="ETA" property="eta" jdbcType="DATE" />
+        <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
+        <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+        <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
+        <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+        <result column="DEL" property="del" jdbcType="VARCHAR" />
+        <!-- Lazy load customer -->
+        <association property="customer" javaType="Customer" select="findCustomerById" column="custId"/>
+    </resultMap>
+
+    <select id="findCustomerById" parameterType="int" resultType="Customer">
+        select * from t_customer where ID = #{id}
+    </select>
+</mapper>
