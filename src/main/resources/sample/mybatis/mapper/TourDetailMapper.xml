@@ -132,7 +132,7 @@
         src.*,
         veh.*,
         driver.*,
-        it.*,
+<!--        it.*,-->
         dest.LOC_ID AS D_LOC_ID,
         dest.ADDRESS AS D_ADDRESS,
         dest.LAT as D_LAT,
@@ -159,15 +159,54 @@
         on t.VEHICLE_ID = veh.ASSET_ID
         inner join t_driver driver
         on t.DRIVER_ID = driver.DRIVER_ID
-        inner join t_tour_item it
-        on t.TOURID = it.TOURID
+<!--        inner join t_tour_item it-->
+<!--        on t.TOURID = it.TOURID-->
 
     </select>
 
     <select id="findTourItemById" parameterType="String" resultType="TourItem">
-        select * from t_tour_item where TOURID = #{id}
+        select *
+        from t_tour_item where TOURID = #{id}
     </select>
 
+    <resultMap id="BaseResultMap2" type="TourDetail" >
+        <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+        <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
+        <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
+        <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />
+        <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
+        <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
+        <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
+        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+        <result column="ETA" property="eta" jdbcType="DATE" />
+        <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
+        <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+        <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
+        <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+        <result column="DEL" property="del" jdbcType="VARCHAR" />
+    <!--        Lazy load tour item-->
+        <collection property="tourItem" ofType="TourItem" select="findTourItemById" column="tourid">
+            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+            <id column="SEQ" property="seq" jdbcType="INTEGER" />
+            <result column="CONTAINER" property="container" jdbcType="VARCHAR" />
+            <result column="QUAN" property="quan" jdbcType="DECIMAL" />
+            <result column="QUAN_UOM" property="quanUom" jdbcType="VARCHAR" />
+            <result column="COMMODITY" property="commodity" jdbcType="VARCHAR" />
+            <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+            <result column="STATUS" property="status" jdbcType="VARCHAR" />
+            <result column="DEL" property="del" jdbcType="VARCHAR" />
+            <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+            <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
+        </collection>
+    </resultMap>
+
+    <select id="findTourTest" resultMap="BaseResultMap2">
+        select *
+        from t_tour
+    </select>
     <!-- Lazy load   -->
 <!--    <select id="getTourLazyLoading" resultMap="BatchTourLazyLoadingResultMap">-->
 <!--        SELECT * FROM t_tour-->

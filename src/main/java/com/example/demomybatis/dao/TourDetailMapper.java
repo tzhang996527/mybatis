@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface TourDetailMapper {
     List<TourDetail> getTourDetail();
+
+    List<TourDetail> findTourTest();
 }
