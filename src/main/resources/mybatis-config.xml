@@ -5,10 +5,15 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
-        <setting name="lazyLoadingEnabled" value="true"/>
-        <setting name="aggressiveLazyLoading" value="false"/>
         <!-- Mapper Cache -->
         <setting name="cacheEnabled" value="true"/>
+
+        <!--开启懒加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--关闭懒加载的对象可能被任何懒属性全部加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--消除equals，hashcode，toString等方法对懒加载的影响-->
+        <setting name="lazyLoadTriggerMethods" value=""/>
     </settings>
     <typeAliases>
         <package name="com.example.demomybatis.entity"/>

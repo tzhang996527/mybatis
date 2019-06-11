@@ -2,6 +2,7 @@ package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.TourItem;
 import com.example.demomybatis.entity.TourItemKey;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

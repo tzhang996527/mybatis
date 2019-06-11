@@ -28,60 +28,6 @@
 
     <!-- get tour details   -->
     <resultMap id="tourDetailResultMap" type="TourDetail">
-        <id column="TOURID" property="tourid" />
-        <result column="TOUR_TYPE" property="tourType"/>
-        <result column="SOURCE_LOC" property="destAddress"/>
-        <result column="ETA" property="ETA" javaType="java.util.Date"/>
-        <result column="EXE_STATUS" property="status"/>
-        <association property="soldto" javaType="Customer">
-            <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
-            <id column="TYPE" property="type" jdbcType="VARCHAR" />
-            <result column="NAME" property="name" jdbcType="VARCHAR" />
-            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-        </association>
-        <association property="shipto" javaType="Customer">
-            <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
-            <id column="TYPE" property="type" jdbcType="VARCHAR" />
-            <result column="NAME" property="name" jdbcType="VARCHAR" />
-            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-        </association>
-        <collection property="plannedStops" ofType="PlannedStop">
-            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
-            <id column="SEQ" property="seq" jdbcType="INTEGER" />
-            <result column="LOCID" property="locid" jdbcType="VARCHAR" />
-            <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-            <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
-            <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
-            <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
-            <result column="EST_DEPART" property="estDepart" jdbcType="DATE" />
-            <result column="EST_ARR" property="estArr" jdbcType="DATE" />
-            <result column="ETA" property="eta" jdbcType="DATE" />
-            <result column="STATUS" property="status" jdbcType="VARCHAR" />
-        </collection>
-    </resultMap>
-
-    <select id="getTourDetail" resultMap="tourDetailResultMap">
-        select t.*,
-        c.*,
-        s.*,
-        loc.*,
-        loc2.*
-        from t_tour t INNER JOIN
-        t_pln_stop s on t.TOURID = s.TOURID
-        inner join t_customer c
-        on t.CUST_ID = c.CUST_ID
-        inner join t_location loc
-        on t.SOURCE_LOCID = loc.LOC_ID
-        inner join t_location loc2
-        on t.DEST_LOCID = loc2.LOC_ID
-    </select>
-
-    <!-- Lazy load   -->
-    <select id="getTourLazyLoading" resultMap="BatchTourLazyLoadingResultMap">
-        SELECT * FROM t_tour
-    </select>
-
-    <resultMap id="BatchTourLazyLoadingResultMap" type="TourDetail">
         <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
         <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />
         <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
@@ -99,11 +45,157 @@
         <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
         <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
         <result column="DEL" property="del" jdbcType="VARCHAR" />
-        <!-- Lazy load customer -->
-        <association property="customer" javaType="Customer" select="findCustomerById" column="custId"/>
+        <association property="sourceLoc" javaType="Location">
+            <id column="LOC_ID" property="locId" jdbcType="VARCHAR" />
+            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+            <result column="LAT" property="lat" jdbcType="VARCHAR" />
+            <result column="LNG" property="lng" jdbcType="VARCHAR" />
+            <result column="CITY" property="city" jdbcType="VARCHAR" />
+            <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+            <result column="DISTRICT" property="district" jdbcType="VARCHAR" />
+            <result column="POSTAL_CODE" property="postalCode" jdbcType="VARCHAR" />
+        </association>
+        <association property="destloc" javaType="Location">
+            <id column="D_LOC_ID" property="locId" jdbcType="VARCHAR" />
+            <result column="D_ADDRESS" property="address" jdbcType="VARCHAR" />
+            <result column="D_LAT" property="lat" jdbcType="VARCHAR" />
+            <result column="D_LNG" property="lng" jdbcType="VARCHAR" />
+            <result column="D_CITY" property="city" jdbcType="VARCHAR" />
+            <result column="D_PROVINCE" property="province" jdbcType="VARCHAR" />
+            <result column="D_DISTRICT" property="district" jdbcType="VARCHAR" />
+            <result column="D_POSTAL_CODE" property="postalCode" jdbcType="VARCHAR" />
+        </association>
+        <association property="soldto" javaType="Customer">
+            <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+            <id column="TYPE" property="type" jdbcType="VARCHAR" />
+            <result column="NAME" property="name" jdbcType="VARCHAR" />
+            <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        </association>
+        <association property="shipto" javaType="Customer">
+            <id column="SH_CUST_ID" property="custId" jdbcType="VARCHAR" />
+            <id column="SH_TYPE" property="type" jdbcType="VARCHAR" />
+            <result column="SH_NAME" property="name" jdbcType="VARCHAR" />
+            <result column="SH_ADDRESS" property="address" jdbcType="VARCHAR" />
+        </association>
+<!--        vehicle-->
+        <association property="vehicle" javaType="Asset">
+            <id column="ASSET_ID" property="assetId" jdbcType="VARCHAR" />
+            <result column="ASSET_TYPE" property="assetType" jdbcType="VARCHAR" />
+            <result column="PLATENUMBER" property="platenumber" jdbcType="VARCHAR" />
+            <result column="MAKE" property="make" jdbcType="VARCHAR" />
+            <result column="MODEL" property="model" jdbcType="VARCHAR" />
+            <result column="VIN" property="vin" jdbcType="VARCHAR" />
+            <result column="YEAR" property="year" jdbcType="DATE" />
+            <result column="HARDWARE" property="hardware" jdbcType="VARCHAR" />
+            <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+        </association>
+<!--        driver-->
+        <association property="driver" javaType="Driver">
+            <id column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
+            <result column="NAME" property="name" jdbcType="VARCHAR" />
+            <result column="TEL" property="tel" jdbcType="VARCHAR" />
+            <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+        </association>
+        <collection property="plannedStops" ofType="PlannedStop">
+            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+            <id column="SEQ" property="seq" jdbcType="INTEGER" />
+            <result column="LOCID" property="locid" jdbcType="VARCHAR" />
+            <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
+            <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
+            <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
+            <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+            <result column="EST_DEPART" property="estDepart" jdbcType="DATE" />
+            <result column="EST_ARR" property="estArr" jdbcType="DATE" />
+            <result column="ETA" property="eta" jdbcType="DATE" />
+            <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        </collection>
+<!--        Lazy load tour item-->
+        <collection property="tourItem" ofType="TourItem" select="findTourItemById" column="tourid">
+            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+            <id column="SEQ" property="seq" jdbcType="INTEGER" />
+            <result column="CONTAINER" property="container" jdbcType="VARCHAR" />
+            <result column="QUAN" property="quan" jdbcType="DECIMAL" />
+            <result column="QUAN_UOM" property="quanUom" jdbcType="VARCHAR" />
+            <result column="COMMODITY" property="commodity" jdbcType="VARCHAR" />
+            <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+            <result column="STATUS" property="status" jdbcType="VARCHAR" />
+            <result column="DEL" property="del" jdbcType="VARCHAR" />
+            <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+            <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
+        </collection>
     </resultMap>
 
-    <select id="findCustomerById" parameterType="int" resultType="Customer">
-        select * from t_customer where ID = #{id}
+    <select id="getTourDetail" resultMap="tourDetailResultMap">
+        select t.*,
+        c.*,
+        s.*,
+        src.*,
+        veh.*,
+        driver.*,
+        it.*,
+        dest.LOC_ID AS D_LOC_ID,
+        dest.ADDRESS AS D_ADDRESS,
+        dest.LAT as D_LAT,
+        dest.LNG as D_LNG,
+        dest.CITY as D_CITY,
+        dest.PROVINCE AS D_PROVINCE,
+        dest.DISTRICT AS D_DISTRICT,
+        dest.POSTAL_CODE as D_POSTAL_CODE,
+        shipto.CUST_ID AS SH_CUST_ID,
+        shipto.TYPE AS SH_TYPE,
+        shipto.NAME AS SH_NAME,
+        shipto.ADDRESS AS SH_ADDRESS
+        from t_tour t INNER JOIN
+        t_pln_stop s on t.TOURID = s.TOURID
+        inner join t_customer c
+        on t.CUST_ID = c.CUST_ID
+        inner join t_customer shipto
+        on t.SHIP_TO = shipto.CUST_ID
+        inner join t_location src
+        on t.SOURCE_LOCID = src.LOC_ID
+        inner join t_location dest
+        on t.DEST_LOCID = dest.LOC_ID
+        inner join t_asset veh
+        on t.VEHICLE_ID = veh.ASSET_ID
+        inner join t_driver driver
+        on t.DRIVER_ID = driver.DRIVER_ID
+        inner join t_tour_item it
+        on t.TOURID = it.TOURID
+
     </select>
+
+    <select id="findTourItemById" parameterType="String" resultType="TourItem">
+        select * from t_tour_item where TOURID = #{id}
+    </select>
+
+    <!-- Lazy load   -->
+<!--    <select id="getTourLazyLoading" resultMap="BatchTourLazyLoadingResultMap">-->
+<!--        SELECT * FROM t_tour-->
+<!--    </select>-->
+
+<!--    <resultMap id="BatchTourLazyLoadingResultMap" type="TourDetail">-->
+<!--        <id column="TOURID" property="tourid" jdbcType="VARCHAR" />-->
+<!--        <result column="TOUR_TYPE" property="tourType" jdbcType="VARCHAR" />-->
+<!--        <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />-->
+<!--        <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />-->
+<!--        <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />-->
+<!--        <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />-->
+<!--        <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />-->
+<!--        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />-->
+<!--        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />-->
+<!--        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />-->
+<!--        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />-->
+<!--        <result column="ETA" property="eta" jdbcType="DATE" />-->
+<!--        <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />-->
+<!--        <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />-->
+<!--        <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />-->
+<!--        <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />-->
+<!--        <result column="DEL" property="del" jdbcType="VARCHAR" />-->
+<!--        &lt;!&ndash; Lazy load customer &ndash;&gt;-->
+<!--        <association property="customer" javaType="Customer" select="findCustomerById" column="custId"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="findCustomerById" parameterType="int" resultType="Customer">-->
+<!--        select * from t_customer where ID = #{id}-->
+<!--    </select>-->
 </mapper>

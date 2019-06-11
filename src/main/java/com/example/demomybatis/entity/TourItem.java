@@ -1,9 +1,11 @@
 package com.example.demomybatis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
+@JsonIgnoreProperties(value = {"handler"})
 public class TourItem extends TourItemKey implements Serializable {
     private String container;
 

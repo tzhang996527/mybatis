@@ -1,8 +1,10 @@
 package com.example.demomybatis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.List;
-
+@JsonIgnoreProperties(value = {"handler"})
 public class TourDetail extends Tour implements Serializable {
     //Tour item
     private List<TourItem> tourItem;

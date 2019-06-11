@@ -1,6 +1,8 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.dao.AssetTypeMapper;
+import com.example.demomybatis.dao.TourDetailMapper;
+import com.example.demomybatis.dao.TourItemMapper;
 import com.example.demomybatis.dao.TourMapper;
 import com.example.demomybatis.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,16 @@ public class TourController {
 
     private final TourMapper tourMapper;
 
+    private final TourDetailMapper tourDetailMapper;
+
+    private final TourItemMapper tourItemMapper;
+
     @Autowired
-    public TourController(AssetTypeMapper assetTypeMapper, TourMapper tourMapper){
+    public TourController(AssetTypeMapper assetTypeMapper, TourMapper tourMapper, TourDetailMapper tourDetailMapper, TourItemMapper tourItemMapper){
         this.assetTypeMapper = assetTypeMapper;
         this.tourMapper = tourMapper;
+        this.tourDetailMapper = tourDetailMapper;
+        this.tourItemMapper = tourItemMapper;
     }
 
     @GetMapping(path="tour")
@@ -29,6 +37,10 @@ public class TourController {
         return this.tourMapper.selectAllTour();
     }
 
+    @GetMapping(path="tourDetail")
+    public List<TourDetail> getTourDetail(){
+        return this.tourDetailMapper.getTourDetail();
+    }
 
 //    @GetMapping(path="plannedStops")
 //    public  List<PlannedStop> getPlannedStops(){
