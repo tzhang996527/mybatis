@@ -17,7 +17,7 @@
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
     <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
-    <result column="CREATED_BY" property="createdBy" jdbcType="DATE" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
     <result column="TEXT" property="text" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>

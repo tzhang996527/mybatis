@@ -31,9 +31,6 @@ public class TourDetail extends Tour implements Serializable {
     //Driver
     private Driver driver;
 
-    public TourDetail() {
-    }
-
     public List<PlannedStop> getPlannedStops() {
         return plannedStops;
     }

@@ -21,7 +21,7 @@ create table `T_RESV_TYPE`(
 	`RESV_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     primary key (`RESV_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
@@ -32,22 +32,12 @@ create table `T_TOUR_TYPE`(
 	`TOUR_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     primary key (`TOUR_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `T_TOUR_TYPE` VALUES('LONG','短途','Admin',now());
 INSERT INTO `T_TOUR_TYPE` VALUES('SHORT','长途','Admin',now());
-
-create table `T_NOTIFICATION`(
-	`ID` INT(10) NOT NULL auto_increment,
-    `TEXT` VARCHAR(100),
-	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
-    primary key (`ID`)
-)engine=InnoDB DEFAULT CHARSET=utf8;
-
-insert into `T_NOTIFICATION`(`TEXT`) VALUES('前方道路拥堵');
 
 create table `T_CUSTOMER`(
 	`CUST_ID` varchar(20) not null,
@@ -55,7 +45,7 @@ create table `T_CUSTOMER`(
     `NAME` VARCHAR(50),
     `ADDRESS` VARCHAR(50),
 	`CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
@@ -73,7 +63,7 @@ create table `T_LOCATION`(
     `DISTRICT` VARCHAR(20),
     `POSTAL_CODE` VARCHAR(10),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary KEY(`LOC_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -111,7 +101,7 @@ CREATE TABLE `T_ASSET_TYPE`(
     `ASSET_TYPE` VARCHAR(10) NOT NULL,
     `ASSET_TEXT` VARCHAR(30),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key(`ASSET_TYPE`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -138,7 +128,7 @@ CREATE TABLE `T_ASSET`(
     `HARDWARE` VARCHAR(50),
     `LOCATION` varchar(20),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary key(`ASSET_ID`),
     constraint `fk_asset_type` foreign key(`ASSET_TYPE`) references `T_ASSET_TYPE`(`ASSET_TYPE`)
@@ -184,7 +174,7 @@ CREATE TABLE `T_DRIVER`(
     `TEL`  VARCHAR(15),
     `LOCATION` varchar(20),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL`  VARCHAR(1),
     primary key(`DRIVER_ID`),
     constraint `fk_driver_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
@@ -222,7 +212,7 @@ create table `T_TOUR` (
     `ETA`	     date,
     `EXE_STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` DATE,
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary key(`TOURID`),
@@ -311,6 +301,21 @@ NOW(),
 'ADMIN',
 '');
 
+create table `T_NOTIFICATION`(
+	`TOURID` VARCHAR(20) NOT NULL,
+	`SEQ` INT(10),
+    `TEXT` VARCHAR(100),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` date,
+     primary KEY(`TOURID`,`SEQ`),
+    constraint `fk_no_tour_id` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+     ON delete no action ON update no action
+)engine=InnoDB DEFAULT CHARSET=utf8;
+
+insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',1,'前方道路1拥堵');
+insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',2,'前方道路2拥堵');
+insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',3,'前方道路3拥堵');
+
 create table `T_PLN_STOP` (
 	`TOURID` VARCHAR(20) NOT NULL,
     `SEQ` INT,
@@ -369,7 +374,7 @@ create table `T_TOUR_ITEM` (
     `STATUS`      VARCHAR(2),
     `DEL` 		 VARCHAR(1),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     primary key(`TOURID`,`SEQ`),
     constraint `fk_tour_id_itm` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
     ON delete no action ON update no action
@@ -431,7 +436,7 @@ CREATE TABLE `T_EVENT_CODE`(
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `EVENT_TEXT` VARCHAR(50),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` VARCHAR(1),
     primary KEY(`EVENT_CODE`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -455,7 +460,7 @@ CREATE TABLE `T_EXE_EVENT`(
     `SEQ` INT(10) NOT null,
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `LOCATION` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` Date,
     `STATUS` VARCHAR(2),
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
@@ -540,8 +545,9 @@ create table `T_RESERVATION`(
     `ACT_ARR`    date,
     `STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
-    `CREATED_BY` DATE,
+    `TOURID` VARCHAR(20),
+    `CREATED_ON` DATE,
+    `CREATED_BY` VARCHAR(20),
 	`TEXT` VARCHAR(100),
     `DEL` VARCHAR(1),
 	primary key (`RESV_ID`),
@@ -577,7 +583,8 @@ INSERT INTO `db_example`.`t_reservation`
 `CREATED_ON`,
 `CREATED_BY`,
 `TEXT`,
-`DEL`)
+`DEL`,
+`TOURID`)
 VALUES
 ('5100000001',
 'NORM',
@@ -593,9 +600,10 @@ NOW(),
 'P',
 'CUST1',
 NOW(),
-NOW(),
+'ADMIN',
 '测试预留',
-''),
+'',
+'2100000001'),
 ('5100000002',
 'NORM',
 'LOC2',
@@ -610,9 +618,10 @@ NOW(),
 'P',
 'CUST1',
 NOW(),
-NOW(),
+'ADMIN',
 '测试预留',
-''),
+'',
+'2100000002'),
 ('5100000003',
 'NORM',
 'LOC2',
@@ -627,9 +636,10 @@ NOW(),
 'P',
 'CUST1',
 NOW(),
-NOW(),
+'ADMIN',
 '测试预留',
-'');
+'',
+'2100000003');
 
 create table `T_RESV_ITEM` (
 	`RESV_ID` VARCHAR(20) NOT NULL,
@@ -641,7 +651,7 @@ create table `T_RESV_ITEM` (
     `LOCATION`   VARCHAR(20),
     `STATUS`      VARCHAR(2),
     `CREATED_BY` VARCHAR(20),
-    `CREATED_ON` TIMESTAMP,
+    `CREATED_ON` date,
     `DEL` 		 VARCHAR(1),
     primary key(`RESV_ID`,`SEQ`),
     constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `T_RESERVATION`(`RESV_ID`)

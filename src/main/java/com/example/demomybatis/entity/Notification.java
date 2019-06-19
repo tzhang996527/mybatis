@@ -4,21 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Notification implements Serializable {
-    private Integer id;
+
+    private String tourid;
+    private Integer seq;
 
     private String text;
 
     private String createdBy;
 
     private Date createdOn;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getText() {
         return text;
@@ -42,5 +36,21 @@ public class Notification implements Serializable {
 
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
+    public String getTourid() {
+        return tourid;
+    }
+
+    public void setTourid(String tourid) {
+        this.tourid = tourid;
     }
 }

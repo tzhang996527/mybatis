@@ -32,11 +32,13 @@ public class Reservation implements Serializable {
 
     private Date createdOn;
 
-    private Date createdBy;
+    private String createdBy;
 
     private String text;
 
     private String del;
+
+    private String tourId;
 
     public String getResvId() {
         return resvId;
@@ -150,11 +152,11 @@ public class Reservation implements Serializable {
         this.createdOn = createdOn;
     }
 
-    public Date getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Date createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -172,5 +174,13 @@ public class Reservation implements Serializable {
 
     public void setDel(String del) {
         this.del = del == null ? null : del.trim();
+    }
+
+    public String getTourId() {
+        return tourId;
+    }
+
+    public void setTourId(String tourId) {
+        this.tourId = tourId;
     }
 }
