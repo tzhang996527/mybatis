@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface TourDetailMapper {
-    List<TourDetail> getTourDetail();
+    List<TourDetail> getTourDetail(String tourid);
 
     List<TourDetail> findTourTest();
 }

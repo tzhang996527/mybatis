@@ -5,6 +5,7 @@ import com.example.demomybatis.dao.TourDetailMapper;
 import com.example.demomybatis.dao.TourItemMapper;
 import com.example.demomybatis.dao.TourMapper;
 import com.example.demomybatis.entity.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,8 @@ public class TourController {
     }
 
     @GetMapping(path="tourDetail")
-    public List<TourDetail> getTourDetail(){
-        return this.tourDetailMapper.getTourDetail();
+    public List<TourDetail> getTourDetail(@Param("tourid") String tourid){
+        return this.tourDetailMapper.getTourDetail(tourid);
     }
 
 //    @GetMapping(path="plannedStops")

@@ -186,7 +186,7 @@
         </collection>
     </resultMap>
 
-    <select id="getTourDetail" resultMap="tourDetailResultMap">
+    <select id="getTourDetail" resultMap="tourDetailResultMap" parameterType="java.lang.String">
         select t.*,
 <!--        sold-to-->
         so.CUST_ID AS SO_CUST_ID,
@@ -320,6 +320,7 @@
         on t.TOURID = resv.TOURID
 <!--        left join T_ACT_STOP as-->
 <!--        on t.TOURID = as.TOURID-->
+        where t.TOURID = #{tourid, jdbcType=VARCHAR}
 
     </select>
 
