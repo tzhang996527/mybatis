@@ -9,7 +9,8 @@ public class TourDetail extends Tour implements Serializable {
     //Tour item
     private List<TourItem> tourItem;
     //Planned Stops
-    private List<PlannedStop> plannedStops;
+//    private List<PlannedStop> plannedStops;
+    private List<PlannedStopDetail> plannedStopsDetail;
     //Actual Stops
     private List<ActualStop> actualStops;
     //Event
@@ -31,13 +32,13 @@ public class TourDetail extends Tour implements Serializable {
     //Driver
     private Driver driver;
 
-    public List<PlannedStop> getPlannedStops() {
-        return plannedStops;
-    }
+//    public List<PlannedStop> getPlannedStops() {
+//        return plannedStops;
+//    }
 
-    public void setPlannedStops(List<PlannedStop> plannedStops) {
-        this.plannedStops = plannedStops;
-    }
+//    public void setPlannedStops(List<PlannedStop> plannedStops) {
+//        this.plannedStops = plannedStops;
+//    }
 
     public List<TourItem> getTourItem() {
         return tourItem;
@@ -133,5 +134,13 @@ public class TourDetail extends Tour implements Serializable {
 
     public void setShipto(Customer shipto) {
         this.shipto = shipto;
+    }
+
+    public List<PlannedStopDetail> getPlannedStopsDetail() {
+        return plannedStopsDetail;
+    }
+
+    public void setPlannedStopsDetail(List<PlannedStopDetail> plannedStopsDetail) {
+        this.plannedStopsDetail = plannedStopsDetail;
     }
 }

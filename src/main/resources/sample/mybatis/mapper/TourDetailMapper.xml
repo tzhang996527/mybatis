@@ -14,11 +14,11 @@
         <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
         <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
         <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
-        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
-        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
-        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
-        <result column="ETA" property="eta" jdbcType="DATE" />
+        <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+        <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+        <result column="ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+        <result column="ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
+        <result column="ETA" property="eta" jdbcType="TIMESTAMP" />
         <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
         <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
         <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
@@ -35,11 +35,11 @@
         <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
         <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
         <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
-        <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-        <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
-        <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
-        <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
-        <result column="ETA" property="eta" jdbcType="DATE" />
+        <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+        <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+        <result column="ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+        <result column="ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
+        <result column="ETA" property="eta" jdbcType="TIMESTAMP" />
         <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
         <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
         <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
@@ -88,7 +88,7 @@
             <result column="AS_MAKE" property="make" jdbcType="VARCHAR" />
             <result column="AS_MODEL" property="model" jdbcType="VARCHAR" />
             <result column="AS_VIN" property="vin" jdbcType="VARCHAR" />
-            <result column="AS_YEAR" property="year" jdbcType="DATE" />
+            <result column="AS_YEAR" property="year" jdbcType="TIMESTAMP" />
             <result column="AS_HARDWARE" property="hardware" jdbcType="VARCHAR" />
             <result column="AS_LOCATION" property="location" jdbcType="VARCHAR" />
         </association>
@@ -105,18 +105,28 @@
             <result column="DR_LOCATION" property="location" jdbcType="VARCHAR" />
         </association>
 <!--        planned stops-->
-        <collection property="plannedStops" ofType="PlannedStop">
+        <collection property="plannedStopsDetail" ofType="PlannedStopDetail">
             <id column="PS_TOURID" property="tourid" jdbcType="VARCHAR" />
             <id column="PS_SEQ" property="seq" jdbcType="INTEGER" />
             <result column="PS_LOCID" property="locid" jdbcType="VARCHAR" />
-            <result column="PS_PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-            <result column="PS_PLAN_ARR" property="planArr" jdbcType="DATE" />
-            <result column="PS_ACT_DEPART" property="actDepart" jdbcType="DATE" />
-            <result column="PS_ACT_ARR" property="actArr" jdbcType="DATE" />
-            <result column="PS_EST_DEPART" property="estDepart" jdbcType="DATE" />
-            <result column="PS_EST_ARR" property="estArr" jdbcType="DATE" />
-            <result column="PS_ETA" property="eta" jdbcType="DATE" />
+            <result column="PS_PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+            <result column="PS_PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+            <result column="PS_ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+            <result column="PS_ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
+            <result column="PS_EST_DEPART" property="estDepart" jdbcType="TIMESTAMP" />
+            <result column="PS_EST_ARR" property="estArr" jdbcType="TIMESTAMP" />
+            <result column="PS_ETA" property="eta" jdbcType="TIMESTAMP" />
             <result column="PS_STATUS" property="status" jdbcType="VARCHAR" />
+            <association property="location" javaType="Location">
+                <id column="PS_DT_LOC_ID" property="locId" jdbcType="VARCHAR" />
+                <result column="PS_DT_ADDRESS" property="address" jdbcType="VARCHAR" />
+                <result column="PS_DT_LAT" property="lat" jdbcType="VARCHAR" />
+                <result column="PS_DT_LNG" property="lng" jdbcType="VARCHAR" />
+                <result column="PS_DT_CITY" property="city" jdbcType="VARCHAR" />
+                <result column="PS_DT_PROVINCE" property="province" jdbcType="VARCHAR" />
+                <result column="PS_DT_DISTRICT" property="district" jdbcType="VARCHAR" />
+                <result column="PS_DT_POSTAL_CODE" property="postalCode" jdbcType="VARCHAR" />
+            </association>
         </collection>
 <!--        actual stops-->
         <collection property="actualStops" ofType="ActualStop">
@@ -125,7 +135,7 @@
             <result column="AS_LAT" property="lat" jdbcType="VARCHAR" />
             <result column="AS_LNG" property="lng" jdbcType="VARCHAR" />
             <result column="AS_ADDR" property="addr" jdbcType="VARCHAR" />
-            <result column="AS_REP_TIME" property="repTime" jdbcType="DATE" />
+            <result column="AS_REP_TIME" property="repTime" jdbcType="TIMESTAMP" />
             <result column="AS_TEMPERATURE" property="temperature" jdbcType="DECIMAL" />
             <result column="AS_STATUS" property="status" jdbcType="VARCHAR" />
             <result column="AS_DEL" property="del" jdbcType="VARCHAR" />
@@ -136,7 +146,7 @@
             <id column="EV_SEQ" property="seq" jdbcType="INTEGER" />
             <result column="EV_EVENT_CODE" property="eventCode" jdbcType="VARCHAR" />
             <result column="EV_LOCATION" property="location" jdbcType="VARCHAR" />
-            <result column="EV_CREATED_ON" property="createdOn" jdbcType="DATE" />
+            <result column="EV_CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
             <result column="EV_STATUS" property="status" jdbcType="VARCHAR" />
             <result column="EV_CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
             <result column="EV_DEL" property="del" jdbcType="VARCHAR" />
@@ -147,7 +157,7 @@
             <id column="NO_SEQ" property="seq" jdbcType="INTEGER" />
             <result column="NO_TEXT" property="text" jdbcType="VARCHAR" />
             <result column="NO_CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
-            <result column="NO_CREATED_ON" property="createdOn" jdbcType="DATE" />
+            <result column="NO_CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
         </collection>
 <!--        "reservations",-->
         <collection property="reservations" ofType="Reservation">
@@ -158,13 +168,13 @@
             <result column="RESV_VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
             <result column="RESV_DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
             <result column="RESV_SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
-            <result column="RESV_PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-            <result column="RESV_PLAN_ARR" property="planArr" jdbcType="DATE" />
-            <result column="RESV_ACT_DEPART" property="actDepart" jdbcType="DATE" />
-            <result column="RESV_ACT_ARR" property="actArr" jdbcType="DATE" />
+            <result column="RESV_PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+            <result column="RESV_PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+            <result column="RESV_ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+            <result column="RESV_ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
             <result column="RESV_STATUS" property="status" jdbcType="VARCHAR" />
             <result column="RESV_CUST_ID" property="custId" jdbcType="VARCHAR" />
-            <result column="RESV_CREATED_ON" property="createdOn" jdbcType="DATE" />
+            <result column="RESV_CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
             <result column="RESV_CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
             <result column="RESV_TEXT" property="text" jdbcType="VARCHAR" />
 <!--            <result column="RESV_TOURID" property="tourId" jdbcType="VARCHAR" />-->
@@ -182,7 +192,7 @@
             <result column="IT_STATUS" property="status" jdbcType="VARCHAR" />
             <result column="IT_DEL" property="del" jdbcType="VARCHAR" />
             <result column="IT_CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
-            <result column="IT_CREATED_ON" property="createdOn" jdbcType="DATE" />
+            <result column="IT_CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
         </collection>
     </resultMap>
 
@@ -251,6 +261,15 @@
         ps.EST_ARR     AS PS_EST_ARR,
         ps.ETA         AS PS_ETA,
         ps.STATUS      AS PS_STATUS,
+<!--        location detail-->
+        psdt.LOC_ID    AS PS_DT_LOC_ID,
+        psdt.ADDRESS   AS PS_DT_ADDRESS,
+        psdt.LAT       AS PS_DT_LAT,
+        psdt.LNG       AS PS_DT_LNG,
+        psdt.CITY      AS PS_DT_CITY,
+        psdt.PROVINCE  AS PS_DT_PROVINCE,
+        psdt.DISTRICT  AS PS_DT_DISTRICT,
+        psdt.POSTAL_CODE AS PS_DT_POSTAL_CODE,
 <!--        actual stop-->
 <!--        AS.TOURID AS AS_TOURID,-->
 <!--        AS.SEQ AS AS_SEQ,-->
@@ -296,6 +315,8 @@
         tt.TEXT AS TT_TEXT
         from t_tour t left JOIN
         t_pln_stop ps on t.TOURID = ps.TOURID
+        left join T_LOCATION psdt
+        on ps.LOCID = psdt.LOC_ID
         left join t_customer so
         on t.CUST_ID = so.CUST_ID
         left join t_customer shipto
