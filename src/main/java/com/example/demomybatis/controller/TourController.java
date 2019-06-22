@@ -1,9 +1,6 @@
 package com.example.demomybatis.controller;
 
-import com.example.demomybatis.dao.AssetTypeMapper;
-import com.example.demomybatis.dao.TourDetailMapper;
-import com.example.demomybatis.dao.TourItemMapper;
-import com.example.demomybatis.dao.TourMapper;
+import com.example.demomybatis.dao.*;
 import com.example.demomybatis.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +22,15 @@ public class TourController {
 
     private final TourItemMapper tourItemMapper;
 
+    private final ActualStopMapper actualStopMapper;
+
     @Autowired
-    public TourController(AssetTypeMapper assetTypeMapper, TourMapper tourMapper, TourDetailMapper tourDetailMapper, TourItemMapper tourItemMapper){
+    public TourController(AssetTypeMapper assetTypeMapper, TourMapper tourMapper, TourDetailMapper tourDetailMapper, TourItemMapper tourItemMapper, ActualStopMapper actualStopMapper){
         this.assetTypeMapper = assetTypeMapper;
         this.tourMapper = tourMapper;
         this.tourDetailMapper = tourDetailMapper;
         this.tourItemMapper = tourItemMapper;
+        this.actualStopMapper = actualStopMapper;
     }
 
     @GetMapping(path="tour")
@@ -39,8 +39,17 @@ public class TourController {
     }
 
     @GetMapping(path="tourDetail")
-    public List<TourDetail> getTourDetail(@Param("tourid") String tourid){
-        return this.tourDetailMapper.getTourDetail(tourid);
+    public TourDetail getTourDetail(@Param("tourid") String tourid){
+        TourDetail tourDetail = this.tourDetailMapper.getTourDetail(tourid);
+        //get actual stops
+        tourDetail.setActualStops(this.actualStopMapper.selectByTourId(tourid));
+
+        return tourDetail;
+    }
+
+    @GetMapping(path="actStop")
+    public List<ActualStop> getActualStops(@Param("tourid") String tourid){
+        return this.actualStopMapper.selectByTourId(tourid);
     }
 
 //    @GetMapping(path="plannedStops")

@@ -23,6 +23,14 @@
     where TOURID = #{tourid,jdbcType=VARCHAR}
       and SEQ = #{seq,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByTourId" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_act_stop
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.ActualStopKey" >
     delete from t_act_stop
     where TOURID = #{tourid,jdbcType=VARCHAR}
