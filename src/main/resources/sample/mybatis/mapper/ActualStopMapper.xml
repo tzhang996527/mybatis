@@ -31,6 +31,12 @@
     where TOURID = #{tourid,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectMaxSeq" resultType="int" parameterType="String" >
+    select max(SEQ) AS SEQ
+    from t_act_stop
+    where TOURID = #{tourid,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.ActualStopKey" >
     delete from t_act_stop
     where TOURID = #{tourid,jdbcType=VARCHAR}
@@ -41,7 +47,7 @@
       LNG, ADDR, REP_TIME, TEMPERATURE, 
       STATUS, DEL)
     values (#{tourid,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, 
-      #{lng,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{repTime,jdbcType=DATE}, #{temperature,jdbcType=DECIMAL}, 
+      #{lng,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{repTime,jdbcType=TIMESTAMP}, #{temperature,jdbcType=DECIMAL},
       #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.ActualStop" >
@@ -92,7 +98,7 @@
         #{addr,jdbcType=VARCHAR},
       </if>
       <if test="repTime != null" >
-        #{repTime,jdbcType=DATE},
+        #{repTime,jdbcType=TIMESTAMP},
       </if>
       <if test="temperature != null" >
         #{temperature,jdbcType=DECIMAL},

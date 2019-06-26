@@ -21,4 +21,6 @@ public interface ActualStopMapper {
     int updateByPrimaryKey(ActualStop record);
 
     List<ActualStop> selectByTourId(String tourId);
+
+    int selectMaxSeq(String tourId);
 }

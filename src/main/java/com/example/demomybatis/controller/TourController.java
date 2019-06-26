@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +53,17 @@ public class TourController {
         return this.actualStopMapper.selectByTourId(tourid);
     }
 
+    @PostMapping(path="actualStop")
+    public ActualStop reportPos(@RequestBody ActualStop actualStop){
+        //get max seq of current tour
+        int seq = this.actualStopMapper.selectMaxSeq(actualStop.getTourid()) + 1;
+
+        actualStop.setSeq(seq);
+        actualStop.setRepTime(new Date());
+        //insert current postion
+        this.actualStopMapper.insertSelective(actualStop);
+        return actualStop;
+    }
 //    @GetMapping(path="plannedStops")
 //    public  List<PlannedStop> getPlannedStops(){
 //        return this.tourMapper.selectPlannedStops();
