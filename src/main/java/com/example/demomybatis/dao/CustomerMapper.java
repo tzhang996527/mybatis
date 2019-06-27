@@ -4,6 +4,8 @@ import com.example.demomybatis.entity.Customer;
 import com.example.demomybatis.entity.CustomerKey;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface CustomerMapper {
     int deleteByPrimaryKey(CustomerKey key);
@@ -12,7 +14,7 @@ public interface CustomerMapper {
 
     int insertSelective(Customer record);
 
-    Customer selectByPrimaryKey(CustomerKey key);
+    List<Customer> selectByPrimaryKey(String id, String type);
 
     int updateByPrimaryKeySelective(Customer record);
 

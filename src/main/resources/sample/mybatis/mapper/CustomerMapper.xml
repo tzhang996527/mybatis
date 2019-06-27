@@ -14,17 +14,19 @@
   <sql id="Base_Column_List" >
     CUST_ID, TYPE, NAME, ADDRESS, CREATED_BY, CREATED_ON, DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.CustomerKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_customer
-    where CUST_ID = #{custId,jdbcType=VARCHAR}
-      and TYPE = #{type,jdbcType=VARCHAR}
+    where true
+    <if test="custId != null"> AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')</if>
+    <if test="type != null"> AND TYPE LIKE CONCAT(CONCAT('%',#{type}),'%')</if>
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.CustomerKey" >
     delete from t_customer
     where CUST_ID = #{custId,jdbcType=VARCHAR}
-      and TYPE = #{type,jdbcType=VARCHAR}
+    <if test="type != null">and TYPE = #{type,jdbcType=VARCHAR}</if>
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.Customer" >
     insert into t_customer (CUST_ID, TYPE, NAME, 
