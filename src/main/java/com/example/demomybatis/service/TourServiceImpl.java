@@ -23,7 +23,7 @@ public class TourServiceImpl implements TourService {
     @Override
     @Transactional(readOnly = true,propagation = Propagation.REQUIRED)
     public List<Tour> getAllTours() {
-        return tourMapper.selectAllTour();
+        return tourMapper.selectByPrimaryKey(null);
         //如果异常被抓起之后，需要回滚只能手动回滚，否则事务会认为异常已经被处理，就不在进行回滚
 //        try {
 //            int i=1/0;//抛出异常

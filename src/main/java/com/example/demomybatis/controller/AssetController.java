@@ -79,6 +79,7 @@ public class AssetController {
 
     @PutMapping(path="asset")
     public List<Asset> updateAssetType(@RequestBody Asset asset){
+
         this.assetMapper.updateByPrimaryKeySelective(asset);
         return this.assetMapper.selectAll();
     }

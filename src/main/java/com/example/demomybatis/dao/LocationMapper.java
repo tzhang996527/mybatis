@@ -13,13 +13,10 @@ public interface LocationMapper {
 
     int insertSelective(Location record);
 
-    Location selectByPrimaryKey(String locId);
+    List<Location> selectByPrimaryKey(Location loc);
 
     int updateByPrimaryKeySelective(Location record);
 
     int updateByPrimaryKey(Location record);
 
-    List<Location> selectAll();
-
-    List<Location> selectByField(String locId, String address);
 }

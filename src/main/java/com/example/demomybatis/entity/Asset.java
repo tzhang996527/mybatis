@@ -16,7 +16,7 @@ public class Asset implements Serializable {
 
     private String vin;
 
-    private Date year;
+    private int year;
 
     private String hardware;
 
@@ -76,11 +76,11 @@ public class Asset implements Serializable {
         this.vin = vin == null ? null : vin.trim();
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

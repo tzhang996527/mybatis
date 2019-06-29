@@ -19,19 +19,8 @@
     LOC_ID, ADDRESS, LAT, LNG, CITY, PROVINCE, DISTRICT, POSTAL_CODE, CREATED_BY, CREATED_ON, 
     DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Location" >
     select 
-    <include refid="Base_Column_List" />
-    from t_location
-    where LOC_ID = #{locId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_location
-  </select>
-  <select id="selectByField" resultMap="BaseResultMap" parameterType="Location">
-    select
     <include refid="Base_Column_List" />
     from t_location
     <where>
@@ -42,7 +31,6 @@
       <if test="district != null"> AND DISTRICT LIKE CONCAT(CONCAT('%',#{district}),'%')</if>
       <if test="postalCode != null"> AND POSTAL_CODE LIKE CONCAT(CONCAT('%',#{postalCode}),'%')</if>
     </where>
-
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_location

@@ -9,7 +9,7 @@
     <result column="MAKE" property="make" jdbcType="VARCHAR" />
     <result column="MODEL" property="model" jdbcType="VARCHAR" />
     <result column="VIN" property="vin" jdbcType="VARCHAR" />
-    <result column="YEAR" property="year" jdbcType="DATE" />
+    <result column="YEAR" property="year" jdbcType="INTEGER" />
     <result column="HARDWARE" property="hardware" jdbcType="VARCHAR" />
     <result column="LOCATION" property="location" jdbcType="VARCHAR" />
     <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
@@ -49,7 +49,7 @@
       HARDWARE, LOCATION, CREATED_BY, 
       CREATED_ON, DEL)
     values (#{assetId,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR}, #{platenumber,jdbcType=VARCHAR}, 
-      #{make,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{year,jdbcType=DATE}, 
+      #{make,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER},
       #{hardware,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
       #{createdOn,jdbcType=TIMESTAMP}, #{del,jdbcType=VARCHAR})
   </insert>
@@ -113,7 +113,7 @@
         #{vin,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
-        #{year,jdbcType=DATE},
+        #{year,jdbcType=INTEGER},
       </if>
       <if test="hardware != null" >
         #{hardware,jdbcType=VARCHAR},
@@ -151,7 +151,7 @@
         VIN = #{vin,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
-        YEAR = #{year,jdbcType=DATE},
+        YEAR = #{year,jdbcType=INTEGER},
       </if>
       <if test="hardware != null" >
         HARDWARE = #{hardware,jdbcType=VARCHAR},
@@ -178,7 +178,7 @@
       MAKE = #{make,jdbcType=VARCHAR},
       MODEL = #{model,jdbcType=VARCHAR},
       VIN = #{vin,jdbcType=VARCHAR},
-      YEAR = #{year,jdbcType=DATE},
+      YEAR = #{year,jdbcType=INTEGER},
       HARDWARE = #{hardware,jdbcType=VARCHAR},
       LOCATION = #{location,jdbcType=VARCHAR},
       CREATED_BY = #{createdBy,jdbcType=VARCHAR},
