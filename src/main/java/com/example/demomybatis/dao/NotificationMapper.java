@@ -3,6 +3,8 @@ package com.example.demomybatis.dao;
 import com.example.demomybatis.entity.Notification;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface NotificationMapper {
     int deleteByPrimaryKey(Integer id);
@@ -11,7 +13,7 @@ public interface NotificationMapper {
 
     int insertSelective(Notification record);
 
-    Notification selectByPrimaryKey(Integer id);
+    List<Notification> selectByPrimaryKey(Notification notification);
 
     int updateByPrimaryKeySelective(Notification record);
 

@@ -22,8 +22,8 @@ public class CustomerController {
     }
 
     @GetMapping(path = "customer")
-    public List<Customer> selectByPrimaryKey(@Param("custId") String custId,@Param("type") String type){
-        return this.customerMapper.selectByPrimaryKey(custId,type);
+    public List<Customer> selectByPrimaryKey(@Param("Customer") Customer customer){
+        return this.customerMapper.selectByPrimaryKey(customer);
     }
 
     @PostMapping(path = "customer")
@@ -33,19 +33,19 @@ public class CustomerController {
         customer.setCreatedOn(new Date());
         this.customerMapper.insert(customer);
         //return all customer
-        return this.customerMapper.selectByPrimaryKey(null,null);
+        return this.customerMapper.selectByPrimaryKey(null);
     }
 
     @PutMapping(path = "customer")
     public List<Customer> updateCustomer(@RequestBody Customer customer){
         this.customerMapper.updateByPrimaryKeySelective(customer);
-        return this.customerMapper.selectByPrimaryKey(null,null);
+        return this.customerMapper.selectByPrimaryKey(null);
     }
     @DeleteMapping(path="Customer/{id}")
     public List<Customer> deleteCustomer(@PathVariable(name="id") String id){
         Customer customer = new Customer();
         customer.setCustId(id);
         this.customerMapper.deleteByPrimaryKey(customer);
-        return this.customerMapper.selectByPrimaryKey(null,null);
+        return this.customerMapper.selectByPrimaryKey(null);
     }
 }

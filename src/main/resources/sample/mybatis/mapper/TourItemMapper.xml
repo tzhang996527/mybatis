@@ -19,12 +19,30 @@
     TOURID, SEQ, CONTAINER, QUAN, QUAN_UOM, COMMODITY, LOCATION, STATUS, DEL, CREATED_BY, 
     CREATED_ON
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.TourItemKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="TourItem" >
     select 
     <include refid="Base_Column_List" />
     from t_tour_item
-    where TOURID = #{tourid,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="tourid != null">
+        AND TOURID LIKE CONCAT(CONCAT('%',#{tourid}),'%')
+      </if>
+      <if test="seq != null">
+        AND SEQ LIKE CONCAT(CONCAT('%',#{seq}),'%')
+      </if>
+      <if test="container != null">
+        AND CONTAINER LIKE CONCAT(CONCAT('%',#{container}),'%')
+      </if>
+      <if test="commodity != null">
+        AND COMMODITY LIKE CONCAT(CONCAT('%',#{commodity}),'%')
+      </if>
+      <if test="location != null">
+        AND LOCATION LIKE CONCAT(CONCAT('%',#{location}),'%')
+      </if>
+      <if test="status != null">
+        AND STATUS LIKE CONCAT(CONCAT('%',#{status}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.TourItemKey" >
     delete from t_tour_item

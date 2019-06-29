@@ -4,6 +4,8 @@ import com.example.demomybatis.entity.ResvItem;
 import com.example.demomybatis.entity.ResvItemKey;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ResvItemMapper {
     int deleteByPrimaryKey(ResvItemKey key);
@@ -12,7 +14,7 @@ public interface ResvItemMapper {
 
     int insertSelective(ResvItem record);
 
-    ResvItem selectByPrimaryKey(ResvItemKey key);
+    List<ResvItem> selectByPrimaryKey(ResvItemKey key);
 
     int updateByPrimaryKeySelective(ResvItem record);
 

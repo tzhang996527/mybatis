@@ -3,6 +3,8 @@ package com.example.demomybatis.dao;
 import com.example.demomybatis.entity.Reservation;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ReservationMapper {
     int deleteByPrimaryKey(String resvId);
@@ -11,7 +13,7 @@ public interface ReservationMapper {
 
     int insertSelective(Reservation record);
 
-    Reservation selectByPrimaryKey(String resvId);
+    List<Reservation> selectByPrimaryKey(Reservation resv);
 
     int updateByPrimaryKeySelective(Reservation record);
 

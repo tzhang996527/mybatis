@@ -30,13 +30,19 @@
     <include refid="Base_Column_List" />
     from t_location
   </select>
-  <select id="selectByField" resultMap="BaseResultMap">
+  <select id="selectByField" resultMap="BaseResultMap" parameterType="Location">
     select
     <include refid="Base_Column_List" />
     from t_location
-    where true
-    <if test="locId != null"> AND LOC_ID LIKE CONCAT(CONCAT('%',#{locId}),'%')</if>
-    <if test="address != null"> AND ADDRESS LIKE CONCAT(CONCAT('%',#{address}),'%')</if>
+    <where>
+      <if test="locId != null"> AND LOC_ID LIKE CONCAT(CONCAT('%',#{locId}),'%')</if>
+      <if test="address != null"> AND ADDRESS LIKE CONCAT(CONCAT('%',#{address}),'%')</if>
+      <if test="city != null"> AND CITY LIKE CONCAT(CONCAT('%',#{city}),'%')</if>
+      <if test="province != null"> AND PROVINCE LIKE CONCAT(CONCAT('%',#{province}),'%')</if>
+      <if test="district != null"> AND DISTRICT LIKE CONCAT(CONCAT('%',#{district}),'%')</if>
+      <if test="postalCode != null"> AND POSTAL_CODE LIKE CONCAT(CONCAT('%',#{postalCode}),'%')</if>
+    </where>
+
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_location

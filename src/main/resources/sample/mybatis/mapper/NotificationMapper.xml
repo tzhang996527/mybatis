@@ -3,7 +3,8 @@
 <mapper namespace="com.example.demomybatis.dao.NotificationMapper" >
   <cache></cache>
   <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Notification" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
+    <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+    <id column="SEQ" property="seq" jdbcType="INTEGER" />
     <result column="TEXT" property="text" jdbcType="VARCHAR" />
     <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
     <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
@@ -11,11 +12,15 @@
   <sql id="Base_Column_List" >
     ID, TEXT, CREATED_BY, CREATED_ON
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Notification" >
     select 
     <include refid="Base_Column_List" />
     from t_notification
-    where ID = #{id,jdbcType=INTEGER}
+    <where>
+      <if test="tourid != null"> AND TOURID LIKE CONCAT(CONCAT('%',#{tourid}),'%')</if>
+      <if test="seq != null"> AND SEQ LIKE CONCAT(CONCAT('%',#{seq}),'%')</if>
+      <if test="text != null"> AND TEXT LIKE CONCAT(CONCAT('%',#{text}),'%')</if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_notification

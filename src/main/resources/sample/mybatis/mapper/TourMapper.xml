@@ -29,7 +29,41 @@
     select
     <include refid="Base_Column_List" />
     from t_tour
-    where TOURID = #{tourid,jdbcType=VARCHAR}
+    <where>
+      <if test="tourid != null">
+        AND TOURID LIKE CONCAT(CONCAT('%',#{tourid}),'%')
+      </if>
+      <if test="tourType != null">
+        AND TOUR_TYPE LIKE CONCAT(CONCAT('%',#{tourType}),'%')
+      </if>
+      <if test="sourceLocid != null">
+        AND SOURCE_LOCID LIKE CONCAT(CONCAT('%',#{sourceLocid}),'%')
+      </if>
+      <if test="destLocid != null">
+        AND DEST_LOCID LIKE CONCAT(CONCAT('%',#{destLocid}),'%')
+      </if>
+      <if test="vehicleId != null">
+        AND VEHICLE_ID LIKE CONCAT(CONCAT('%',#{vehicleId}),'%')
+      </if>
+      <if test="driverId != null">
+        AND DRIVER_ID LIKE CONCAT(CONCAT('%',#{driverId}),'%')
+      </if>
+      <if test="shipTo != null">
+        AND SHIP_TO LIKE CONCAT(CONCAT('%',#{shipTo}),'%')
+      </if>
+      <if test="planDepart != null">
+        AND PLAN_DEPART LIKE CONCAT(CONCAT('%',#{planDepart}),'%')
+      </if>
+      <if test="planArr != null">
+        AND PLAN_ARR LIKE CONCAT(CONCAT('%',#{planArr}),'%')
+      </if>
+      <if test="exeStatus != null">
+        AND EXE_STATUS LIKE CONCAT(CONCAT('%',#{exeStatus}),'%')
+      </if>
+      <if test="custId != null">
+        AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_tour

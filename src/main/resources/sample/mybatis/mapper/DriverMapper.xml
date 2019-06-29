@@ -14,11 +14,24 @@
   <sql id="Base_Column_List" >
     DRIVER_ID, NAME, TEL, LOCATION, CREATED_BY, CREATED_ON, DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Driver" >
     select 
     <include refid="Base_Column_List" />
     from t_driver
-    where DRIVER_ID = #{driverId,jdbcType=VARCHAR}
+    <where>
+      <if test="driverId != null">
+        AND DRIVER_ID LIKE CONCAT(CONCAT('%',#{driverId}),'%')
+      </if>
+      <if test="name != null">
+        AND NAME LIKE CONCAT(CONCAT('%',#{name}),'%')
+      </if>
+      <if test="tel != null">
+        AND TEL LIKE CONCAT(CONCAT('%',#{tel}),'%')
+      </if>
+      <if test="location != null">
+        AND LOCATION LIKE CONCAT(CONCAT('%',#{location}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_driver

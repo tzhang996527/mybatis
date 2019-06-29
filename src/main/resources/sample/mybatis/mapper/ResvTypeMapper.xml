@@ -15,7 +15,14 @@
     select 
     <include refid="Base_Column_List" />
     from t_resv_type
-    where RESV_TYPE = #{resvType,jdbcType=VARCHAR}
+    <where>
+      <if test="resvType != null">
+        AND RESV_TYPE LIKE CONCAT(CONCAT('%',#{resvType}),'%')
+      </if>
+      <if test="text != null">
+        AND TEXT LIKE CONCAT(CONCAT('%',#{text}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_resv_type

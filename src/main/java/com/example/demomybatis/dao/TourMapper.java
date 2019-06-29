@@ -8,15 +8,13 @@ import java.util.List;
 @Mapper
 public interface TourMapper {
 
-    List<Tour> selectAllTour();
-
     int deleteByPrimaryKey(String tourid);
 
     int insert(Tour record);
 
     int insertSelective(Tour record);
 
-    Tour selectByPrimaryKey(String tourid);
+    List<Tour> selectByPrimaryKey(Tour tour);
 
     int updateByPrimaryKeySelective(Tour record);
 

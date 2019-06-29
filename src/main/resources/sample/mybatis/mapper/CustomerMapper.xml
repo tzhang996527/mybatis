@@ -14,13 +14,16 @@
   <sql id="Base_Column_List" >
     CUST_ID, TYPE, NAME, ADDRESS, CREATED_BY, CREATED_ON, DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Customer">
     select 
     <include refid="Base_Column_List" />
     from t_customer
-    where true
-    <if test="custId != null"> AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')</if>
-    <if test="type != null"> AND TYPE LIKE CONCAT(CONCAT('%',#{type}),'%')</if>
+    <where>
+      <if test="custId != null"> AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')</if>
+      <if test="type != null"> AND TYPE LIKE CONCAT(CONCAT('%',#{type}),'%')</if>
+      <if test="name != null"> AND NAME LIKE CONCAT(CONCAT('%',#{name}),'%')</if>
+      <if test="address != null"> AND ADDRESS LIKE CONCAT(CONCAT('%',#{address}),'%')</if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.CustomerKey" >

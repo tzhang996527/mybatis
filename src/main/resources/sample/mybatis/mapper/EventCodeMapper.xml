@@ -12,11 +12,18 @@
   <sql id="Base_Column_List" >
     EVENT_CODE, EVENT_TEXT, CREATED_BY, CREATED_ON, DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="EventCode" >
     select 
     <include refid="Base_Column_List" />
     from t_event_code
-    where EVENT_CODE = #{eventCode,jdbcType=VARCHAR}
+    <where>
+      <if test="eventCode != null">
+        AND EVENT_CODE LIKE CONCAT(CONCAT('%',#{eventCode}),'%')
+      </if>
+      <if test="eventText != null">
+        AND EVENT_TEXT LIKE CONCAT(CONCAT('%',#{eventText}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_event_code

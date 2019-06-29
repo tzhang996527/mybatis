@@ -4,6 +4,8 @@ import com.example.demomybatis.entity.Event;
 import com.example.demomybatis.entity.EventKey;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface EventMapper {
     int deleteByPrimaryKey(EventKey key);
@@ -12,7 +14,7 @@ public interface EventMapper {
 
     int insertSelective(Event record);
 
-    Event selectByPrimaryKey(EventKey key);
+    List<Event> selectByPrimaryKey(Event event);
 
     int updateByPrimaryKeySelective(Event record);
 

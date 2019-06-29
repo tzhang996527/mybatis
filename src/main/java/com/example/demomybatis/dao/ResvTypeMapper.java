@@ -3,6 +3,8 @@ package com.example.demomybatis.dao;
 import com.example.demomybatis.entity.ResvType;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ResvTypeMapper {
     int deleteByPrimaryKey(String resvType);
@@ -11,7 +13,7 @@ public interface ResvTypeMapper {
 
     int insertSelective(ResvType record);
 
-    ResvType selectByPrimaryKey(String resvType);
+    List<ResvType> selectByPrimaryKey(ResvType resvType);
 
     int updateByPrimaryKeySelective(ResvType record);
 

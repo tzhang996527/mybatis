@@ -5,6 +5,8 @@ import com.example.demomybatis.entity.TourItemKey;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface TourItemMapper {
     int deleteByPrimaryKey(TourItemKey key);
@@ -13,7 +15,7 @@ public interface TourItemMapper {
 
     int insertSelective(TourItem record);
 
-    TourItem selectByPrimaryKey(TourItemKey key);
+    List<TourItem> selectByPrimaryKey(TourItem tourItem);
 
     int updateByPrimaryKeySelective(TourItem record);
 

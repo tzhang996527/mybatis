@@ -4,6 +4,8 @@ import com.example.demomybatis.entity.PlannedStop;
 import com.example.demomybatis.entity.PlannedStopKey;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface PlannedStopMapper {
     int deleteByPrimaryKey(PlannedStopKey key);
@@ -12,7 +14,7 @@ public interface PlannedStopMapper {
 
     int insertSelective(PlannedStop record);
 
-    PlannedStop selectByPrimaryKey(PlannedStopKey key);
+    List<PlannedStop> selectByPrimaryKey(PlannedStopKey plannedStopKey);
 
     int updateByPrimaryKeySelective(PlannedStop record);
 

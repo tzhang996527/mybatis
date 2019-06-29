@@ -3,6 +3,8 @@ package com.example.demomybatis.dao;
 import com.example.demomybatis.entity.TourType;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface TourTypeMapper {
     int deleteByPrimaryKey(String tourType);
@@ -11,7 +13,7 @@ public interface TourTypeMapper {
 
     int insertSelective(TourType record);
 
-    TourType selectByPrimaryKey(String tourType);
+    List<TourType> selectByPrimaryKey(TourType tourType);
 
     int updateByPrimaryKeySelective(TourType record);
 

@@ -11,11 +11,14 @@
   <sql id="Base_Column_List" >
     TOUR_TYPE, TEXT, CREATED_BY, CREATED_ON
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="TourType" >
     select 
     <include refid="Base_Column_List" />
     from t_tour_type
-    where TOUR_TYPE = #{tourType,jdbcType=VARCHAR}
+    <where>
+      <if test="tourType != null"> AND TOUR_TYPE LIKE CONCAT(CONCAT('%',#{tourType}),'%')</if>
+      <if test="text != null"> AND TEXT LIKE CONCAT(CONCAT('%',#{text}),'%')</if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_tour_type

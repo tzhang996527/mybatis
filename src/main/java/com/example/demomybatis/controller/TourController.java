@@ -5,6 +5,7 @@ import com.example.demomybatis.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -15,39 +16,54 @@ import java.util.List;
 @RequestMapping("api/v1/")
 public class TourController {
 
-    private final AssetTypeMapper assetTypeMapper;
-
     private final TourMapper tourMapper;
 
     private final TourDetailMapper tourDetailMapper;
 
-    private final TourItemMapper tourItemMapper;
-
     private final ActualStopMapper actualStopMapper;
 
     @Autowired
-    public TourController(AssetTypeMapper assetTypeMapper, TourMapper tourMapper, TourDetailMapper tourDetailMapper, TourItemMapper tourItemMapper, ActualStopMapper actualStopMapper){
-        this.assetTypeMapper = assetTypeMapper;
+    public TourController(TourMapper tourMapper, TourDetailMapper tourDetailMapper, ActualStopMapper actualStopMapper){
         this.tourMapper = tourMapper;
         this.tourDetailMapper = tourDetailMapper;
-        this.tourItemMapper = tourItemMapper;
         this.actualStopMapper = actualStopMapper;
     }
 
     @GetMapping(path="tour")
-    public List<Tour> getTour(){
-        return this.tourMapper.selectAllTour();
+    public List<Tour> getTour(@Param("Tour") Tour tour){
+        return this.tourMapper.selectByPrimaryKey(tour);
     }
 
+    @PostMapping(path = "tour")
+    public List<Tour> create(@RequestBody Tour tour){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        tour.setCreatedBy(username);
+        tour.setCreatedOn(new Date());
+        this.tourMapper.insert(tour);
+        //return all customer
+        return this.tourMapper.selectByPrimaryKey(null);
+    }
+
+    @PutMapping(path = "tour")
+    public List<Tour> update(@RequestBody Tour tour){
+        this.tourMapper.updateByPrimaryKeySelective(tour);
+        return this.tourMapper.selectByPrimaryKey(null);
+    }
+    @DeleteMapping(path="tour/{id}")
+    public List<Tour> delete(@PathVariable(name="id") String id){
+        this.tourMapper.deleteByPrimaryKey(id);
+        return this.tourMapper.selectByPrimaryKey(null);
+    }
+    //tour detail
     @GetMapping(path="tourDetail")
     public TourDetail getTourDetail(@Param("tourid") String tourid){
         TourDetail tourDetail = this.tourDetailMapper.getTourDetail(tourid);
         //get actual stops
         tourDetail.setActualStops(this.actualStopMapper.selectByTourId(tourid));
-
         return tourDetail;
     }
 
+    //Actual stop
     @GetMapping(path="actStop")
     public List<ActualStop> getActualStops(@Param("tourid") String tourid){
         return this.actualStopMapper.selectByTourId(tourid);

@@ -23,8 +23,14 @@
     select 
     <include refid="Base_Column_List" />
     from t_resv_item
-    where RESV_ID = #{resvId,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="resvId != null">
+        AND RESV_ID LIKE CONCAT(CONCAT('%',#{resvId}),'%')
+      </if>
+      <if test="seq != null">
+        AND SEQ LIKE CONCAT(CONCAT('%',#{seq,jdbcType=INTEGER}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.ResvItemKey" >
     delete from t_resv_item
