@@ -23,7 +23,7 @@ public class TourDetail extends Tour implements Serializable {
     private TourType tourtype;
     //source location
     private Location sourceLoc;
-    private Location destloc;
+    private Location destLoc;
     //Vehicle
     private Asset vehicle;
     //Customer
@@ -88,12 +88,12 @@ public class TourDetail extends Tour implements Serializable {
         this.sourceLoc = sourceLoc;
     }
 
-    public Location getDestloc() {
-        return destloc;
+    public Location getDestLoc() {
+        return destLoc;
     }
 
-    public void setDestloc(Location destloc) {
-        this.destloc = destloc;
+    public void setDestLoc(Location destLoc) {
+        this.destLoc = destLoc;
     }
 
     public Asset getVehicle() {

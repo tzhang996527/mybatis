@@ -38,6 +38,10 @@ public class Tour implements Serializable {
 
     private String del;
 
+    //source location
+    private Location sourceLoc;
+    private Location destLoc;
+
     public String getTourid() {
         return tourid;
     }
@@ -172,5 +176,21 @@ public class Tour implements Serializable {
 
     public void setDel(String del) {
         this.del = del == null ? null : del.trim();
+    }
+
+    public Location getSourceLoc() {
+        return sourceLoc;
+    }
+
+    public void setSourceLoc(Location sourceLoc) {
+        this.sourceLoc = sourceLoc;
+    }
+
+    public Location getDestLoc() {
+        return destLoc;
+    }
+
+    public void setDestLoc(Location destLoc) {
+        this.destLoc = destLoc;
     }
 }

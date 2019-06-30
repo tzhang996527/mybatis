@@ -9,59 +9,85 @@
     <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
     <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
     <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
-    <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-    <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
-    <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
-    <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
+    <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+    <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+    <result column="ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+    <result column="ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
     <result column="ETA" property="eta" jdbcType="DATE" />
     <result column="EXE_STATUS" property="exeStatus" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
-    <result column="CREATED_ON" property="createdOn" jdbcType="DATE" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
     <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
+    <!--        source-->
+    <association property="sourceLoc" javaType="Location">
+      <id column="SL_LOC_ID" property="locId" jdbcType="VARCHAR" />
+      <result column="SL_ADDRESS" property="address" jdbcType="VARCHAR" />
+    </association>
+    <!--        destion-->
+    <association property="destLoc" javaType="Location">
+      <id column="DL_LOC_ID" property="locId" jdbcType="VARCHAR" />
+      <result column="DL_ADDRESS" property="address" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
+  <sql id="location_field">
+    <!--        source location-->
+    src.LOC_ID   AS SL_LOC_ID,
+    src.ADDRESS  AS SL_ADDRESS,
+    <!--        destination-->
+    dest.LOC_ID   AS DL_LOC_ID,
+    dest.ADDRESS  AS DL_ADDRESS
+  </sql>
   <sql id="Base_Column_List" >
     TOURID, TOUR_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, PLAN_DEPART,
     PLAN_ARR, ACT_DEPART, ACT_ARR, ETA, EXE_STATUS, CUST_ID, CREATED_ON, CREATED_BY,
     DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <sql id="Base_Column_List1" >
+    t.*,
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Tour" >
     select
-    <include refid="Base_Column_List" />
-    from t_tour
+    <include refid="Base_Column_List1" />
+    <include refid="location_field" />
+    from t_tour t
+    left join t_location src
+    on t.SOURCE_LOCID = src.LOC_ID
+    left join t_location dest
+    on t.DEST_LOCID = dest.LOC_ID
     <where>
       <if test="tourid != null">
-        AND TOURID LIKE CONCAT(CONCAT('%',#{tourid}),'%')
+        AND t.TOURID LIKE CONCAT(CONCAT('%',#{tourid}),'%')
       </if>
       <if test="tourType != null">
-        AND TOUR_TYPE LIKE CONCAT(CONCAT('%',#{tourType}),'%')
+        AND t.TOUR_TYPE LIKE CONCAT(CONCAT('%',#{tourType}),'%')
       </if>
       <if test="sourceLocid != null">
-        AND SOURCE_LOCID LIKE CONCAT(CONCAT('%',#{sourceLocid}),'%')
+        AND t.SOURCE_LOCID LIKE CONCAT(CONCAT('%',#{sourceLocid}),'%')
       </if>
       <if test="destLocid != null">
-        AND DEST_LOCID LIKE CONCAT(CONCAT('%',#{destLocid}),'%')
+        AND t.DEST_LOCID LIKE CONCAT(CONCAT('%',#{destLocid}),'%')
       </if>
       <if test="vehicleId != null">
-        AND VEHICLE_ID LIKE CONCAT(CONCAT('%',#{vehicleId}),'%')
+        AND t.VEHICLE_ID LIKE CONCAT(CONCAT('%',#{vehicleId}),'%')
       </if>
       <if test="driverId != null">
-        AND DRIVER_ID LIKE CONCAT(CONCAT('%',#{driverId}),'%')
+        AND t.DRIVER_ID LIKE CONCAT(CONCAT('%',#{driverId}),'%')
       </if>
       <if test="shipTo != null">
-        AND SHIP_TO LIKE CONCAT(CONCAT('%',#{shipTo}),'%')
+        AND t.SHIP_TO LIKE CONCAT(CONCAT('%',#{shipTo}),'%')
       </if>
       <if test="planDepart != null">
-        AND PLAN_DEPART LIKE CONCAT(CONCAT('%',#{planDepart}),'%')
+        AND t.PLAN_DEPART LIKE CONCAT(CONCAT('%',#{planDepart}),'%')
       </if>
       <if test="planArr != null">
-        AND PLAN_ARR LIKE CONCAT(CONCAT('%',#{planArr}),'%')
+        AND t.PLAN_ARR LIKE CONCAT(CONCAT('%',#{planArr}),'%')
       </if>
       <if test="exeStatus != null">
-        AND EXE_STATUS LIKE CONCAT(CONCAT('%',#{exeStatus}),'%')
+        AND t.EXE_STATUS LIKE CONCAT(CONCAT('%',#{exeStatus}),'%')
       </if>
       <if test="custId != null">
-        AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
+        AND t.CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
       </if>
     </where>
   </select>

@@ -56,7 +56,7 @@
             <result column="SL_POSTAL_CODE" property="postalCode" jdbcType="VARCHAR" />
         </association>
 <!--        destion-->
-        <association property="destloc" javaType="Location">
+        <association property="destLoc" javaType="Location">
             <id column="DL_LOC_ID" property="locId" jdbcType="VARCHAR" />
             <result column="DL_ADDRESS" property="address" jdbcType="VARCHAR" />
             <result column="DL_LAT" property="lat" jdbcType="VARCHAR" />
