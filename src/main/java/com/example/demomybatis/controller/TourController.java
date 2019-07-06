@@ -22,11 +22,14 @@ public class TourController {
 
     private final ActualStopMapper actualStopMapper;
 
+    private final PlannedStopMapper plannedStopMapper;
+
     @Autowired
-    public TourController(TourMapper tourMapper, TourDetailMapper tourDetailMapper, ActualStopMapper actualStopMapper){
+    public TourController(TourMapper tourMapper, TourDetailMapper tourDetailMapper, ActualStopMapper actualStopMapper, PlannedStopMapper plannedStopMapper){
         this.tourMapper = tourMapper;
         this.tourDetailMapper = tourDetailMapper;
         this.actualStopMapper = actualStopMapper;
+        this.plannedStopMapper = plannedStopMapper;
     }
 
     @GetMapping(path="tour")
@@ -35,13 +38,38 @@ public class TourController {
     }
 
     @PostMapping(path = "tour")
-    public List<Tour> create(@RequestBody Tour tour){
+    public String create(@RequestBody TourDetail tourDetail){
+        //Creat tour
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String nextId = Long.toString(this.tourMapper.getNextTourId());
+        Tour tour = new Tour();
+        tour.setTourid(nextId);
+        //tour type
+        tour.setTourType(tourDetail.getTourType());
+        //asset id
+        tour.setVehicleId(tourDetail.getVehicle().getAssetId());
+        tour.setSourceLocid(tourDetail.getSourceLoc().getLocId());
+        tour.setDestLocid(tourDetail.getDestLoc().getLocId());
+        tour.setPlanDepart(tourDetail.getPlanDepart());
+        tour.setPlanArr(tourDetail.getPlanArr());
+//        tour.setShipTo("");
         tour.setCreatedBy(username);
         tour.setCreatedOn(new Date());
         this.tourMapper.insert(tour);
-        //return all customer
-        return this.tourMapper.selectByPrimaryKey(null);
+
+        //planned stop
+        List<PlannedStopDetail> plannedStopDetails = tourDetail.getPlannedStopsDetail();
+        int len = plannedStopDetails.size();
+        for(int i=0; i< len;i++){
+            PlannedStop plannedStop = plannedStopDetails.get(i);
+            plannedStop.setTourid(nextId);
+            plannedStop.setLocid(plannedStop.getLocid());
+            plannedStop.setSeq(i+1);
+            plannedStop.setStatus("P"); //Planned
+            this.plannedStopMapper.insert(plannedStop);
+        }
+
+        return nextId;
     }
 
     @PutMapping(path = "tour")
@@ -79,6 +107,12 @@ public class TourController {
         //insert current postion
         this.actualStopMapper.insertSelective(actualStop);
         return actualStop;
+    }
+
+    @GetMapping(path="nextTourId")
+    public String getNextTourId(){
+        long nextId = this.tourMapper.getNextTourId();
+        return Long.toString(nextId);
     }
 //    @GetMapping(path="plannedStops")
 //    public  List<PlannedStop> getPlannedStops(){

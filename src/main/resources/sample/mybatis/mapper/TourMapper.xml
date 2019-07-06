@@ -46,6 +46,9 @@
   <sql id="Base_Column_List1" >
     t.*,
   </sql>
+  <select id="getNextTourId" resultType="long">
+    SELECT NEXTVAL('TOUR');
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Tour" >
     select
     <include refid="Base_Column_List1" />
@@ -104,9 +107,9 @@
     DEL)
     values (#{tourid,jdbcType=VARCHAR}, #{tourType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR},
     #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR},
-    #{shipTo,jdbcType=VARCHAR}, #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE},
-    #{actDepart,jdbcType=DATE}, #{actArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, #{exeStatus,jdbcType=VARCHAR},
-    #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE}, #{createdBy,jdbcType=VARCHAR},
+    #{shipTo,jdbcType=VARCHAR}, #{planDepart,jdbcType=TIMESTAMP}, #{planArr,jdbcType=TIMESTAMP},
+    #{actDepart,jdbcType=TIMESTAMP}, #{actArr,jdbcType=TIMESTAMP}, #{eta,jdbcType=TIMESTAMP}, #{exeStatus,jdbcType=VARCHAR},
+    #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
     #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Tour" >
@@ -187,19 +190,19 @@
         #{shipTo,jdbcType=VARCHAR},
       </if>
       <if test="planDepart != null" >
-        #{planDepart,jdbcType=DATE},
+        #{planDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="planArr != null" >
-        #{planArr,jdbcType=DATE},
+        #{planArr,jdbcType=TIMESTAMP},
       </if>
       <if test="actDepart != null" >
-        #{actDepart,jdbcType=DATE},
+        #{actDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="actArr != null" >
-        #{actArr,jdbcType=DATE},
+        #{actArr,jdbcType=TIMESTAMP},
       </if>
       <if test="eta != null" >
-        #{eta,jdbcType=DATE},
+        #{eta,jdbcType=TIMESTAMP},
       </if>
       <if test="exeStatus != null" >
         #{exeStatus,jdbcType=VARCHAR},
@@ -208,7 +211,7 @@
         #{custId,jdbcType=VARCHAR},
       </if>
       <if test="createdOn != null" >
-        #{createdOn,jdbcType=DATE},
+        #{createdOn,jdbcType=TIMESTAMP},
       </if>
       <if test="createdBy != null" >
         #{createdBy,jdbcType=VARCHAR},
@@ -240,19 +243,19 @@
         SHIP_TO = #{shipTo,jdbcType=VARCHAR},
       </if>
       <if test="planDepart != null" >
-        PLAN_DEPART = #{planDepart,jdbcType=DATE},
+        PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="planArr != null" >
-        PLAN_ARR = #{planArr,jdbcType=DATE},
+        PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
       </if>
       <if test="actDepart != null" >
-        ACT_DEPART = #{actDepart,jdbcType=DATE},
+        ACT_DEPART = #{actDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="actArr != null" >
-        ACT_ARR = #{actArr,jdbcType=DATE},
+        ACT_ARR = #{actArr,jdbcType=TIMESTAMP},
       </if>
       <if test="eta != null" >
-        ETA = #{eta,jdbcType=DATE},
+        ETA = #{eta,jdbcType=TIMESTAMP},
       </if>
       <if test="exeStatus != null" >
         EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
@@ -261,7 +264,7 @@
         CUST_ID = #{custId,jdbcType=VARCHAR},
       </if>
       <if test="createdOn != null" >
-        CREATED_ON = #{createdOn,jdbcType=DATE},
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
       </if>
       <if test="createdBy != null" >
         CREATED_BY = #{createdBy,jdbcType=VARCHAR},
@@ -280,14 +283,14 @@
     VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
     DRIVER_ID = #{driverId,jdbcType=VARCHAR},
     SHIP_TO = #{shipTo,jdbcType=VARCHAR},
-    PLAN_DEPART = #{planDepart,jdbcType=DATE},
-    PLAN_ARR = #{planArr,jdbcType=DATE},
-    ACT_DEPART = #{actDepart,jdbcType=DATE},
-    ACT_ARR = #{actArr,jdbcType=DATE},
-    ETA = #{eta,jdbcType=DATE},
+    PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
+    PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
+    ACT_DEPART = #{actDepart,jdbcType=TIMESTAMP},
+    ACT_ARR = #{actArr,jdbcType=TIMESTAMP},
+    ETA = #{eta,jdbcType=TIMESTAMP},
     EXE_STATUS = #{exeStatus,jdbcType=VARCHAR},
     CUST_ID = #{custId,jdbcType=VARCHAR},
-    CREATED_ON = #{createdOn,jdbcType=DATE},
+    CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
     CREATED_BY = #{createdBy,jdbcType=VARCHAR},
     DEL = #{del,jdbcType=VARCHAR}
     where TOURID = #{tourid,jdbcType=VARCHAR}

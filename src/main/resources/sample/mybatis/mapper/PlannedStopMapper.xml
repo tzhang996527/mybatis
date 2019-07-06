@@ -6,13 +6,13 @@
     <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
     <id column="SEQ" property="seq" jdbcType="INTEGER" />
     <result column="LOCID" property="locid" jdbcType="VARCHAR" />
-    <result column="PLAN_DEPART" property="planDepart" jdbcType="DATE" />
-    <result column="PLAN_ARR" property="planArr" jdbcType="DATE" />
-    <result column="ACT_DEPART" property="actDepart" jdbcType="DATE" />
-    <result column="ACT_ARR" property="actArr" jdbcType="DATE" />
-    <result column="EST_DEPART" property="estDepart" jdbcType="DATE" />
-    <result column="EST_ARR" property="estArr" jdbcType="DATE" />
-    <result column="ETA" property="eta" jdbcType="DATE" />
+    <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+    <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+    <result column="ACT_DEPART" property="actDepart" jdbcType="TIMESTAMP" />
+    <result column="ACT_ARR" property="actArr" jdbcType="TIMESTAMP" />
+    <result column="EST_DEPART" property="estDepart" jdbcType="TIMESTAMP" />
+    <result column="EST_ARR" property="estArr" jdbcType="TIMESTAMP" />
+    <result column="ETA" property="eta" jdbcType="TIMESTAMP" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
@@ -40,8 +40,8 @@
       ACT_ARR, EST_DEPART, EST_ARR, ETA, 
       STATUS, DEL)
     values (#{tourid,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{locid,jdbcType=VARCHAR}, 
-      #{planDepart,jdbcType=DATE}, #{planArr,jdbcType=DATE}, #{actDepart,jdbcType=DATE}, 
-      #{actArr,jdbcType=DATE}, #{estDepart,jdbcType=DATE}, #{estArr,jdbcType=DATE}, #{eta,jdbcType=DATE}, 
+      #{planDepart,jdbcType=TIMESTAMP}, #{planArr,jdbcType=TIMESTAMP}, #{actDepart,jdbcType=TIMESTAMP},
+      #{actArr,jdbcType=TIMESTAMP}, #{estDepart,jdbcType=TIMESTAMP}, #{estArr,jdbcType=TIMESTAMP}, #{eta,jdbcType=TIMESTAMP},
       #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.PlannedStop" >
@@ -95,25 +95,25 @@
         #{locid,jdbcType=VARCHAR},
       </if>
       <if test="planDepart != null" >
-        #{planDepart,jdbcType=DATE},
+        #{planDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="planArr != null" >
-        #{planArr,jdbcType=DATE},
+        #{planArr,jdbcType=TIMESTAMP},
       </if>
       <if test="actDepart != null" >
-        #{actDepart,jdbcType=DATE},
+        #{actDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="actArr != null" >
-        #{actArr,jdbcType=DATE},
+        #{actArr,jdbcType=TIMESTAMP},
       </if>
       <if test="estDepart != null" >
-        #{estDepart,jdbcType=DATE},
+        #{estDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="estArr != null" >
-        #{estArr,jdbcType=DATE},
+        #{estArr,jdbcType=TIMESTAMP},
       </if>
       <if test="eta != null" >
-        #{eta,jdbcType=DATE},
+        #{eta,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
@@ -130,25 +130,25 @@
         LOCID = #{locid,jdbcType=VARCHAR},
       </if>
       <if test="planDepart != null" >
-        PLAN_DEPART = #{planDepart,jdbcType=DATE},
+        PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="planArr != null" >
-        PLAN_ARR = #{planArr,jdbcType=DATE},
+        PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
       </if>
       <if test="actDepart != null" >
-        ACT_DEPART = #{actDepart,jdbcType=DATE},
+        ACT_DEPART = #{actDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="actArr != null" >
-        ACT_ARR = #{actArr,jdbcType=DATE},
+        ACT_ARR = #{actArr,jdbcType=TIMESTAMP},
       </if>
       <if test="estDepart != null" >
-        EST_DEPART = #{estDepart,jdbcType=DATE},
+        EST_DEPART = #{estDepart,jdbcType=TIMESTAMP},
       </if>
       <if test="estArr != null" >
-        EST_ARR = #{estArr,jdbcType=DATE},
+        EST_ARR = #{estArr,jdbcType=TIMESTAMP},
       </if>
       <if test="eta != null" >
-        ETA = #{eta,jdbcType=DATE},
+        ETA = #{eta,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         STATUS = #{status,jdbcType=VARCHAR},
@@ -163,13 +163,13 @@
   <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.PlannedStop" >
     update t_pln_stop
     set LOCID = #{locid,jdbcType=VARCHAR},
-      PLAN_DEPART = #{planDepart,jdbcType=DATE},
-      PLAN_ARR = #{planArr,jdbcType=DATE},
-      ACT_DEPART = #{actDepart,jdbcType=DATE},
-      ACT_ARR = #{actArr,jdbcType=DATE},
-      EST_DEPART = #{estDepart,jdbcType=DATE},
-      EST_ARR = #{estArr,jdbcType=DATE},
-      ETA = #{eta,jdbcType=DATE},
+      PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
+      PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
+      ACT_DEPART = #{actDepart,jdbcType=TIMESTAMP},
+      ACT_ARR = #{actArr,jdbcType=TIMESTAMP},
+      EST_DEPART = #{estDepart,jdbcType=TIMESTAMP},
+      EST_ARR = #{estArr,jdbcType=TIMESTAMP},
+      ETA = #{eta,jdbcType=TIMESTAMP},
       STATUS = #{status,jdbcType=VARCHAR},
       DEL = #{del,jdbcType=VARCHAR}
     where TOURID = #{tourid,jdbcType=VARCHAR}

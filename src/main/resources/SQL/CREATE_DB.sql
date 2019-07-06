@@ -754,3 +754,78 @@ VALUES
 'LOC2',
 'P',
 '');
+
+DROP TABLE IF EXISTS t_sequence;
+DROP FUNCTION IF EXISTS currval;
+DROP FUNCTION IF EXISTS setval;
+DROP FUNCTION IF EXISTS nextval;
+CREATE TABLE t_sequence (
+name VARCHAR(50) NOT NULL,
+current_value BIGINT NOT NULL,
+increment INT NOT NULL DEFAULT 1,
+PRIMARY KEY (name)
+) ENGINE=InnoDB;
+
+DELIMITER $
+CREATE FUNCTION currval (seq_name VARCHAR(50))
+RETURNS BIGINT
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT ''
+BEGIN
+DECLARE value BIGINT;
+SET value = 0;
+SELECT current_value INTO value
+FROM t_sequence
+WHERE name = seq_name;
+RETURN value;
+END
+$
+
+
+DELIMITER $
+CREATE FUNCTION nextval (seq_name VARCHAR(50))
+RETURNS BIGINT
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT ''
+BEGIN
+UPDATE t_sequence
+SET current_value = current_value + increment
+WHERE name = seq_name;
+RETURN currval(seq_name);
+END
+$
+
+
+DELIMITER $
+CREATE FUNCTION setval (seq_name VARCHAR(50), value bigint)
+RETURNS BIGINT
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT ''
+BEGIN
+UPDATE t_sequence
+SET current_value = value
+WHERE name = seq_name;
+RETURN currval(seq_name);
+END
+$
+
+INSERT INTO t_sequence VALUES ('TOUR', 6100000000, 1);
+-- ----添加一个sequence名称和初始值，以及自增幅度  添加一个名为TestSeq 的自增序列
+
+-- SELECT SETVAL('TOUR', 10);
+-- ---设置指定sequence的初始值    这里设置TestSeq 的初始值为10
+
+SELECT CURRVAL('TOUR');
+-- --查询指定sequence的当前值   这里是获取TestSeq当前值--
+
+SELECT NEXTVAL('TOUR');
+-- --查询指定sequence的下一个值  这里是获取TestSeq下一个值

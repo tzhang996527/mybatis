@@ -19,4 +19,6 @@ public interface TourMapper {
     int updateByPrimaryKeySelective(Tour record);
 
     int updateByPrimaryKey(Tour record);
+
+    long getNextTourId();
 }
