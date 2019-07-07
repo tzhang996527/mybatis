@@ -1,11 +1,9 @@
 package com.example.demomybatis.service;
 
 import com.example.demomybatis.dao.PlannedStopMapper;
+import com.example.demomybatis.dao.TourItemMapper;
 import com.example.demomybatis.dao.TourMapper;
-import com.example.demomybatis.entity.PlannedStop;
-import com.example.demomybatis.entity.PlannedStopDetail;
-import com.example.demomybatis.entity.Tour;
-import com.example.demomybatis.entity.TourDetail;
+import com.example.demomybatis.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,9 @@ public class TourService {
 
     @Autowired
     private PlannedStopMapper plannedStopMapper;
+
+    @Autowired
+    private TourItemMapper tourItemMapper;
 
     public List<Tour> getTour(){
         return tourMapper.selectByPrimaryKey(null);
@@ -45,14 +46,16 @@ public class TourService {
         tour.setDestLocid(tourDetail.getDestLoc().getLocId());
         tour.setPlanDepart(tourDetail.getPlanDepart());
         tour.setPlanArr(tourDetail.getPlanArr());
+
+        //planned
         tour.setExeStatus("01");
-//        tour.setShipTo("");
+        tour.setShipTo(tourDetail.getShipTo());
+        tour.setCustId(tourDetail.getCustId());
+        tour.setDriverId(tourDetail.getDriver().getDriverId());
         tour.setCreatedBy(username);
         tour.setCreatedOn(new Date());
         this.tourMapper.insert(tour);
-//        if(true){
-//            throw new RuntimeException("Save tour error......");
-//        }
+
         //planned stop
         List<PlannedStopDetail> plannedStopDetails = tourDetail.getPlannedStopsDetail();
         int len = plannedStopDetails.size();
@@ -65,6 +68,21 @@ public class TourService {
             this.plannedStopMapper.insert(plannedStop);
         }
 
+        //cargo
+        List<TourItem> tourItems = tourDetail.getTourItem();
+        len = tourItems.size();
+        for(int i=0;i<len;i++){
+            TourItem it = tourItems.get(i);
+            it.setTourid(nextId);
+            it.setStatus("P");
+            it.setCreatedBy(username);
+            it.setCreatedOn(new Date());
+            this.tourItemMapper.insert(it);
+        }
+//        //test exception
+//        if(true){
+//            throw new RuntimeException("Save tour error......");
+//        }
         return nextId;
     }
 //    private TourMapper tourMapper;
