@@ -2,6 +2,7 @@ package com.example.demomybatis.controller;
 
 import com.example.demomybatis.dao.*;
 import com.example.demomybatis.entity.*;
+import com.example.demomybatis.service.TourService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class TourController {
+
+    @Autowired
+    private TourService tourService;
 
     private final TourMapper tourMapper;
 
@@ -40,36 +44,7 @@ public class TourController {
     @PostMapping(path = "tour")
     public String create(@RequestBody TourDetail tourDetail){
         //Creat tour
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String nextId = Long.toString(this.tourMapper.getNextTourId());
-        Tour tour = new Tour();
-        tour.setTourid(nextId);
-        //tour type
-        tour.setTourType(tourDetail.getTourType());
-        //asset id
-        tour.setVehicleId(tourDetail.getVehicle().getAssetId());
-        tour.setSourceLocid(tourDetail.getSourceLoc().getLocId());
-        tour.setDestLocid(tourDetail.getDestLoc().getLocId());
-        tour.setPlanDepart(tourDetail.getPlanDepart());
-        tour.setPlanArr(tourDetail.getPlanArr());
-//        tour.setShipTo("");
-        tour.setCreatedBy(username);
-        tour.setCreatedOn(new Date());
-        this.tourMapper.insert(tour);
-
-        //planned stop
-        List<PlannedStopDetail> plannedStopDetails = tourDetail.getPlannedStopsDetail();
-        int len = plannedStopDetails.size();
-        for(int i=0; i< len;i++){
-            PlannedStop plannedStop = plannedStopDetails.get(i);
-            plannedStop.setTourid(nextId);
-            plannedStop.setLocid(plannedStop.getLocid());
-            plannedStop.setSeq(i+1);
-            plannedStop.setStatus("P"); //Planned
-            this.plannedStopMapper.insert(plannedStop);
-        }
-
-        return nextId;
+        return this.tourService.saveTour(tourDetail);
     }
 
     @PutMapping(path = "tour")
