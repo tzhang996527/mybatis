@@ -21,4 +21,5 @@ public interface TourMapper {
     int updateByPrimaryKey(Tour record);
 
     long getNextTourId();
+    long getNextResvId();
 }

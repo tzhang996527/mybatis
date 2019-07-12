@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.ScheduleMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.Schedule" >
+    <id column="SCH_ID" property="schId" jdbcType="VARCHAR" />
+    <result column="SCH_TYPE" property="schType" jdbcType="VARCHAR" />
+    <result column="SOURCE_LOCID" property="sourceLocid" jdbcType="VARCHAR" />
+    <result column="DEST_LOCID" property="destLocid" jdbcType="VARCHAR" />
+    <result column="VEHICLE_ID" property="vehicleId" jdbcType="VARCHAR" />
+    <result column="DRIVER_ID" property="driverId" jdbcType="VARCHAR" />
+    <result column="SHIP_TO" property="shipTo" jdbcType="VARCHAR" />
+    <result column="START_DT" property="startDt" jdbcType="TIMESTAMP" />
+    <result column="END_DT" property="endDt" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="DEL" property="del" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCH_ID, SCH_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, START_DT, 
+    END_DT, STATUS, CUST_ID, CREATED_ON, CREATED_BY, DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_schedule
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_schedule
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.Schedule" >
+    insert into t_schedule (SCH_ID, SCH_TYPE, SOURCE_LOCID, 
+      DEST_LOCID, VEHICLE_ID, DRIVER_ID, 
+      SHIP_TO, START_DT, END_DT, 
+      STATUS, CUST_ID, CREATED_ON, 
+      CREATED_BY, DEL)
+    values (#{schId,jdbcType=VARCHAR}, #{schType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR}, 
+      #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR}, 
+      #{shipTo,jdbcType=VARCHAR}, #{startDt,jdbcType=TIMESTAMP}, #{endDt,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Schedule" >
+    insert into t_schedule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="schId != null" >
+        SCH_ID,
+      </if>
+      <if test="schType != null" >
+        SCH_TYPE,
+      </if>
+      <if test="sourceLocid != null" >
+        SOURCE_LOCID,
+      </if>
+      <if test="destLocid != null" >
+        DEST_LOCID,
+      </if>
+      <if test="vehicleId != null" >
+        VEHICLE_ID,
+      </if>
+      <if test="driverId != null" >
+        DRIVER_ID,
+      </if>
+      <if test="shipTo != null" >
+        SHIP_TO,
+      </if>
+      <if test="startDt != null" >
+        START_DT,
+      </if>
+      <if test="endDt != null" >
+        END_DT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="schId != null" >
+        #{schId,jdbcType=VARCHAR},
+      </if>
+      <if test="schType != null" >
+        #{schType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceLocid != null" >
+        #{sourceLocid,jdbcType=VARCHAR},
+      </if>
+      <if test="destLocid != null" >
+        #{destLocid,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleId != null" >
+        #{vehicleId,jdbcType=VARCHAR},
+      </if>
+      <if test="driverId != null" >
+        #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="shipTo != null" >
+        #{shipTo,jdbcType=VARCHAR},
+      </if>
+      <if test="startDt != null" >
+        #{startDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDt != null" >
+        #{endDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.Schedule" >
+    update t_schedule
+    <set >
+      <if test="schType != null" >
+        SCH_TYPE = #{schType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceLocid != null" >
+        SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
+      </if>
+      <if test="destLocid != null" >
+        DEST_LOCID = #{destLocid,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleId != null" >
+        VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
+      </if>
+      <if test="driverId != null" >
+        DRIVER_ID = #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="shipTo != null" >
+        SHIP_TO = #{shipTo,jdbcType=VARCHAR},
+      </if>
+      <if test="startDt != null" >
+        START_DT = #{startDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDt != null" >
+        END_DT = #{endDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.Schedule" >
+    update t_schedule
+    set SCH_TYPE = #{schType,jdbcType=VARCHAR},
+      SOURCE_LOCID = #{sourceLocid,jdbcType=VARCHAR},
+      DEST_LOCID = #{destLocid,jdbcType=VARCHAR},
+      VEHICLE_ID = #{vehicleId,jdbcType=VARCHAR},
+      DRIVER_ID = #{driverId,jdbcType=VARCHAR},
+      SHIP_TO = #{shipTo,jdbcType=VARCHAR},
+      START_DT = #{startDt,jdbcType=TIMESTAMP},
+      END_DT = #{endDt,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      DEL = #{del,jdbcType=VARCHAR}
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+  </update>
+</mapper>

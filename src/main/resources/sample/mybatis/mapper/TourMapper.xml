@@ -49,6 +49,9 @@
   <select id="getNextTourId" resultType="long">
     SELECT NEXTVAL('TOUR');
   </select>
+  <select id="getNextResvId" resultType="long">
+    SELECT NEXTVAL('RESV');
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Tour" >
     select
     <include refid="Base_Column_List1" />

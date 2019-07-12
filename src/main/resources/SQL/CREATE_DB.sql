@@ -5,6 +5,8 @@ drop table if exists `db_example`.`T_NOTIFICATION`;
 drop table if exists `db_example`.`T_EXE_EVENT`;
 drop table if exists `db_example`.`T_TOUR_ITEM`;
 drop table if exists `db_example`.`T_TOUR`;
+drop table if exists `db_example`.`T_SCH_STOP`;
+drop table if exists `db_example`.`T_SCHEDULE`;
 drop table if exists `db_example`.`T_RESV_ITEM`;
 drop table if exists `db_example`.`T_RESERVATION`;
 drop table if exists `db_example`.`T_DRIVER`;
@@ -15,7 +17,15 @@ drop table if exists `db_example`.`T_EVENT_CODE`;
 drop table if exists `db_example`.`T_RESV_TYPE`;
 drop table if exists `db_example`.`T_TOUR_TYPE`;
 drop table if exists `db_example`.`T_CUSTOMER`;
+DROP TABLE if exists `db_example`.`T_SCH_TYPE`;
 
+create table `T_SCH_TYPE`(
+	`SCH_TYPE` VARCHAR(10) NOT NULL,
+    `TEXT` VARCHAR(30),
+	`CREATED_BY` VARCHAR(20),
+    `CREATED_ON` datetime,
+    primary key (`SCH_TYPE`)
+)engine=InnoDB DEFAULT CHARSET=utf8;
 
 create table `T_RESV_TYPE`(
 	`RESV_TYPE` VARCHAR(10) NOT NULL,
@@ -819,6 +829,8 @@ END
 $
 
 INSERT INTO t_sequence VALUES ('TOUR', 6100000000, 1);
+INSERT INTO t_sequence VALUES('RESV',3200000000,1);
+INSERT INTO t_sequence VALUES('PLAN',2100000000,1);
 -- ----添加一个sequence名称和初始值，以及自增幅度  添加一个名为TestSeq 的自增序列
 
 -- SELECT SETVAL('TOUR', 10);
@@ -829,3 +841,50 @@ SELECT CURRVAL('TOUR');
 
 SELECT NEXTVAL('TOUR');
 -- --查询指定sequence的下一个值  这里是获取TestSeq下一个值
+
+create table `T_SCHEDULE` (
+	`SCH_ID` VARCHAR(20) NOT NULL,
+    `SCH_TYPE` VARCHAR(10),
+    `SOURCE_LOCID` VARCHAR(20),
+    `DEST_LOCID` VARCHAR(20),
+    `VEHICLE_ID` VARCHAR(20),
+    `DRIVER_ID` VARCHAR(20),
+    `SHIP_TO`  VARCHAR(20),
+    `START_DT` datetime,
+    `END_DT`   datetime,
+    `STATUS`  VARCHAR(2),
+    `CUST_ID` VARCHAR(20),
+    `CREATED_ON` datetime,
+    `CREATED_BY` VARCHAR(20),
+    `DEL` VARCHAR(1),
+    primary key(`SCH_ID`),
+    constraint `fk_sch_type` foreign key(`SCH_TYPE`) references `T_SCH_TYPE`(`SCH_TYPE`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_src_loc` foreign key(`SOURCE_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_dest_loc` foreign key(`DEST_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_veh_id` foreign key(`VEHICLE_ID`) references `T_ASSET`(`ASSET_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_driver` foreign key(`DRIVER_ID`) references `T_DRIVER`(`DRIVER_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_ship_to` foreign key(`SHIP_TO`) references `T_CUSTOMER`(`CUST_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
+    ON delete no action ON update no action
+) engine=InnoDB default charset = utf8;
+
+create table `T_SCH_STOP` (
+	`SCH_ID` VARCHAR(20) NOT NULL,
+    `SEQ` INT,
+	`LOCID` VARCHAR(20),
+    `PLAN_DEPART` datetime,
+    `PLAN_ARR`    datetime,
+    `STATUS`      VARCHAR(2),
+    primary key(`SCH_ID`,`SEQ`),
+    key `idx_fk_sch_id`(`SCH_ID`),
+    constraint `fk_sch_id_pln` foreign key(`SCH_ID`) references `T_SCHEDULE`(`SCH_ID`)
+    ON delete no action ON update no action,
+    constraint `fk_sch_pln_loc` foreign key(`LOCID`) references `T_LOCATION`(`LOC_ID`)
+    ON delete no action ON update no action
+) engine=InnoDB default charset = utf8;

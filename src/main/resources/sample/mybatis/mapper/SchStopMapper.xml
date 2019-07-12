@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.SchStopMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.SchStop" >
+    <id column="SCH_ID" property="schId" jdbcType="VARCHAR" />
+    <id column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="LOCID" property="locid" jdbcType="VARCHAR" />
+    <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
+    <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCH_ID, SEQ, LOCID, PLAN_DEPART, PLAN_ARR, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.SchStopKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sch_stop
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.SchStopKey" >
+    delete from t_sch_stop
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.SchStop" >
+    insert into t_sch_stop (SCH_ID, SEQ, LOCID, 
+      PLAN_DEPART, PLAN_ARR, STATUS
+      )
+    values (#{schId,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{locid,jdbcType=VARCHAR}, 
+      #{planDepart,jdbcType=TIMESTAMP}, #{planArr,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.SchStop" >
+    insert into t_sch_stop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="schId != null" >
+        SCH_ID,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="locid != null" >
+        LOCID,
+      </if>
+      <if test="planDepart != null" >
+        PLAN_DEPART,
+      </if>
+      <if test="planArr != null" >
+        PLAN_ARR,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="schId != null" >
+        #{schId,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="locid != null" >
+        #{locid,jdbcType=VARCHAR},
+      </if>
+      <if test="planDepart != null" >
+        #{planDepart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planArr != null" >
+        #{planArr,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.SchStop" >
+    update t_sch_stop
+    <set >
+      <if test="locid != null" >
+        LOCID = #{locid,jdbcType=VARCHAR},
+      </if>
+      <if test="planDepart != null" >
+        PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planArr != null" >
+        PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.SchStop" >
+    update t_sch_stop
+    set LOCID = #{locid,jdbcType=VARCHAR},
+      PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
+      PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where SCH_ID = #{schId,jdbcType=VARCHAR}
+      and SEQ = #{seq,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,7 +1,9 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.dao.ReservationMapper;
+import com.example.demomybatis.dao.TourMapper;
 import com.example.demomybatis.entity.Reservation;
+import com.example.demomybatis.service.TourService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class ReservationController {
+
+    @Autowired
+    private TourMapper tourMapper;
 
     private final ReservationMapper reservationMapper;
 
@@ -29,6 +34,9 @@ public class ReservationController {
     @PostMapping(path = "reservation")
     public List<Reservation> create(@RequestBody Reservation reservation){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String nextId = Long.toString(this.tourMapper.getNextResvId());
+        reservation.setResvId(nextId);
         reservation.setCreatedBy(username);
         reservation.setCreatedOn(new Date());
         this.reservationMapper.insert(reservation);

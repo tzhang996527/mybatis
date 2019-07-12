@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demomybatis.dao.SchTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demomybatis.entity.SchType" >
+    <id column="SCH_TYPE" property="schType" jdbcType="VARCHAR" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
+    <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
+    <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCH_TYPE, TEXT, CREATED_BY, CREATED_ON
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sch_type
+    where SCH_TYPE = #{schType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_sch_type
+    where SCH_TYPE = #{schType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demomybatis.entity.SchType" >
+    insert into t_sch_type (SCH_TYPE, TEXT, CREATED_BY, 
+      CREATED_ON)
+    values (#{schType,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demomybatis.entity.SchType" >
+    insert into t_sch_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="schType != null" >
+        SCH_TYPE,
+      </if>
+      <if test="text != null" >
+        TEXT,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="schType != null" >
+        #{schType,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demomybatis.entity.SchType" >
+    update t_sch_type
+    <set >
+      <if test="text != null" >
+        TEXT = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SCH_TYPE = #{schType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demomybatis.entity.SchType" >
+    update t_sch_type
+    set TEXT = #{text,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP}
+    where SCH_TYPE = #{schType,jdbcType=VARCHAR}
+  </update>
+</mapper>
