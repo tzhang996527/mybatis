@@ -11,7 +11,7 @@
   <sql id="Base_Column_List" >
     RESV_TYPE, TEXT, CREATED_BY, CREATED_ON
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="ResvType" >
     select 
     <include refid="Base_Column_List" />
     from t_resv_type

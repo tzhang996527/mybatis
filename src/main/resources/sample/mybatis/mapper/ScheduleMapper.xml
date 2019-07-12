@@ -21,11 +21,42 @@
     SCH_ID, SCH_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, START_DT, 
     END_DT, STATUS, CUST_ID, CREATED_ON, CREATED_BY, DEL
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Schedule" >
     select 
     <include refid="Base_Column_List" />
     from t_schedule
-    where SCH_ID = #{schId,jdbcType=VARCHAR}
+    <where>
+      <if test="schId != null">
+        AND SCH_ID LIKE CONCAT(CONCAT('%',#{schId}),'%')
+      </if>
+      <if test="schType != null">
+        AND SCH_TYPE LIKE CONCAT(CONCAT('%',#{schType}),'%')
+      </if>
+      <if test="sourceLocid != null">
+        AND SOURCE_LOCID LIKE CONCAT(CONCAT('%',#{sourceLocid}),'%')
+      </if>
+      <if test="destLocid != null">
+        AND DEST_LOCID LIKE CONCAT(CONCAT('%',#{destLocid}),'%')
+      </if>
+      <if test="vehicleId != null">
+        AND VEHICLE_ID LIKE CONCAT(CONCAT('%',#{vehicleId}),'%')
+      </if>
+      <if test="driverId != null">
+        AND DRIVER_ID LIKE CONCAT(CONCAT('%',#{driverId}),'%')
+      </if>
+      <if test="shipTo != null">
+        AND SHIP_TO LIKE CONCAT(CONCAT('%',#{shipTo}),'%')
+      </if>
+      <if test="status != null">
+        AND STATUS LIKE CONCAT(CONCAT('%',#{status}),'%')
+      </if>
+      <if test="custId != null">
+        AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
+      </if>
+    </where>
+  </select>
+  <select id="getNextSchId" resultType="long">
+    SELECT NEXTVAL('SCH');
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_schedule

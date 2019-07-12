@@ -16,8 +16,14 @@
     select 
     <include refid="Base_Column_List" />
     from t_sch_stop
-    where SCH_ID = #{schId,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="schId != null">
+        AND SCH_ID LIKE CONCAT(CONCAT('%',#{schId}),'%')
+      </if>
+      <if test="schId != null">
+        AND SEQ LIKE CONCAT(CONCAT('%',#{seq}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.SchStopKey" >
     delete from t_sch_stop

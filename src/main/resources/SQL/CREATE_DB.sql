@@ -830,7 +830,7 @@ $
 
 INSERT INTO t_sequence VALUES ('TOUR', 6100000000, 1);
 INSERT INTO t_sequence VALUES('RESV',3200000000,1);
-INSERT INTO t_sequence VALUES('PLAN',2100000000,1);
+INSERT INTO t_sequence VALUES('SCH',2100000000,1);
 -- ----添加一个sequence名称和初始值，以及自增幅度  添加一个名为TestSeq 的自增序列
 
 -- SELECT SETVAL('TOUR', 10);

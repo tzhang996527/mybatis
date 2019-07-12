@@ -1,7 +1,10 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.SchType;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+@Mapper
 public interface SchTypeMapper {
     int deleteByPrimaryKey(String schType);
 
@@ -9,7 +12,7 @@ public interface SchTypeMapper {
 
     int insertSelective(SchType record);
 
-    SchType selectByPrimaryKey(String schType);
+    List<SchType> selectByPrimaryKey(SchType schType);
 
     int updateByPrimaryKeySelective(SchType record);
 

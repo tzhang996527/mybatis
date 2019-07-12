@@ -10,11 +10,18 @@
   <sql id="Base_Column_List" >
     SCH_TYPE, TEXT, CREATED_BY, CREATED_ON
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="SchType" >
     select 
     <include refid="Base_Column_List" />
     from t_sch_type
-    where SCH_TYPE = #{schType,jdbcType=VARCHAR}
+    <where>
+      <if test="schType != null">
+        AND SCH_TYPE LIKE CONCAT(CONCAT('%',#{schType}),'%')
+      </if>
+      <if test="text != null">
+        AND TEXT LIKE CONCAT(CONCAT('%',#{text}),'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_sch_type

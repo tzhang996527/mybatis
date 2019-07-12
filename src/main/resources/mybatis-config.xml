@@ -37,5 +37,8 @@
         <mapper resource="sample/mybatis/mapper/TourItemMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/TourTypeMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/TourDetailMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/ScheduleMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/SchStopMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/SchTypeMapper.xml"/>
     </mappers>
 </configuration>
