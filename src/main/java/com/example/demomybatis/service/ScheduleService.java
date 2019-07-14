@@ -28,39 +28,29 @@ public class ScheduleService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public String create(Schedule schedule){
+    public String create(ScheduleDetail scheduleDetail){
 //  public String create(ScheduleDetail scheduleDetail){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String nextId = Long.toString(this.scheduleMapper.getNextSchId());
-//        Schedule sch = new Schedule();
-        schedule.setSchId(nextId);
-//        sch.setCustId(scheduleDetail.getCustId());
-//        sch.setSchType(scheduleDetail.getSchType());
-//        sch.setShipTo(scheduleDetail.getShipTo());
-//        sch.setCustId(scheduleDetail.getCustId());
-//        sch.setStartDt(scheduleDetail.getStartDt());
-//        sch.setEndDt(scheduleDetail.getEndDt());
-//        sch.setSourceLocid(scheduleDetail.getSourceLocid());
-//        sch.setDestLocid(scheduleDetail.getDestLocid());
-//        sch.setVehicleId(scheduleDetail.getVehicleId());
-//        sch.setDriverId(scheduleDetail.getDriverId());
-        //Planned
-        schedule.setStatus("P");
-        schedule.setCreatedBy(username);
-        schedule.setCreatedOn(new Date());
-        this.scheduleMapper.insert(schedule);
+        Schedule sch = scheduleDetail;
 
-//        //planned stop
-//        List<SchStop> plannedStopDetails = scheduleDetail.getSchStops();
-//        int len = plannedStopDetails.size();
-//        for(int i=0; i< len;i++){
-//            SchStop plannedStop = plannedStopDetails.get(i);
-//            plannedStop.setSchId(nextId);
-//            plannedStop.setLocid(plannedStop.getLocid());
-//            plannedStop.setSeq(i+1);
-//            plannedStop.setStatus("P"); //Planned
-//            this.schStopMapper.insert(plannedStop);
-//        }
+        sch.setSchId(nextId);
+        sch.setStatus("P");
+        sch.setCreatedBy(username);
+        sch.setCreatedOn(new Date());
+        this.scheduleMapper.insert(sch);
+
+        //planned stop
+        List<SchStop> plannedStopDetails = scheduleDetail.getSchStops();
+        int len = plannedStopDetails.size();
+        for(int i=0; i< len;i++){
+            SchStop plannedStop = plannedStopDetails.get(i);
+            plannedStop.setSchId(nextId);
+            plannedStop.setLocid(plannedStop.getLocid());
+            plannedStop.setSeq(i+1);
+            plannedStop.setStatus("P"); //Planned
+            this.schStopMapper.insert(plannedStop);
+        }
 
         //return all type
         return nextId;

@@ -13,13 +13,20 @@
     <result column="END_DT" property="endDt" jdbcType="TIMESTAMP" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="MON" property="mon" jdbcType="VARCHAR" />
+    <result column="TUE" property="tue" jdbcType="VARCHAR" />
+    <result column="WED" property="wed" jdbcType="VARCHAR" />
+    <result column="THU" property="thu" jdbcType="VARCHAR" />
+    <result column="FRI" property="fri" jdbcType="VARCHAR" />
+    <result column="SAT" property="sat" jdbcType="VARCHAR" />
+    <result column="SUN" property="sun" jdbcType="VARCHAR" />
     <result column="CREATED_ON" property="createdOn" jdbcType="TIMESTAMP" />
     <result column="CREATED_BY" property="createdBy" jdbcType="VARCHAR" />
     <result column="DEL" property="del" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     SCH_ID, SCH_TYPE, SOURCE_LOCID, DEST_LOCID, VEHICLE_ID, DRIVER_ID, SHIP_TO, START_DT, 
-    END_DT, STATUS, CUST_ID, CREATED_ON, CREATED_BY, DEL
+    END_DT, STATUS, CUST_ID, MON, TUE, WED, THU, FRI, SAT, SUN, CREATED_ON, CREATED_BY, DEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Schedule" >
     select 
@@ -53,6 +60,27 @@
       <if test="custId != null">
         AND CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
       </if>
+      <if test="mon != null">
+        AND MON = #{mon}
+      </if>
+      <if test="tue != null">
+        AND TUE = #{tue}
+      </if>
+      <if test="wed != null">
+        AND WED = #{wed}
+      </if>
+      <if test="thu != null">
+        AND THU = #{thu}
+      </if>
+      <if test="fri != null">
+        AND FRI = #{fri}
+      </if>
+      <if test="sat != null">
+        AND SAT = #{sat}
+      </if>
+      <if test="sun != null">
+        AND SUN = #{sun}
+      </if>
     </where>
   </select>
   <select id="getNextSchId" resultType="long">
@@ -66,12 +94,14 @@
     insert into t_schedule (SCH_ID, SCH_TYPE, SOURCE_LOCID, 
       DEST_LOCID, VEHICLE_ID, DRIVER_ID, 
       SHIP_TO, START_DT, END_DT, 
-      STATUS, CUST_ID, CREATED_ON, 
+      STATUS, CUST_ID, MON, TUE, WED, THU, FRI, SAT, SUN, CREATED_ON,
       CREATED_BY, DEL)
     values (#{schId,jdbcType=VARCHAR}, #{schType,jdbcType=VARCHAR}, #{sourceLocid,jdbcType=VARCHAR}, 
       #{destLocid,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR}, 
       #{shipTo,jdbcType=VARCHAR}, #{startDt,jdbcType=TIMESTAMP}, #{endDt,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR},
+      #{mon},#{tue},#{wed},#{thu},#{fri},#{sat},#{sun},
+      #{createdOn,jdbcType=TIMESTAMP},
       #{createdBy,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.Schedule" >
@@ -222,6 +252,13 @@
       END_DT = #{endDt,jdbcType=TIMESTAMP},
       STATUS = #{status,jdbcType=VARCHAR},
       CUST_ID = #{custId,jdbcType=VARCHAR},
+      MON = #{mon,jdbcType=VARCHAR},
+      TUE = #{tue,jdbcType=VARCHAR},
+      WED = #{wed,jdbcType=VARCHAR},
+      THU = #{thu,jdbcType=VARCHAR},
+      FRI = #{fri,jdbcType=VARCHAR},
+      SAT = #{sat,jdbcType=VARCHAR},
+      SUN = #{sun,jdbcType=VARCHAR},
       CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
       CREATED_BY = #{createdBy,jdbcType=VARCHAR},
       DEL = #{del,jdbcType=VARCHAR}

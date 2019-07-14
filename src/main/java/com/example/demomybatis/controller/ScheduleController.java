@@ -1,6 +1,7 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.entity.Schedule;
+import com.example.demomybatis.entity.ScheduleDetail;
 import com.example.demomybatis.service.ScheduleService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ScheduleController {
     }
 
     @PostMapping(path = "sch")
-    public String create(@RequestBody Schedule schedule){
+    public String create(@RequestBody ScheduleDetail schedule){
         return this.scheduleService.create(schedule);
     }
 

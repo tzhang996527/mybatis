@@ -7,10 +7,11 @@
     <result column="LOCID" property="locid" jdbcType="VARCHAR" />
     <result column="PLAN_DEPART" property="planDepart" jdbcType="TIMESTAMP" />
     <result column="PLAN_ARR" property="planArr" jdbcType="TIMESTAMP" />
+    <result column="DAYS" property="days" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    SCH_ID, SEQ, LOCID, PLAN_DEPART, PLAN_ARR, STATUS
+    SCH_ID, SEQ, LOCID, PLAN_DEPART, PLAN_ARR, DAYS, STATUS
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demomybatis.entity.SchStopKey" >
     select 
@@ -32,10 +33,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.SchStop" >
     insert into t_sch_stop (SCH_ID, SEQ, LOCID, 
-      PLAN_DEPART, PLAN_ARR, STATUS
+      PLAN_DEPART, PLAN_ARR, DAYS, STATUS
       )
     values (#{schId,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{locid,jdbcType=VARCHAR}, 
-      #{planDepart,jdbcType=TIMESTAMP}, #{planArr,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      #{planDepart,jdbcType=TIMESTAMP}, #{planArr,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER},
+      #{status,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demomybatis.entity.SchStop" >
@@ -55,6 +57,9 @@
       </if>
       <if test="planArr != null" >
         PLAN_ARR,
+      </if>
+      <if test="days != null" >
+        DAYS,
       </if>
       <if test="status != null" >
         STATUS,
@@ -76,6 +81,9 @@
       <if test="planArr != null" >
         #{planArr,jdbcType=TIMESTAMP},
       </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
@@ -93,6 +101,9 @@
       <if test="planArr != null" >
         PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
       </if>
+      <if test="days != null" >
+        STATUS = #{days,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         STATUS = #{status,jdbcType=VARCHAR},
       </if>
@@ -105,6 +116,7 @@
     set LOCID = #{locid,jdbcType=VARCHAR},
       PLAN_DEPART = #{planDepart,jdbcType=TIMESTAMP},
       PLAN_ARR = #{planArr,jdbcType=TIMESTAMP},
+      DAYS = #{days, jdbcType=INTEGER},
       STATUS = #{status,jdbcType=VARCHAR}
     where SCH_ID = #{schId,jdbcType=VARCHAR}
       and SEQ = #{seq,jdbcType=INTEGER}

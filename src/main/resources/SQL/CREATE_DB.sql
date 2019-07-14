@@ -854,6 +854,13 @@ create table `T_SCHEDULE` (
     `END_DT`   datetime,
     `STATUS`  VARCHAR(2),
     `CUST_ID` VARCHAR(20),
+    `MON` varchar(1),
+    `TUE` varchar(1),
+    `WED` varchar(1),
+    `THU` varchar(1),
+    `FRI` varchar(1),
+    `SAT` varchar(1),
+    `SUN` varchar(1),
     `CREATED_ON` datetime,
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
@@ -880,6 +887,7 @@ create table `T_SCH_STOP` (
 	`LOCID` VARCHAR(20),
     `PLAN_DEPART` datetime,
     `PLAN_ARR`    datetime,
+    `DAYS`        int,
     `STATUS`      VARCHAR(2),
     primary key(`SCH_ID`,`SEQ`),
     key `idx_fk_sch_id`(`SCH_ID`),
@@ -888,3 +896,7 @@ create table `T_SCH_STOP` (
     constraint `fk_sch_pln_loc` foreign key(`LOCID`) references `T_LOCATION`(`LOC_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
+
+INSERT INTO t_sch_type VALUES('LONG','长期计划','Admin',now());
+INSERT INTO t_sch_type VALUES('MEDI','中期计划','Admin',now());
+INSERT INTO t_sch_type VALUES('SHRT','短期计划','Admin',now());

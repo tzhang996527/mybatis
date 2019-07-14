@@ -9,6 +9,8 @@ public class SchStop extends SchStopKey {
 
     private Date planArr;
 
+    private Integer days;
+
     private String status;
 
     public String getLocid() {
@@ -41,5 +43,13 @@ public class SchStop extends SchStopKey {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
     }
 }
