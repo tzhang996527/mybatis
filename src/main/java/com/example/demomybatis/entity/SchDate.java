@@ -1,27 +1,37 @@
 package com.example.demomybatis.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class SchDate {
 
-    private Date day;
+    private Date planDepart;
 
-    private String weekDay;
+    private Date planArr;
 
+    private List<PlannedStop> plannedStops;
 
-    public Date getDay() {
-        return day;
+    public Date getPlanDepart() {
+        return planDepart;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public void setPlanDepart(Date planDepart) {
+        this.planDepart = planDepart;
     }
 
-    public String getWeekDay() {
-        return weekDay;
+    public Date getPlanArr() {
+        return planArr;
     }
 
-    public void setWeekDay(String weekDay) {
-        this.weekDay = weekDay;
+    public void setPlanArr(Date planArr) {
+        this.planArr = planArr;
+    }
+
+    public List<PlannedStop> getPlannedStops() {
+        return plannedStops;
+    }
+
+    public void setPlannedStops(List<PlannedStop> plannedStops) {
+        this.plannedStops = plannedStops;
     }
 }

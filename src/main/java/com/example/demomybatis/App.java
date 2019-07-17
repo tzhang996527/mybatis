@@ -1,10 +1,16 @@
 package com.example.demomybatis;
 
+import com.example.demomybatis.util.DateUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -31,6 +37,34 @@ public class App {
 //			boolean match1 = bCryptPasswordEncoder.matches(password1,encoding_password1);
 //			System.out.println("Encoding_password1: " + encoding_password1);
 //			System.out.println("matches " + password1 + "boolean = " + match1);
+
+			Date date = new Date();
+			long times = date.getTime();//时间戳
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateString = formatter.format(date);
+			System.out.println(dateString);
+
+//			Calendar cal = Calendar.getInstance();
+//			int year = cal.get(Calendar.YEAR);//获取年份
+//			int month=cal.get(Calendar.MONTH) + 1;//获取月份
+//			int day=cal.get(Calendar.DATE);//获取日
+//			int hour=cal.get(Calendar.HOUR);//小时
+//			int minute=cal.get(Calendar.MINUTE);//分
+//			int second=cal.get(Calendar.SECOND);//秒
+			DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat df_time = new SimpleDateFormat("HH:mm:ss");
+			String d = df_date.format(date);
+			String t = df_time.format(date);
+			String aa = d + " " + t;
+			Date test = DateUtil.parse(aa);
+
+			Calendar tempEnd = Calendar.getInstance();
+			tempEnd.setTime(date);
+			tempEnd.add(Calendar.DAY_OF_YEAR,1);
+			Date nextDay = tempEnd.getTime();
+			System.out.println(nextDay.toString());
+
+			System.out.println(dateString);
 
 		};
 	}

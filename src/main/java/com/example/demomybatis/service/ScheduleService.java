@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,7 +86,7 @@ public class ScheduleService {
     public List<String> createTourViaSch(String schId){
 
         List<String> tourIds = new ArrayList<>();
-        List<String> schWD = new ArrayList<>();
+
 
         //get schedule data
         Schedule sch = new Schedule();
@@ -95,54 +96,20 @@ public class ScheduleService {
         List<SchStop> schStops = this.schStopMapper.selectByPrimaryKey(schStop);
         List<Schedule> schedules = this.scheduleMapper.selectByPrimaryKey(sch);
 
+        //start date
+        Date startDat;
+        //start Time
+        Date startTime;
+        //End date
+        Date endDat;
+        //End time
+        Date endTime;
+        Schedule schedule;
+
         for (int j = 0; j < schedules.size(); j++) {
 
-            Schedule schedule = schedules.get(j);
+            schedule = schedules.get(j);
 
-            //get start and end date
-            Date startDat = schedule.getStartDt();
-            Date endDat = schedule.getEndDt();
-
-            //get weekdays of schedule
-            String mon = schedule.getMon();
-            if (mon == "true") {
-                schWD.add("mon");
-            }
-
-            String tue = schedule.getTue();
-            if (tue == "true") {
-                schWD.add("tue");
-            }
-
-            String wed = schedule.getWed();
-            if (wed == "true") {
-                schWD.add("wed");
-            }
-
-            String thu = schedule.getThu();
-            if (thu == "true") {
-                schWD.add("thu");
-            }
-
-            String fri = schedule.getFri();
-            if (fri == "true") {
-                schWD.add("fri");
-            }
-
-            String sat = schedule.getSat();
-            if (sat == "true") {
-                schWD.add("sat");
-            }
-
-            String sun = schedule.getSun();
-            if (sun == "true") {
-                schWD.add("sun");
-            }
-
-            //get day of start date
-            List<Date> lt_date = getBetweenDates(startDat, endDat);
-            for (int i = 0; i < lt_date.size(); i++) {
-                if (schWD.contains(dateToWeek(lt_date.get(i)))) {
                     //Creat tour
                     String username = SecurityContextHolder.getContext().getAuthentication().getName();
                     String nextId = Long.toString(this.tourMapper.getNextTourId());
@@ -173,6 +140,10 @@ public class ScheduleService {
                         PlannedStop plannedStop = new PlannedStop();
                         plannedStop.setTourid(nextId);
                         plannedStop.setLocid(schStop1.getLocid());
+
+                        schStop1.getPlanDepart();
+                        schStop1.getPlanArr();
+                        schStop1.getDays();
                         plannedStop.setPlanDepart(null);
                         plannedStop.setPlanArr(null);
                         plannedStop.setSeq(k + 1);
@@ -181,10 +152,94 @@ public class ScheduleService {
                     }
 
                     tourIds.add(nextId);
+        }
+        return tourIds;
+    }
+
+    //calculate tour date
+    private List<SchDate> calTourDate(Schedule schedule,List<SchStop> schStops){
+
+        List<SchDate> rt_schDate = new ArrayList<>();
+        List<String> schWD = new ArrayList<>();
+
+        //get schedule start and end date
+        Date startDat = schedule.getStartDt();
+        Date endDat = schedule.getEndDt();
+
+        //get weekdays of schedule
+        String mon = schedule.getMon();
+        if (mon == "true") {
+            schWD.add("mon");
+        }
+
+        String tue = schedule.getTue();
+        if (tue == "true") {
+            schWD.add("tue");
+        }
+
+        String wed = schedule.getWed();
+        if (wed == "true") {
+            schWD.add("wed");
+        }
+
+        String thu = schedule.getThu();
+        if (thu == "true") {
+            schWD.add("thu");
+        }
+
+        String fri = schedule.getFri();
+        if (fri == "true") {
+            schWD.add("fri");
+        }
+
+        String sat = schedule.getSat();
+        if (sat == "true") {
+            schWD.add("sat");
+        }
+
+        String sun = schedule.getSun();
+        if (sun == "true") {
+            schWD.add("sun");
+        }
+
+        //get day of start date
+        List<Date> lt_date = getBetweenDates(startDat, endDat);
+
+        Date tourDate;
+        Integer len = schStops.size();
+
+        for (int i = 0; i < lt_date.size(); i++) {
+            tourDate = lt_date.get(i);
+            if (schWD.contains(dateToWeek(tourDate))) {
+                //valid date[yyyy-MM-dd]
+//                LocalDate plannedDep_D =;
+                for (int j = 0; j < len; j++) {
+                    SchStop schStop = schStops.get(j);
+                    Date plannedDep_T = schStop.getPlanDepart(); //time
+                    Date plannedArr_T = schStop.getPlanArr();//time
+                    Integer exeDays = schStop.getDays();
+
+                    Calendar tempEnd = Calendar.getInstance();
+                    tempEnd.setTime(tourDate);
+                    //first stop
+                    if(j == 0){
+                        //departure date = startDat[yyyy-MM-dd] + schStop1.getPlanDepart()[hh:MM:ss]
+
+                    }else if(j == len - 1){
+                        //last stop
+
+                    }else{
+                        //intermediate stops
+                    }
+
+                    SchDate schDate = new SchDate();
+
                 }
             }
         }
-        return tourIds;
+
+        return null;
+
     }
 
     //get all dates
@@ -212,7 +267,6 @@ public class ScheduleService {
 //        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 
         String[] weekDays = {"mon","tue","wed","thu","fri","sat","sun"};
-
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
@@ -220,7 +274,6 @@ public class ScheduleService {
         if (w < 0){
             w = 0;
         }
-
         return weekDays[w];
     }
 
