@@ -19,10 +19,10 @@
     from t_sch_stop
     <where>
       <if test="schId != null">
-        AND SCH_ID LIKE CONCAT(CONCAT('%',#{schId}),'%')
+        AND SCH_ID = #{schId}
       </if>
-      <if test="schId != null">
-        AND SEQ LIKE CONCAT(CONCAT('%',#{seq}),'%')
+      <if test="seq != null">
+        AND SEQ = #{seq}
       </if>
     </where>
   </select>

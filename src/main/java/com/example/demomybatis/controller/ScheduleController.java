@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleService scheduleService;
-    
+
     @GetMapping(path = "sch")
     public List<Schedule> selectByPrimaryKey(@Param("sch") Schedule sch){
         return this.scheduleService.selectByPrimaryKey(sch);
@@ -35,5 +36,10 @@ public class ScheduleController {
     public List<Schedule> delete(@PathVariable(name="id") String id){
         this.scheduleService.delete(id);
         return this.scheduleService.selectByPrimaryKey(null);
+    }
+
+    @PostMapping(path ="schGenTour")
+    public List<String> generateTour(@RequestBody Schedule sch) throws ParseException {
+        return this.scheduleService.createTourViaSch(sch.getSchId());
     }
 }
