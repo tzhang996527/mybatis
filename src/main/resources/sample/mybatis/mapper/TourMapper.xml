@@ -96,6 +96,7 @@
         AND t.CUST_ID LIKE CONCAT(CONCAT('%',#{custId}),'%')
       </if>
     </where>
+    ORDER BY TOURID
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_tour

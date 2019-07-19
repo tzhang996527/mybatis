@@ -38,6 +38,7 @@ public class TourController {
 
     @GetMapping(path="tour")
     public List<Tour> getTour(@Param("Tour") Tour tour){
+        List<Tour> t = this.tourMapper.selectByPrimaryKey(tour);
         return this.tourMapper.selectByPrimaryKey(tour);
     }
 
@@ -63,6 +64,22 @@ public class TourController {
         TourDetail tourDetail = this.tourDetailMapper.getTourDetail(tourid);
         //get actual stops
         tourDetail.setActualStops(this.actualStopMapper.selectByTourId(tourid));
+
+        if(tourDetail.getVehicle() == null){
+            tourDetail.setVehicle(new Asset());
+        }
+
+        if(tourDetail.getSoldto() == null){
+            tourDetail.setSoldto(new Customer());
+        }
+
+        if(tourDetail.getShipto() == null){
+            tourDetail.setShipto(new Customer());
+        }
+
+        if(tourDetail.getDriver() == null){
+            tourDetail.setDriver(new Driver());
+        }
         return tourDetail;
     }
 
