@@ -39,8 +39,14 @@
 
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.ActualStopKey" >
     delete from t_act_stop
-    where TOURID = #{tourid,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="tourid != null">
+        TOURID = #{tourid,jdbcType=VARCHAR}
+      </if>
+      <if test="seq != null">
+        AND SEQ = #{seq,jdbcType=INTEGER}
+      </if>
+    </where>
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.ActualStop" >
     insert into t_act_stop (TOURID, SEQ, LAT, 

@@ -39,8 +39,10 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.EventKey" >
     delete from t_exe_event
-    where TOURID = #{tourid,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="tourid != null">TOURID = #{tourid,jdbcType=VARCHAR}</if>
+      <if test="seq != null">and SEQ = #{seq,jdbcType=INTEGER}</if>
+    </where>
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.Event" >
     insert into t_exe_event (TOURID, SEQ, EVENT_CODE, 

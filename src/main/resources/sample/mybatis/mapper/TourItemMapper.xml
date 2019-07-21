@@ -46,8 +46,10 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demomybatis.entity.TourItemKey" >
     delete from t_tour_item
-    where TOURID = #{tourid,jdbcType=VARCHAR}
-      and SEQ = #{seq,jdbcType=INTEGER}
+    <where>
+      <if test="tourid != null">TOURID = #{tourid,jdbcType=VARCHAR}</if>
+      <if test="seq != null">and SEQ = #{seq,jdbcType=INTEGER}</if>
+    </where>
   </delete>
   <insert id="insert" parameterType="com.example.demomybatis.entity.TourItem" >
     insert into t_tour_item (TOURID, SEQ, CONTAINER, 

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface NotificationMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Notification notification);
 
     int insert(Notification record);
 

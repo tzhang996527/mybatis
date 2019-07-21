@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demomybatis.dao.TourDetailMapper">
-    <cache/>
+<!--    <cache/>-->
 
     <resultMap id="BaseResultMap" type="TourDetail" >
         <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
@@ -182,7 +182,7 @@
 
 <!--        tour item-->
         <collection property="tourItem" ofType="TourItem">
-            <id column="TOURID" property="tourid" jdbcType="VARCHAR" />
+            <id column="IT_TOURID" property="tourid" jdbcType="VARCHAR" />
             <id column="IT_SEQ" property="seq" jdbcType="INTEGER" />
             <result column="IT_CONTAINER" property="container" jdbcType="VARCHAR" />
             <result column="IT_QUAN" property="quan" jdbcType="DECIMAL" />
@@ -242,6 +242,7 @@
         driver.TEL       AS DR_TEL,
         driver.LOCATION  AS DR_LOCATION,
 <!--        item-->
+        it.TOURID    AS IT_TOURID,
         it.SEQ       as IT_SEQ,
         it.CONTAINER AS IT_CONTAINER,
         it.QUAN      AS IT_QUAN,

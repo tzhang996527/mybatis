@@ -1,8 +1,6 @@
 package com.example.demomybatis.service;
 
-import com.example.demomybatis.dao.PlannedStopMapper;
-import com.example.demomybatis.dao.TourItemMapper;
-import com.example.demomybatis.dao.TourMapper;
+import com.example.demomybatis.dao.*;
 import com.example.demomybatis.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +24,87 @@ public class TourService {
     @Autowired
     private TourItemMapper tourItemMapper;
 
+    @Autowired
+    private ActualStopMapper actualStopMapper;
+
+    @Autowired
+    private EventMapper eventMapper;
+
+    @Autowired
+    private NotificationMapper notificationMapper;
+
     public List<Tour> getTour(){
         return tourMapper.selectByPrimaryKey(null);
+    }
+
+    //delete tour
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String deleteTour(String tourId){
+
+        //delete planned stops
+        PlannedStopKey stopKey = new PlannedStopKey();
+        stopKey.setTourid(tourId);
+        this.plannedStopMapper.deleteByPrimaryKey(stopKey);
+
+        //delete actual stops
+        ActualStopKey actualStopKey = new ActualStopKey();
+        actualStopKey.setTourid(tourId);
+        this.actualStopMapper.deleteByPrimaryKey(actualStopKey);
+
+        //delete notifications
+        Notification notification = new Notification();
+        notification.setTourid(tourId);
+        this.notificationMapper.deleteByPrimaryKey(notification);
+
+        //delete events
+        EventKey eventKey = new EventKey();
+        eventKey.setTourid(tourId);
+        this.eventMapper.deleteByPrimaryKey(eventKey);
+
+        //delete items
+        TourItemKey tourItemKey = new TourItemKey();
+        tourItemKey.setTourid(tourId);
+        this.tourItemMapper.deleteByPrimaryKey(tourItemKey);
+
+        this.tourMapper.deleteByPrimaryKey(tourId);
+
+        return tourId;
+
+    }
+    //Update tour
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String updateTour(TourDetail tourDetail){
+        //update tour
+        Tour tour = tourDetail;
+        //tour type
+        tour.setTourType(tourDetail.getTourType());
+        //asset id
+        tour.setVehicleId(tourDetail.getVehicle().getAssetId());
+        tour.setSourceLocid(tourDetail.getSourceLoc().getLocId());
+        tour.setDestLocid(tourDetail.getDestLoc().getLocId());
+        tour.setPlanDepart(tourDetail.getPlanDepart());
+        tour.setPlanArr(tourDetail.getPlanArr());
+        tour.setShipTo(tourDetail.getShipTo());
+        tour.setCustId(tourDetail.getCustId());
+        tour.setDriverId(tourDetail.getDriver().getDriverId());
+        this.tourMapper.updateByPrimaryKey(tour);
+        //update planned stop
+        List<PlannedStopDetail> plannedStopDetails = tourDetail.getPlannedStopsDetail();
+        int len = plannedStopDetails.size();
+        for(int i=0; i< len;i++){
+            PlannedStop plannedStop = plannedStopDetails.get(i);
+            this.plannedStopMapper.updateByPrimaryKey(plannedStop);
+        }
+
+        //cargo
+        List<TourItem> tourItems = tourDetail.getTourItem();
+        len = tourItems.size();
+        for(int i=0;i<len;i++){
+            TourItem it = tourItems.get(i);
+            this.tourItemMapper.updateByPrimaryKey(it);
+        }
+
+        return tour.getTourid();
     }
 
     //Create tour

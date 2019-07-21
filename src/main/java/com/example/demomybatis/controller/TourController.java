@@ -49,13 +49,12 @@ public class TourController {
     }
 
     @PutMapping(path = "tour")
-    public List<Tour> update(@RequestBody Tour tour){
-        this.tourMapper.updateByPrimaryKeySelective(tour);
-        return this.tourMapper.selectByPrimaryKey(null);
+    public String update(@RequestBody TourDetail tourDetail){
+        return this.tourService.updateTour(tourDetail);
     }
     @DeleteMapping(path="tour/{id}")
     public List<Tour> delete(@PathVariable(name="id") String id){
-        this.tourMapper.deleteByPrimaryKey(id);
+        this.tourService.deleteTour(id);
         return this.tourMapper.selectByPrimaryKey(null);
     }
     //tour detail
