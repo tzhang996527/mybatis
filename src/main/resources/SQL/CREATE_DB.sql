@@ -18,6 +18,7 @@ drop table if exists `db_example`.`T_RESV_TYPE`;
 drop table if exists `db_example`.`T_TOUR_TYPE`;
 drop table if exists `db_example`.`T_CUSTOMER`;
 DROP TABLE if exists `db_example`.`T_SCH_TYPE`;
+drop table if exists `db_example`.`T_ASSET_STATUS`;
 
 create table `T_SCH_TYPE`(
 	`SCH_TYPE` VARCHAR(10) NOT NULL,
@@ -900,3 +901,11 @@ create table `T_SCH_STOP` (
 INSERT INTO t_sch_type VALUES('LONG','长期计划','Admin',now());
 INSERT INTO t_sch_type VALUES('MEDI','中期计划','Admin',now());
 INSERT INTO t_sch_type VALUES('SHRT','短期计划','Admin',now());
+
+CREATE TABLE `T_ASSET_STATUS`(
+	`ASSET_ID` VARCHAR(20) not NULL,
+    `STATUS` VARCHAR(10),
+    `CHANGED_BY` VARCHAR(20),
+    `CHANGED_ON` datetime,
+    primary key(`ASSET_ID`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
