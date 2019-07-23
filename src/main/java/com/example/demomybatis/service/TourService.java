@@ -119,23 +119,28 @@ public class TourService {
 
         //set vehicle status to "2" - used
         //set asset status
-        if(assetId != null){
-            AssetStatus assetStatus = new AssetStatus();
-            assetStatus.setAssetId(assetId);
-            assetStatus.setStatus("2");//set vehicle status to "2" - vehicle used
-            assetStatus.setChangedBy(username);
-            assetStatus.setChangedOn(new Date());
-            this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
-        }
 
-        //reset old vehicle to available
-        if(oldVehId != null){
-            AssetStatus assetStatus = new AssetStatus();
-            assetStatus.setAssetId(oldVehId);
-            assetStatus.setStatus("1");//set vehicle status to "1" - vehicle available
-            assetStatus.setChangedBy(username);
-            assetStatus.setChangedOn(new Date());
-            this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
+        //if vehicle id is changed - then update vehicle status
+        if(!oldVehId.equals(assetId)) {
+            //set current vehicle status
+            if (assetId != null) {
+                AssetStatus assetStatus = new AssetStatus();
+                assetStatus.setAssetId(assetId);
+                assetStatus.setStatus("2");//set vehicle status to "2" - vehicle used
+                assetStatus.setChangedBy(username);
+                assetStatus.setChangedOn(new Date());
+                this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
+            }
+
+            //reset old vehicle to available
+            if (oldVehId != null) {
+                AssetStatus assetStatus = new AssetStatus();
+                assetStatus.setAssetId(oldVehId);
+                assetStatus.setStatus("1");//set vehicle status to "1" - vehicle available
+                assetStatus.setChangedBy(username);
+                assetStatus.setChangedOn(new Date());
+                this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
+            }
         }
 
         return tour.getTourid();

@@ -1,6 +1,7 @@
 package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.Asset;
+import com.example.demomybatis.entity.AssetDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface AssetMapper {
     List<Asset> selectAll();
 
     List<Asset> selectByField(String assetId, String assetType);
+
+    List<AssetDetail> selectAssetDetail(AssetDetail assetDetail);
 }

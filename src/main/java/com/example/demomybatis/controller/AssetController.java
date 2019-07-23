@@ -4,6 +4,7 @@ import com.example.demomybatis.dao.AssetMapper;
 import com.example.demomybatis.dao.AssetStatusMapper;
 import com.example.demomybatis.dao.AssetTypeMapper;
 import com.example.demomybatis.entity.Asset;
+import com.example.demomybatis.entity.AssetDetail;
 import com.example.demomybatis.entity.AssetStatus;
 import com.example.demomybatis.entity.AssetType;
 import org.apache.ibatis.annotations.Param;
@@ -66,6 +67,12 @@ public class AssetController {
     @GetMapping(path="asset")
     public List<Asset> getAllAsset(@Param("assetId") String assetId, @Param("assetType") String assetTpye){
         return this.assetMapper.selectByField(assetId,assetTpye);
+    }
+
+    //asset with status
+    @GetMapping(path = "assetDetail")
+    public List<AssetDetail> getAssetDetail(@Param("AssetDetail") AssetDetail assetDetail){
+        return this.assetMapper.selectAssetDetail(assetDetail);
     }
 
     @GetMapping(path="asset/{id}")

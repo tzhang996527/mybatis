@@ -1,8 +1,9 @@
 package com.example.demomybatis.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AssetStatus {
+public class AssetStatus implements Serializable {
     private String assetId;
 
     private String status;
