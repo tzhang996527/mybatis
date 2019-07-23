@@ -33,6 +33,9 @@ public class TourService {
     @Autowired
     private NotificationMapper notificationMapper;
 
+    @Autowired
+    private AssetStatusMapper assetStatusMapper;
+
     public List<Tour> getTour(){
         return tourMapper.selectByPrimaryKey(null);
     }
@@ -74,12 +77,22 @@ public class TourService {
     //Update tour
     @Transactional(propagation = Propagation.REQUIRED)
     public String updateTour(TourDetail tourDetail){
+
+        //get old tour data
+        Tour old = new Tour();
+        old.setTourid(tourDetail.getTourid());
+        List<Tour> oldTour = this.tourMapper.selectByPrimaryKey(old);
+        //get original vehicle id
+        String oldVehId = oldTour.get(0).getVehicleId();
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //update tour
         Tour tour = tourDetail;
         //tour type
         tour.setTourType(tourDetail.getTourType());
         //asset id
-        tour.setVehicleId(tourDetail.getVehicle().getAssetId());
+        String assetId = tourDetail.getVehicle().getAssetId();
+        tour.setVehicleId(assetId);
         tour.setSourceLocid(tourDetail.getSourceLoc().getLocId());
         tour.setDestLocid(tourDetail.getDestLoc().getLocId());
         tour.setPlanDepart(tourDetail.getPlanDepart());
@@ -102,6 +115,27 @@ public class TourService {
         for(int i=0;i<len;i++){
             TourItem it = tourItems.get(i);
             this.tourItemMapper.updateByPrimaryKey(it);
+        }
+
+        //set vehicle status to "2" - used
+        //set asset status
+        if(assetId != null){
+            AssetStatus assetStatus = new AssetStatus();
+            assetStatus.setAssetId(assetId);
+            assetStatus.setStatus("2");//set vehicle status to "2" - vehicle used
+            assetStatus.setChangedBy(username);
+            assetStatus.setChangedOn(new Date());
+            this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
+        }
+
+        //reset old vehicle to available
+        if(oldVehId != null){
+            AssetStatus assetStatus = new AssetStatus();
+            assetStatus.setAssetId(oldVehId);
+            assetStatus.setStatus("1");//set vehicle status to "1" - vehicle available
+            assetStatus.setChangedBy(username);
+            assetStatus.setChangedOn(new Date());
+            this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
         }
 
         return tour.getTourid();
@@ -156,6 +190,18 @@ public class TourService {
             it.setCreatedOn(new Date());
             this.tourItemMapper.insert(it);
         }
+
+        //set vehicle status to "2" - used
+        //set asset status
+        if(tourDetail.getVehicle().getAssetId() != null){
+            AssetStatus assetStatus = new AssetStatus();
+            assetStatus.setAssetId(tourDetail.getVehicle().getAssetId());
+            assetStatus.setStatus("2");//set vehicle status to "2" - vehicle used
+            assetStatus.setChangedBy(username);
+            assetStatus.setChangedOn(new Date());
+            this.assetStatusMapper.updateByPrimaryKeySelective(assetStatus);
+        }
+
 //        //test exception
 //        if(true){
 //            throw new RuntimeException("Save tour error......");

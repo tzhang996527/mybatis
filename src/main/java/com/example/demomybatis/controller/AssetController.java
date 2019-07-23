@@ -1,8 +1,10 @@
 package com.example.demomybatis.controller;
 
 import com.example.demomybatis.dao.AssetMapper;
+import com.example.demomybatis.dao.AssetStatusMapper;
 import com.example.demomybatis.dao.AssetTypeMapper;
 import com.example.demomybatis.entity.Asset;
+import com.example.demomybatis.entity.AssetStatus;
 import com.example.demomybatis.entity.AssetType;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,13 @@ public class AssetController {
 
     private final AssetMapper assetMapper;
 
+    private final AssetStatusMapper assetStatusMapper;
+
     @Autowired
-    public AssetController(AssetTypeMapper assetTypeMapper, AssetMapper assetMapper) {
+    public AssetController(AssetTypeMapper assetTypeMapper, AssetMapper assetMapper, AssetStatusMapper assetStatusMapper) {
         this.assetTypeMapper = assetTypeMapper;
         this.assetMapper = assetMapper;
+        this.assetStatusMapper = assetStatusMapper;
     }
 
     //get all asset type
@@ -73,6 +78,14 @@ public class AssetController {
         asset.setCreatedBy(username);
         asset.setCreatedOn(new Date());
         this.assetMapper.insert(asset);
+
+        //init asset status
+        AssetStatus assetStatus = new AssetStatus();
+        assetStatus.setAssetId(asset.getAssetId());
+        assetStatus.setStatus("1");//Initial status - vehicle available
+        assetStatus.setChangedBy(username);
+        assetStatus.setChangedOn(new Date());
+        this.assetStatusMapper.insert(assetStatus);
         return this.assetMapper.selectAll();
 //        return String.format("AssetType %s created.",assetType.getAssetType());
     }

@@ -40,5 +40,6 @@
         <mapper resource="sample/mybatis/mapper/ScheduleMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/SchStopMapper.xml"/>
         <mapper resource="sample/mybatis/mapper/SchTypeMapper.xml"/>
+        <mapper resource="sample/mybatis/mapper/AssetStatusMapper.xml"/>
     </mappers>
 </configuration>
