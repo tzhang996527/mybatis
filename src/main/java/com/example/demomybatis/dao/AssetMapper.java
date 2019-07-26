@@ -22,7 +22,7 @@ public interface AssetMapper {
 
     List<Asset> selectAll();
 
-    List<Asset> selectByField(String assetId, String assetType);
+    List<Asset> selectByField(Asset asset);
 
     List<AssetDetail> selectAssetDetail(AssetDetail assetDetail);
 }

@@ -26,12 +26,13 @@ public class DemoMybatisApplicationTests {
 	private TourDetailMapper tourDetailMapper;
 	@Test
 	public void test1(){
-		List<TourItem> it = null;
-		List<TourDetail> tourDetails = tourDetailMapper.findTourTest();
-		for(TourDetail item :tourDetails){
-			it = item.getTourItem();
-			System.out.println("");
-		}
+//		List<TourItem> it = null;
+//		List<TourDetail> tourDetails = tourDetailMapper.findTourTest();
+//		for(TourDetail item :tourDetails){
+//			it = item.getTourItem();
+//			System.out.println("");
+//		}
+		System.out.println("");
 
 	}
 

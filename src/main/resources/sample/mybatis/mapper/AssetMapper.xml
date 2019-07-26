@@ -46,7 +46,7 @@
         <include refid="Base_Column_List" />
         from t_asset
     </select>
-    <select id="selectByField" resultMap="BaseResultMap">
+    <select id="selectByField" resultMap="BaseResultMap" parameterType="Asset">
         select
         <include refid="Base_Column_List" />
         from t_asset

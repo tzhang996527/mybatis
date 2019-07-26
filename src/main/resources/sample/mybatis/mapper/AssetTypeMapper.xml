@@ -19,7 +19,7 @@
     from t_asset_type
   </select>
 
-  <select id="selectByField" resultMap="BaseResultMap">
+  <select id="selectByField" resultMap="BaseResultMap" parameterType="AssetType">
     select
     <include refid="Base_Column_List" />
     from t_asset_type

@@ -34,8 +34,8 @@ public class AssetController {
 
     //get all asset type
     @GetMapping(path="assetType")
-    public List<AssetType> getAllAssetType(@Param("assetType") String assetType,@Param("assetText") String assetText){
-        return this.assetTypeMapper.selectByField(assetType,assetText);
+    public List<AssetType> getAllAssetType(@Param("AssetType") AssetType assetType){
+        return this.assetTypeMapper.selectByField(assetType);
     }
 
     @GetMapping(path="assetType/{id}")
@@ -65,8 +65,8 @@ public class AssetController {
 
     //get all asset
     @GetMapping(path="asset")
-    public List<Asset> getAllAsset(@Param("assetId") String assetId, @Param("assetType") String assetTpye){
-        return this.assetMapper.selectByField(assetId,assetTpye);
+    public List<Asset> getAllAsset(@Param("Asset") Asset asset){
+        return this.assetMapper.selectByField(asset);
     }
 
     //asset with status

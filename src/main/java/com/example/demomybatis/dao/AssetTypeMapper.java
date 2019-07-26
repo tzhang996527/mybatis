@@ -21,5 +21,5 @@ public interface AssetTypeMapper {
 
     List<AssetType> selectAll();
 
-    List<AssetType> selectByField(String assetType, String assetText);
+    List<AssetType> selectByField(AssetType assetType);
 }
