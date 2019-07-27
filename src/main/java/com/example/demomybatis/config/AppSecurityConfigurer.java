@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
@@ -70,7 +71,9 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		//configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedHeader("*");
 		configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
@@ -105,7 +108,8 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// spring-security 5.0 之后需要过滤静态资源
-				.antMatchers("/login","/index","/css/**","/js/**","/fonts/**","/img/*").permitAll()
+				.antMatchers("/login","/index","/css/**","/js/**","/fonts/**","/img/*",
+						"/static/css/**","/static/js/**","/static/fonts/**","/img/*","/static/**").permitAll()
 //				.antMatchers("/", "/home").hasRole("USER")
 				.antMatchers("/admin/**").hasAnyRole("ADMIN", "DBA")
 				.anyRequest().authenticated()
