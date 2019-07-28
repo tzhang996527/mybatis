@@ -17,9 +17,9 @@
     <select id="findByUserName" parameterType="String" resultMap="userMap">
         select u.*
         ,r.name AS ROLE_NAME
-        from T_USER u
-        LEFT JOIN T_USER_ROLE ur on u.id = ur.USER_ID
-        LEFT JOIN T_ROLE r on ur.ROLE_ID = r.ID
+        from t_user u
+        LEFT JOIN t_user_role ur on u.id = ur.USER_ID
+        LEFT JOIN t_role r on ur.ROLE_ID = r.ID
         where u.NAME = #{username}
     </select>
 </mapper>

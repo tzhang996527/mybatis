@@ -1,28 +1,34 @@
 CREATE DATEBASE db_example;
 
 use db_example;
-drop table if exists `db_example`.`T_PLN_STOP`;
-drop table if exists `db_example`.`T_ACT_STOP`;
-drop table if exists `db_example`.`T_NOTIFICATION`;
-drop table if exists `db_example`.`T_EXE_EVENT`;
-drop table if exists `db_example`.`T_TOUR_ITEM`;
-drop table if exists `db_example`.`T_TOUR`;
-drop table if exists `db_example`.`T_SCH_STOP`;
-drop table if exists `db_example`.`T_SCHEDULE`;
-drop table if exists `db_example`.`T_RESV_ITEM`;
-drop table if exists `db_example`.`T_RESERVATION`;
-drop table if exists `db_example`.`T_DRIVER`;
-drop table if exists `db_example`.`T_ASSET`;
-drop table if exists `db_example`.`T_LOCATION`;
-drop table if exists `db_example`.`T_ASSET_TYPE`;
-drop table if exists `db_example`.`T_EVENT_CODE`;
-drop table if exists `db_example`.`T_RESV_TYPE`;
-drop table if exists `db_example`.`T_TOUR_TYPE`;
-drop table if exists `db_example`.`T_CUSTOMER`;
-DROP TABLE if exists `db_example`.`T_SCH_TYPE`;
-drop table if exists `db_example`.`T_ASSET_STATUS`;
+drop table if exists `db_example`.`t_pln_stop`;
+drop table if exists `db_example`.`t_act_stop`;
+drop table if exists `db_example`.`t_notification`;
+drop table if exists `db_example`.`t_exe_event`;
+drop table if exists `db_example`.`t_tour_item`;
+drop table if exists `db_example`.`t_tour`;
+drop table if exists `db_example`.`t_sch_stop`;
+drop table if exists `db_example`.`t_schedule`;
+drop table if exists `db_example`.`t_resv_item`;
+drop table if exists `db_example`.`t_reservation`;
+drop table if exists `db_example`.`t_driver`;
+drop table if exists `db_example`.`t_asset`;
+drop table if exists `db_example`.`t_location`;
+drop table if exists `db_example`.`t_asset_type`;
+drop table if exists `db_example`.`t_event_code`;
+drop table if exists `db_example`.`t_resv_type`;
+drop table if exists `db_example`.`t_tour_type`;
+drop table if exists `db_example`.`t_customer`;
+drop table if exists `db_example`.`t_sch_type`;
+drop table if exists `db_example`.`t_asset_status`;
 
-create table `T_SCH_TYPE`(
+drop table if exists `db_example`.`t_sequence`;
+
+drop function if exists `db_example`.`currval`;
+drop function if exists `db_example`.`nextval`;
+drop function if exists `db_example`.`setval`;
+
+create table `t_sch_type`(
 	`SCH_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
@@ -30,7 +36,7 @@ create table `T_SCH_TYPE`(
     primary key (`SCH_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-create table `T_RESV_TYPE`(
+create table `t_resv_type`(
 	`RESV_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
@@ -38,10 +44,10 @@ create table `T_RESV_TYPE`(
     primary key (`RESV_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `T_RESV_TYPE` VALUES('NORM','普通预留','Admin',now());
-INSERT INTO `T_RESV_TYPE` VALUES('ADV1','客户预留','Admin',now());
+INSERT INTO `t_resv_type` VALUES('NORM','普通预留','Admin',now());
+INSERT INTO `t_resv_type` VALUES('ADV1','客户预留','Admin',now());
 
-create table `T_TOUR_TYPE`(
+create table `t_tour_type`(
 	`TOUR_TYPE` VARCHAR(10) NOT NULL,
     `TEXT` VARCHAR(30),
 	`CREATED_BY` VARCHAR(20),
@@ -49,10 +55,10 @@ create table `T_TOUR_TYPE`(
     primary key (`TOUR_TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `T_TOUR_TYPE` VALUES('LONG','短途','Admin',now());
-INSERT INTO `T_TOUR_TYPE` VALUES('SHORT','长途','Admin',now());
+INSERT INTO `t_tour_type` VALUES('LONG','短途','Admin',now());
+INSERT INTO `t_tour_type` VALUES('SHORT','长途','Admin',now());
 
-create table `T_CUSTOMER`(
+create table `t_customer`(
 	`CUST_ID` varchar(20) not null,
     `TYPE` VARCHAR(10),
     `NAME` VARCHAR(50),
@@ -63,10 +69,10 @@ create table `T_CUSTOMER`(
     primary key (`CUST_ID`,`TYPE`)
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST1','GROUP1','中国移动上海分公司','上海市北京西路1000号');
-insert into `T_CUSTOMER`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST2','GROUP1','中国联通上海分公司','上海市南京东路2000号');
+insert into `t_customer`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST1','GROUP1','中国移动上海分公司','上海市北京西路1000号');
+insert into `t_customer`(`CUST_ID`,`TYPE`,`NAME`,`ADDRESS`) VALUES('CUST2','GROUP1','中国联通上海分公司','上海市南京东路2000号');
 
-create table `T_LOCATION`(
+create table `t_location`(
 	`LOC_ID` VARCHAR(20) NOT NULL,
     `ADDRESS` VARCHAR(100),
     `LAT` VARCHAR(10),
@@ -81,7 +87,7 @@ create table `T_LOCATION`(
     primary KEY(`LOC_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `db_example`.`T_LOCATION`
+INSERT INTO `db_example`.`t_location`
 (`LOC_ID`,
 `ADDRESS`,
 `LAT`,
@@ -110,7 +116,7 @@ VALUES
 '200000',
 '');
 
-CREATE TABLE `T_ASSET_TYPE`(
+CREATE TABLE `t_asset_type`(
     `ASSET_TYPE` VARCHAR(10) NOT NULL,
     `ASSET_TEXT` VARCHAR(30),
     `CREATED_BY` VARCHAR(20),
@@ -119,7 +125,7 @@ CREATE TABLE `T_ASSET_TYPE`(
     primary key(`ASSET_TYPE`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-INSERT INTO `db_example`.`T_ASSET_TYPE`
+INSERT INTO `db_example`.`t_asset_type`
 (`ASSET_TYPE`,
 `ASSET_TEXT`,
 `DEL`)
@@ -130,7 +136,7 @@ VALUES
 '卡车20吨',
 '');
 
-CREATE TABLE `T_ASSET`(
+CREATE TABLE `t_asset`(
 	`ASSET_ID` VARCHAR(20) not NULL,
     `ASSET_TYPE` VARCHAR(10),
     `PLATENUMBER` VARCHAR(10),
@@ -144,12 +150,12 @@ CREATE TABLE `T_ASSET`(
     `CREATED_ON` datetime,
     `DEL` VARCHAR(1),
     primary key(`ASSET_ID`),
-    constraint `fk_asset_type` foreign key(`ASSET_TYPE`) references `T_ASSET_TYPE`(`ASSET_TYPE`)
+    constraint `fk_asset_type` foreign key(`ASSET_TYPE`) references `t_asset_type`(`ASSET_TYPE`)
     ON delete no action ON update no action,
-    constraint `fk_location` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_location` foreign key(`LOCATION`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
-INSERT INTO `db_example`.`T_ASSET`
+INSERT INTO `db_example`.`t_asset`
 (`ASSET_ID`,
 `ASSET_TYPE`,
 `PLATENUMBER`,
@@ -181,7 +187,7 @@ VALUES
 'LOC1',
 '');
 
-CREATE TABLE `T_DRIVER`(
+CREATE TABLE `t_driver`(
 	`DRIVER_ID` VARCHAR(20) NOT NULL,
     `NAME` VARCHAR(10),
     `TEL`  VARCHAR(15),
@@ -190,10 +196,10 @@ CREATE TABLE `T_DRIVER`(
     `CREATED_ON` datetime,
     `DEL`  VARCHAR(1),
     primary key(`DRIVER_ID`),
-    constraint `fk_driver_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_driver_loc` foreign key(`LOCATION`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
-INSERT INTO `db_example`.`T_DRIVER`
+INSERT INTO `db_example`.`t_driver`
 (`DRIVER_ID`,
 `NAME`,
 `TEL`,
@@ -210,7 +216,7 @@ VALUES
 'LOC1',
 '');
 
-create table `T_TOUR` (
+create table `t_tour` (
 	`TOURID` VARCHAR(20) NOT NULL,
     `TOUR_TYPE` VARCHAR(10),
     `SOURCE_LOCID` VARCHAR(20),
@@ -229,23 +235,23 @@ create table `T_TOUR` (
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary key(`TOURID`),
-    constraint `fk_tour_type` foreign key(`TOUR_TYPE`) references `T_TOUR_TYPE`(`TOUR_TYPE`)
+    constraint `fk_tour_type` foreign key(`TOUR_TYPE`) references `t_tour_type`(`TOUR_TYPE`)
     ON delete no action ON update no action,
-    constraint `fk_src_loc` foreign key(`SOURCE_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_src_loc` foreign key(`SOURCE_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_dest_loc` foreign key(`DEST_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_dest_loc` foreign key(`DEST_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_veh_id` foreign key(`VEHICLE_ID`) references `T_ASSET`(`ASSET_ID`)
+    constraint `fk_veh_id` foreign key(`VEHICLE_ID`) references `t_asset`(`ASSET_ID`)
     ON delete no action ON update no action,
-    constraint `fk_driver` foreign key(`DRIVER_ID`) references `T_DRIVER`(`DRIVER_ID`)
+    constraint `fk_driver` foreign key(`DRIVER_ID`) references `t_driver`(`DRIVER_ID`)
     ON delete no action ON update no action,
-    constraint `fk_ship_to` foreign key(`SHIP_TO`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_ship_to` foreign key(`SHIP_TO`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action,
-    constraint `fk_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_customer` foreign key(`CUST_ID`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB auto_increment=2 charset = utf8;
 
-INSERT INTO `db_example`.`T_TOUR`
+INSERT INTO `db_example`.`t_tour`
 (`TOURID`,
 `TOUR_TYPE`,
 `SOURCE_LOCID`,
@@ -314,22 +320,22 @@ NOW(),
 'ADMIN',
 '');
 
-create table `T_NOTIFICATION`(
+create table `t_notification`(
 	`TOURID` VARCHAR(20) NOT NULL,
 	`SEQ` INT(10),
     `TEXT` VARCHAR(100),
 	`CREATED_BY` VARCHAR(20),
     `CREATED_ON` datetime,
      primary KEY(`TOURID`,`SEQ`),
-    constraint `fk_no_tour_id` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+    constraint `fk_no_tour_id` foreign key(`TOURID`) references `t_tour`(`TOURID`)
      ON delete no action ON update no action
 )engine=InnoDB DEFAULT CHARSET=utf8;
 
-insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',1,'前方道路1拥堵');
-insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',2,'前方道路2拥堵');
-insert into `T_NOTIFICATION`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',3,'前方道路3拥堵');
+insert into `t_notification`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',1,'前方道路1拥堵');
+insert into `t_notification`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',2,'前方道路2拥堵');
+insert into `t_notification`(`TOURID`,`SEQ`,`TEXT`) VALUES('2100000002',3,'前方道路3拥堵');
 
-create table `T_PLN_STOP` (
+create table `t_pln_stop` (
 	`TOURID` VARCHAR(20) NOT NULL,
     `SEQ` INT,
 	`LOCID` VARCHAR(20),
@@ -344,12 +350,12 @@ create table `T_PLN_STOP` (
     `DEL` 		 VARCHAR(1),
     primary key(`TOURID`,`SEQ`),
     key `idx_fk_tour_id_pln`(`TOURID`),
-    constraint `fk_tour_id_pln` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+    constraint `fk_tour_id_pln` foreign key(`TOURID`) references `t_tour`(`TOURID`)
     ON delete no action ON update no action,
-    constraint `fk_pln_loc` foreign key(`LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_pln_loc` foreign key(`LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
-INSERT INTO `db_example`.`T_PLN_STOP`
+INSERT INTO `db_example`.`t_pln_stop`
 (`TOURID`,
 `SEQ`,
 `LOCID`,
@@ -376,7 +382,7 @@ INTERVAL 2 HOUR),NOW(),'P',''),
 ('2100000002',2,'LOC2',NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),INTERVAL 2 HOUR),NOW(),DATE_ADD(NOW(),
 INTERVAL 2 HOUR),NOW(),'P','');
 
-create table `T_TOUR_ITEM` (
+create table `t_tour_item` (
 	`TOURID` VARCHAR(20) NOT NULL,
     `SEQ` INT,
     `CONTAINER` VARCHAR(20),
@@ -389,10 +395,10 @@ create table `T_TOUR_ITEM` (
     `CREATED_BY` VARCHAR(20),
     `CREATED_ON` datetime,
     primary key(`TOURID`,`SEQ`),
-    constraint `fk_tour_id_itm` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+    constraint `fk_tour_id_itm` foreign key(`TOURID`) references `t_tour`(`TOURID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
-INSERT INTO `db_example`.`T_TOUR_ITEM`
+INSERT INTO `db_example`.`t_tour_item`
 (`TOURID`,
 `SEQ`,
 `CONTAINER`,
@@ -429,7 +435,7 @@ VALUES
 '01',
 '');
 
-create table `T_ACT_STOP` (
+create table `t_act_stop` (
 	`TOURID` VARCHAR(20) NOT NULL,
     `SEQ` int,
     `LAT`  VARCHAR(10),
@@ -441,12 +447,12 @@ create table `T_ACT_STOP` (
     `DEL` VARCHAR(1),
     primary key(`TOURID`,`SEQ`),
     key `idx_fk_tour_id_act`(`TOURID`),
-    constraint `fk_tour_id_act` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+    constraint `fk_tour_id_act` foreign key(`TOURID`) references `t_tour`(`TOURID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
 
 
-INSERT INTO `db_example`.`T_ACT_STOP`
+INSERT INTO `db_example`.`t_act_stop`
 (`TOURID`,
 `SEQ`,
 `LNG`,
@@ -478,7 +484,7 @@ VALUES
 ('2100000001',21,121.471966,31.225521,'',NOW(),1,'E',''),
 ('2100000001',22,121.471602,31.225365,'',NOW(),1,'E',''),
 ('2100000001',23,121.468767,31.224214,'',NOW(),1,'E','');
-CREATE TABLE `T_EVENT_CODE`(
+CREATE TABLE `t_event_code`(
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
     `EVENT_TEXT` VARCHAR(50),
     `CREATED_BY` VARCHAR(20),
@@ -486,7 +492,7 @@ CREATE TABLE `T_EVENT_CODE`(
     `DEL` VARCHAR(1),
     primary KEY(`EVENT_CODE`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `db_example`.`T_EVENT_CODE`
+INSERT INTO `db_example`.`t_event_code`
 (`EVENT_CODE`,
 `EVENT_TEXT`,
 `DEL`)
@@ -501,7 +507,7 @@ VALUES
 '卸载',
 '');
 
-CREATE TABLE `T_EXE_EVENT`(
+CREATE TABLE `t_exe_event`(
 	`TOURID` VARCHAR(20) NOT NULL,
     `SEQ` INT(10) NOT null,
 	`EVENT_CODE` VARCHAR(10) NOT NULL,
@@ -511,12 +517,12 @@ CREATE TABLE `T_EXE_EVENT`(
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary KEY(`TOURID`,`SEQ`),
-    constraint `fk_evt_tour_id` foreign key(`TOURID`) references `T_TOUR`(`TOURID`)
+    constraint `fk_evt_tour_id` foreign key(`TOURID`) references `t_tour`(`TOURID`)
      ON delete no action ON update no action,
-    constraint `fk_evt_loc` foreign key(`LOCATION`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_evt_loc` foreign key(`LOCATION`) references `t_location`(`LOC_ID`)
      ON delete no action ON update no action
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `db_example`.`T_EXE_EVENT`
+INSERT INTO `db_example`.`t_exe_event`
 (`TOURID`,
 `SEQ`,
 `EVENT_CODE`,
@@ -577,7 +583,7 @@ NOW(),
 'E',
 '');
 
-create table `T_RESERVATION`(
+create table `t_reservation`(
 	`RESV_ID` VARCHAR(20) NOT NULL,
     `RESV_TYPE` VARCHAR(10),
 	`SOURCE_LOCID` VARCHAR(20),
@@ -597,22 +603,22 @@ create table `T_RESERVATION`(
 	`TEXT` VARCHAR(100),
     `DEL` VARCHAR(1),
 	primary key (`RESV_ID`),
-    constraint `fk_resv_type` foreign key(`RESV_TYPE`) references `T_RESV_TYPE`(`RESV_TYPE`)
+    constraint `fk_resv_type` foreign key(`RESV_TYPE`) references `t_resv_type`(`RESV_TYPE`)
     ON delete no action ON update no action,
-    constraint `fk_resv_src_loc` foreign key(`SOURCE_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_resv_src_loc` foreign key(`SOURCE_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_resv_dest_loc` foreign key(`DEST_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_resv_dest_loc` foreign key(`DEST_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_resv_veh_id` foreign key(`VEHICLE_ID`) references `T_ASSET`(`ASSET_ID`)
+    constraint `fk_resv_veh_id` foreign key(`VEHICLE_ID`) references `t_asset`(`ASSET_ID`)
     ON delete no action ON update no action,
-    constraint `fk_resv_driver` foreign key(`DRIVER_ID`) references `T_DRIVER`(`DRIVER_ID`)
+    constraint `fk_resv_driver` foreign key(`DRIVER_ID`) references `t_driver`(`DRIVER_ID`)
     ON delete no action ON update no action,
-    constraint `fk_resv_ship_to` foreign key(`SHIP_TO`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_resv_ship_to` foreign key(`SHIP_TO`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action,
-    constraint `fk_resv_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_resv_customer` foreign key(`CUST_ID`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action
 )engine=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `db_example`.`T_RESERVATION`
+INSERT INTO `db_example`.`t_reservation`
 (`RESV_ID`,
 `RESV_TYPE`,
 `SOURCE_LOCID`,
@@ -687,7 +693,7 @@ NOW(),
 '',
 '2100000003');
 
-create table `T_RESV_ITEM` (
+create table `t_resv_item` (
 	`RESV_ID` VARCHAR(20) NOT NULL,
     `SEQ` INT,
     `CONTAINER` VARCHAR(20),
@@ -700,10 +706,10 @@ create table `T_RESV_ITEM` (
     `CREATED_ON` datetime,
     `DEL` 		 VARCHAR(1),
     primary key(`RESV_ID`,`SEQ`),
-    constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `T_RESERVATION`(`RESV_ID`)
+    constraint `fk_resv_id_itm` foreign key(`RESV_ID`) references `t_reservation`(`RESV_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
-INSERT INTO `db_example`.`T_RESV_ITEM`
+INSERT INTO `db_example`.`t_resv_item`
 (`RESV_ID`,
 `SEQ`,
 `CONTAINER`,
@@ -768,11 +774,11 @@ VALUES
 'P',
 '');
 
-DROP TABLE IF EXISTS T_SEQUENCE;
+DROP TABLE IF EXISTS t_sequence;
 DROP FUNCTION IF EXISTS currval;
 DROP FUNCTION IF EXISTS setval;
 DROP FUNCTION IF EXISTS nextval;
-CREATE TABLE T_SEQUENCE (
+CREATE TABLE t_sequence (
 name VARCHAR(50) NOT NULL,
 current_value BIGINT NOT NULL,
 increment INT NOT NULL DEFAULT 1,
@@ -791,7 +797,7 @@ BEGIN
 DECLARE value BIGINT;
 SET value = 0;
 SELECT current_value INTO value
-FROM T_SEQUENCE
+FROM t_sequence
 WHERE name = seq_name;
 RETURN value;
 END
@@ -807,7 +813,7 @@ CONTAINS SQL
 SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
-UPDATE T_SEQUENCE
+UPDATE t_sequence
 SET current_value = current_value + increment
 WHERE name = seq_name;
 RETURN currval(seq_name);
@@ -824,16 +830,16 @@ CONTAINS SQL
 SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
-UPDATE T_SEQUENCE
+UPDATE t_sequence
 SET current_value = value
 WHERE name = seq_name;
 RETURN currval(seq_name);
 END
 $
 
-INSERT INTO T_SEQUENCE VALUES ('TOUR', 6100000000, 1);
-INSERT INTO T_SEQUENCE VALUES('RESV',3200000000,1);
-INSERT INTO T_SEQUENCE VALUES('SCH',2100000000,1);
+INSERT INTO t_sequence VALUES ('TOUR', 6100000000, 1);
+INSERT INTO t_sequence VALUES('RESV',3200000000,1);
+INSERT INTO t_sequence VALUES('SCH',2100000000,1);
 -- ----添加一个sequence名称和初始值，以及自增幅度  添加一个名为TestSeq 的自增序列
 
 -- SELECT SETVAL('TOUR', 10);
@@ -845,7 +851,7 @@ SELECT CURRVAL('TOUR');
 SELECT NEXTVAL('TOUR');
 -- --查询指定sequence的下一个值  这里是获取TestSeq下一个值
 
-create table `T_SCHEDULE` (
+create table `t_schedule` (
 	`SCH_ID` VARCHAR(20) NOT NULL,
     `SCH_TYPE` VARCHAR(10),
     `SOURCE_LOCID` VARCHAR(20),
@@ -868,23 +874,23 @@ create table `T_SCHEDULE` (
     `CREATED_BY` VARCHAR(20),
     `DEL` VARCHAR(1),
     primary key(`SCH_ID`),
-    constraint `fk_sch_type` foreign key(`SCH_TYPE`) references `T_SCH_TYPE`(`SCH_TYPE`)
+    constraint `fk_sch_type` foreign key(`SCH_TYPE`) references `t_sch_type`(`SCH_TYPE`)
     ON delete no action ON update no action,
-    constraint `fk_sch_src_loc` foreign key(`SOURCE_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_sch_src_loc` foreign key(`SOURCE_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_dest_loc` foreign key(`DEST_LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_sch_dest_loc` foreign key(`DEST_LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_veh_id` foreign key(`VEHICLE_ID`) references `T_ASSET`(`ASSET_ID`)
+    constraint `fk_sch_veh_id` foreign key(`VEHICLE_ID`) references `t_asset`(`ASSET_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_driver` foreign key(`DRIVER_ID`) references `T_DRIVER`(`DRIVER_ID`)
+    constraint `fk_sch_driver` foreign key(`DRIVER_ID`) references `t_driver`(`DRIVER_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_ship_to` foreign key(`SHIP_TO`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_sch_ship_to` foreign key(`SHIP_TO`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_customer` foreign key(`CUST_ID`) references `T_CUSTOMER`(`CUST_ID`)
+    constraint `fk_sch_customer` foreign key(`CUST_ID`) references `t_customer`(`CUST_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
 
-create table `T_SCH_STOP` (
+create table `t_sch_stop` (
 	`SCH_ID` VARCHAR(20) NOT NULL,
     `SEQ` INT,
 	`LOCID` VARCHAR(20),
@@ -894,17 +900,17 @@ create table `T_SCH_STOP` (
     `STATUS`      VARCHAR(2),
     primary key(`SCH_ID`,`SEQ`),
     key `idx_fk_sch_id`(`SCH_ID`),
-    constraint `fk_sch_id_pln` foreign key(`SCH_ID`) references `T_SCHEDULE`(`SCH_ID`)
+    constraint `fk_sch_id_pln` foreign key(`SCH_ID`) references `t_schedule`(`SCH_ID`)
     ON delete no action ON update no action,
-    constraint `fk_sch_pln_loc` foreign key(`LOCID`) references `T_LOCATION`(`LOC_ID`)
+    constraint `fk_sch_pln_loc` foreign key(`LOCID`) references `t_location`(`LOC_ID`)
     ON delete no action ON update no action
 ) engine=InnoDB default charset = utf8;
 
-INSERT INTO T_SCH_TYPE VALUES('LONG','长期计划','Admin',now());
-INSERT INTO T_SCH_TYPE VALUES('MEDI','中期计划','Admin',now());
-INSERT INTO T_SCH_TYPE VALUES('SHRT','短期计划','Admin',now());
+INSERT INTO t_sch_type VALUES('LONG','长期计划','Admin',now());
+INSERT INTO t_sch_type VALUES('MEDI','中期计划','Admin',now());
+INSERT INTO t_sch_type VALUES('SHRT','短期计划','Admin',now());
 
-CREATE TABLE `T_ASSET_STATUS`(
+CREATE TABLE `t_asset_status`(
 	`ASSET_ID` VARCHAR(20) not NULL,
     `STATUS` VARCHAR(10),
     `CHANGED_BY` VARCHAR(20),

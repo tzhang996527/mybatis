@@ -316,7 +316,7 @@
         tt.TEXT AS TT_TEXT
         from t_tour t left JOIN
         t_pln_stop ps on t.TOURID = ps.TOURID
-        left join T_LOCATION psdt
+        left join t_location psdt
         on ps.LOCID = psdt.LOC_ID
         left join t_customer so
         on t.CUST_ID = so.CUST_ID
@@ -332,13 +332,13 @@
         on t.DRIVER_ID = driver.DRIVER_ID
         left join t_tour_item it
         on t.TOURID = it.TOURID
-        left join T_EXE_EVENT ev
+        left join t_exe_event ev
         on t.TOURID = ev.TOURID
-        left join T_NOTIFICATION no
+        left join t_notification no
         on t.TOURID = no.TOURID
-        left join T_TOUR_TYPE tt
+        left join t_tour_type tt
         on t.TOUR_TYPE = tt.TOUR_TYPE
-        left join T_RESERVATION resv
+        left join t_reservation resv
         on t.TOURID = resv.TOURID
 <!--        left join T_ACT_STOP as-->
 <!--        on t.TOURID = as.TOURID-->
