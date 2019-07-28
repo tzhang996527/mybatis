@@ -182,4 +182,24 @@
     where TOURID = #{tourid,jdbcType=VARCHAR}
       and SEQ = #{seq,jdbcType=INTEGER}
   </update>
+
+  <insert id="upsert" parameterType="com.example.demomybatis.entity.TourItem">
+    insert into t_tour_item (TOURID, SEQ, CONTAINER,
+    QUAN, QUAN_UOM, COMMODITY,
+    LOCATION, STATUS, DEL,
+    CREATED_BY, CREATED_ON)
+    values (#{tourid,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{container,jdbcType=VARCHAR},
+    #{quan,jdbcType=DECIMAL}, #{quanUom,jdbcType=VARCHAR}, #{commodity,jdbcType=VARCHAR},
+    #{location,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{del,jdbcType=VARCHAR},
+    #{createdBy,jdbcType=VARCHAR}, #{createdOn,jdbcType=DATE})
+    on duplicate key update CONTAINER = #{container,jdbcType=VARCHAR},
+                            QUAN = #{quan,jdbcType=DECIMAL},
+                            QUAN_UOM = #{quanUom,jdbcType=VARCHAR},
+                            COMMODITY = #{commodity,jdbcType=VARCHAR},
+                            LOCATION = #{location,jdbcType=VARCHAR},
+                            STATUS = #{status,jdbcType=VARCHAR},
+                            DEL = #{del,jdbcType=VARCHAR},
+                            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+                            CREATED_ON = #{createdOn,jdbcType=DATE}
+  </insert>
 </mapper>

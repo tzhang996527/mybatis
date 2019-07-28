@@ -2,7 +2,6 @@ package com.example.demomybatis.dao;
 
 import com.example.demomybatis.entity.TourItem;
 import com.example.demomybatis.entity.TourItemKey;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +19,6 @@ public interface TourItemMapper {
     int updateByPrimaryKeySelective(TourItem record);
 
     int updateByPrimaryKey(TourItem record);
+
+    int upsert(TourItem record);
 }
