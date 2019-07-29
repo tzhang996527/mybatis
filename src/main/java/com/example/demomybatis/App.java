@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import java.text.DateFormat;
@@ -14,17 +16,16 @@ import java.util.Date;
 
 
 @SpringBootApplication
-public class App {
-
-//	private final TourMapper tourMapper;
-//
-//	public App(TourMapper tourMapper) {
-//		this.tourMapper = tourMapper;
-//	}
+public class App extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(App.class, args);
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(App.class);
 	}
 
 	@Bean
@@ -38,11 +39,11 @@ public class App {
 //			System.out.println("Encoding_password1: " + encoding_password1);
 //			System.out.println("matches " + password1 + "boolean = " + match1);
 
-			Date date = new Date();
-			long times = date.getTime();//时间戳
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String dateString = formatter.format(date);
-			System.out.println(dateString);
+//			Date date = new Date();
+//			long times = date.getTime();//时间戳
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			String dateString = formatter.format(date);
+//			System.out.println(dateString);
 
 //			Calendar cal = Calendar.getInstance();
 //			int year = cal.get(Calendar.YEAR);//获取年份
@@ -51,20 +52,20 @@ public class App {
 //			int hour=cal.get(Calendar.HOUR);//小时
 //			int minute=cal.get(Calendar.MINUTE);//分
 //			int second=cal.get(Calendar.SECOND);//秒
-			DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
-			DateFormat df_time = new SimpleDateFormat("HH:mm:ss");
-			String d = df_date.format(date);
-			String t = df_time.format(date);
-			String aa = d + " " + t;
-			Date test = DateUtil.parse(aa);
-
-			Calendar tempEnd = Calendar.getInstance();
-			tempEnd.setTime(date);
-			tempEnd.add(Calendar.DAY_OF_YEAR,1);
-			Date nextDay = tempEnd.getTime();
-			System.out.println(nextDay.toString());
-
-			System.out.println(dateString);
+//			DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
+//			DateFormat df_time = new SimpleDateFormat("HH:mm:ss");
+//			String d = df_date.format(date);
+//			String t = df_time.format(date);
+//			String aa = d + " " + t;
+//			Date test = DateUtil.parse(aa);
+//
+//			Calendar tempEnd = Calendar.getInstance();
+//			tempEnd.setTime(date);
+//			tempEnd.add(Calendar.DAY_OF_YEAR,1);
+//			Date nextDay = tempEnd.getTime();
+//			System.out.println(nextDay.toString());
+//
+//			System.out.println(dateString);
 
 		};
 	}
