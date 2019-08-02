@@ -10,14 +10,17 @@ import com.example.demomybatis.entity.AssetType;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/")
-public class AssetController {
+public class AssetController{
 
     private final AssetTypeMapper assetTypeMapper;
 
@@ -43,7 +46,19 @@ public class AssetController {
         return this.assetTypeMapper.selectByPrimaryKey(id);
     }
     @PostMapping(path="assetType")
-    public List<AssetType> createAssetType(@RequestBody AssetType assetType){
+    public List<AssetType> createAssetType(@RequestBody @Valid AssetType assetType, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            StringBuffer stringBuffer = new StringBuffer();
+            List<ObjectError> list =bindingResult.getAllErrors();
+            for (ObjectError objectError:list) {
+                stringBuffer.append(objectError.getDefaultMessage());
+                stringBuffer.append("---");
+            }
+
+            //return stringBuffer!=null?stringBuffer.toString():"";
+        }
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         assetType.setCreatedBy(username);
         assetType.setCreatedOn(new Date());
@@ -80,7 +95,11 @@ public class AssetController {
         return this.assetMapper.selectByPrimaryKey(id);
     }
     @PostMapping(path="asset")
-    public List<Asset> createAsset(@RequestBody Asset asset){
+    public List<Asset> createAsset(@RequestBody @Valid Asset asset) throws Exception{
+
+//        if(asset.getHardware() == ""){
+//            throw new NullPointerException("Hardware is empty");
+//        }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         asset.setCreatedBy(username);
         asset.setCreatedOn(new Date());

@@ -1,5 +1,10 @@
 package com.example.demomybatis.entity;
 
+import com.example.demomybatis.validator.VIN;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,12 +13,15 @@ public class Asset implements Serializable {
 
     private String assetType;
 
+    @NotEmpty(message = "Please provide plate number")
     private String platenumber;
 
     private String make;
 
     private String model;
 
+    @VIN
+    @NotEmpty(message = "Please provide a VIN")
     private String vin;
 
     private int year;

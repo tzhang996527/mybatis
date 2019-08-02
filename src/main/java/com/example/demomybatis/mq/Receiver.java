@@ -3,7 +3,7 @@ package com.example.demomybatis.mq;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class Receiver {
 
     private CountDownLatch latch = new CountDownLatch(1);

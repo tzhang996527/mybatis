@@ -1,11 +1,14 @@
 package com.example.demomybatis.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 public class AssetType implements Serializable {
     private String assetType;
 
+    @NotEmpty
     private String assetText;
 
     private String createdBy;
