@@ -102,26 +102,35 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		//关闭跨站请求防护
 		http.csrf().disable();
 
-//		http.cors().and().headers()
-//				.frameOptions().sameOrigin()
-//				.httpStrictTransportSecurity().disable();
-
-		http.authorizeRequests()
+		http.httpBasic()
+				.and().
+				authorizeRequests()
 				// spring-security 5.0 之后需要过滤静态资源
-				.antMatchers("/login","/index","/css/**","/js/**","/fonts/**","/img/*",
+				.antMatchers("/index","/css/**","/js/**","/fonts/**","/img/*",
 						"/static/css/**","/static/js/**","/static/fonts/**","/img/*","/static/**").permitAll()
-//				.antMatchers("/", "/home").hasRole("USER")
-				.antMatchers("/admin/**").hasAnyRole("ADMIN", "DBA")
 				.anyRequest().authenticated()
 //				.and()
 //				.httpBasic()
 				.and()
-				.formLogin().loginPage("/login").successHandler(appAuthenticationSuccessHandler)
-				.usernameParameter("username").passwordParameter("password")
-				.and()
-				.logout().permitAll()
-				.and()
-				.exceptionHandling().accessDeniedPage("/accessDenied");
+				.formLogin().disable();
+
+		//backup 20190803
+//		http.authorizeRequests()
+//				// spring-security 5.0 之后需要过滤静态资源
+//				.antMatchers("/login","/index","/css/**","/js/**","/fonts/**","/img/*",
+//						"/static/css/**","/static/js/**","/static/fonts/**","/img/*","/static/**").permitAll()
+////				.antMatchers("/", "/home").hasRole("USER")
+//				.antMatchers("/admin/**").hasAnyRole("ADMIN", "DBA")
+//				.anyRequest().authenticated()
+////				.and()
+////				.httpBasic()
+//				.and()
+//				.formLogin().loginPage("/login").successHandler(appAuthenticationSuccessHandler)
+//				.usernameParameter("username").passwordParameter("password")
+//				.and()
+//				.logout().permitAll()
+//				.and()
+//				.exceptionHandling().accessDeniedPage("/accessDenied");
 
     }
 		
