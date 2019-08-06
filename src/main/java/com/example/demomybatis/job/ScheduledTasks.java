@@ -31,7 +31,7 @@ public class ScheduledTasks {
 //        log.info("The time is now {}", dateFormat.format(new Date()));
 //    }
 
-    @Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)
     public void sendMsg2MQ() throws InterruptedException {
         log.info("MQ logs>>>>>>>>>>>>");
         System.out.println("Sending message...");
