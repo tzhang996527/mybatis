@@ -2,13 +2,13 @@ package com.example.demomybatis.entity;
 
 import com.example.demomybatis.validator.VIN;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-
 public class Asset implements Serializable {
+
+
+    private static final long serialVersionUID = -8775702135479138695L;
     private String assetId;
 
     private String assetType;
